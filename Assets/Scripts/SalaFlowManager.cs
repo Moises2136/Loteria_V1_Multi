@@ -111,6 +111,9 @@ public class SalaFlowManager : MonoBehaviour
     /// <summary>Panel donde se juega la lotería en modo Multijugador.</summary>
     public GameObject panelJuegaLoteriaMultiplayer;
 
+    /// <summary>Panel del menú principal.</summary>
+    public GameObject panelMenu;
+
     // =========================
     // TEXTO DE ESTADO
     // =========================
@@ -146,8 +149,14 @@ public class SalaFlowManager : MonoBehaviour
         if (panelCuentaRegresiva != null) panelCuentaRegresiva.SetActive(false);
         if (panelJuegaLoteriaSolo != null) panelJuegaLoteriaSolo.SetActive(false);
         if (panelJuegaLoteriaMultiplayer != null) panelJuegaLoteriaMultiplayer.SetActive(false);
-
+        if (panelMenu != null) panelMenu.SetActive(true);
         if (textoEstado != null) textoEstado.text = "";
+
+        if (botonRegresar != null)
+        {
+            botonRegresar.onClick.RemoveAllListeners();
+            botonRegresar.onClick.AddListener(RegresarAMenu);
+        }
 
         if (botonJugarSolo != null)
         {
@@ -307,6 +316,12 @@ public class SalaFlowManager : MonoBehaviour
 
         if (textoEstado != null)
             textoEstado.text = "Modo Multijugador seleccionado.";
+    }
+
+    public void RegresarAMenu()
+    {
+    if (panelJuegaLoteria != null) panelJuegaLoteria.SetActive(false);
+    if (panelMenu != null) panelMenu.SetActive(true); 
     }
 
     // =========================

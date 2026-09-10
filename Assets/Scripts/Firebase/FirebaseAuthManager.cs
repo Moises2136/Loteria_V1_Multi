@@ -69,6 +69,12 @@ public class FirebaseAuthManager : MonoBehaviour
     /// </summary>
     public void RegistrarUsuario()
     {
+        if (auth == null)
+        {
+        MostrarEstado("Firebase aún no está listo. Intenta de nuevo en un momento.");
+        return;
+        }
+
         string email = inputEmail.text;
         string password = inputPassword.text;
 
@@ -87,7 +93,7 @@ public class FirebaseAuthManager : MonoBehaviour
 
             // Si todo salió bien, guardamos al usuario recién creado
             user = task.Result.User;
-            MostrarEstado("Usuario registrado ✅");
+            MostrarEstado("Usuario registrado");
             Debug.Log("Usuario creado: " + user.Email);
         });
     }

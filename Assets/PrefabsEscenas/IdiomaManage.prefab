@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3411671473217124340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3411671473217124343}
+  - component: {fileID: 3411671473217124342}
+  m_Layer: 5
+  m_Name: IdiomaManage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3411671473217124343
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3411671473217124340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3411671473217124342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3411671473217124340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d817a9db1c4284dac04587bf52bd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLanguage: 0
+  localizedTexts:
+  - tmpText: {fileID: 0}
+    spanish: "Espa\xF1ol (MX) "
+    english: Spanish (MX)
+    french: Espagnol (MX)
+    italian: Spagnolo (MX)
+  - tmpText: {fileID: 0}
+    spanish: "Ingl\xE9s (US)"
+    english: English (US)
+    french: Anglais (US)
+    italian: Inglese (US)
+  - tmpText: {fileID: 0}
+    spanish: Frances(FR)
+    english: French(FR)
+    french: Francais(FR)
+    italian: Francese(FR)
+  - tmpText: {fileID: 0}
+    spanish: Italiano
+    english: Italian
+    french: Italien
+    italian: Italiano
+  - tmpText: {fileID: 0}
+    spanish: Idioma
+    english: Language
+    french: Langue
+    italian: Lingua
+  spanishButton:
+    button: {fileID: 0}
+    tmpText: {fileID: 0}
+  englishButton:
+    button: {fileID: 0}
+    tmpText: {fileID: 0}
+  frenchButton:
+    button: {fileID: 0}
+    tmpText: {fileID: 0}
+  italianButton:
+    button: {fileID: 0}
+    tmpText: {fileID: 0}
+  activeTextColor: {r: 0.47, g: 0.71, b: 0.21, a: 1}
+  inactiveTextColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1059175276629",
+    "firebase_url": "https://loteriamecinal-icat-default-rtdb.firebaseio.com",
+    "project_id": "loteriamecinal-icat",
+    "storage_bucket": "loteriamecinal-icat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059175276629:android:96f9882670e612317634dc",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Loteria_Mexicana_Plantas_ICAT"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059175276629-226f7v1iflofktvt8nir5qvuuuavsk63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwxdq0TUpHVlWz__3gQfR4LByzpA5KUvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059175276629-226f7v1iflofktvt8nir5qvuuuavsk63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

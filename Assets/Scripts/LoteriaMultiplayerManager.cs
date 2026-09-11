@@ -237,6 +237,23 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
             aciertosPorJugador[actorNumber] = 0;
 
         aciertosPorJugador[actorNumber]++;
+
+        GuardarAciertosEnRoom();
+    }
+
+    // Ahora guarda el diccionario completo de aciertos como texto en las propiedades de la sala
+    void GuardarAciertosEnRoom()
+    {
+        var partes = new List<string>();
+        foreach (var kvp in aciertosPorJugador)
+        {
+            partes.Add(kvp.Key + ":" + kvp.Value);
+        }
+        
+        string serializado = string.Join(",", partes);
+        
+        var props = new ExitGames.Client.Photon.Hashtable { { "aciertosPorJugador", serializado } };
+        PhotonNetwork.CurrentRoom.SetCustomProperties(props);
     }
 
     /// <summary>
@@ -357,6 +374,22 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
             if (!string.IsNullOrEmpty(str))
                 foreach (var s in str.Split(','))
                     yaCantadas.Add(int.Parse(s));
+        }
+
+        // Reconstruimos los aciertos de cada jugador para evitar el bug de que no gano el jugador.
+        aciertosPorJugador.Clear();
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("aciertosPorJugador", out object aciertosValor))
+        {
+            string str = (string)aciertosValor;
+            if (!string.IsNullOrEmpty(str))
+            {
+                foreach (var par in str.Split(','))
+                {
+                    var partes = par.Split(':');
+                    if (partes.Length == 2)
+                    aciertosPorJugador[int.Parse(partes[0])] = int.Parse(partes[1]);
+                }
+            }
         }
 
         mazoCantado.Clear();

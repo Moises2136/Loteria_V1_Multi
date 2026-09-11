@@ -26,7 +26,7 @@ public class FirestoreLoteriaService : MonoBehaviour
 
     /// <summary>
     /// Se ejecuta al cargar el script. Aquí se asegura de que solo exista
-    /// una instancia (patrón singleton), evita que se destruya al cambiar
+    /// una instancia, evita que se destruya al cambiar
     /// de escena, y se conecta con Firestore.
     /// </summary>
     private void Awake()
@@ -212,16 +212,53 @@ public class FirestoreLoteriaService : MonoBehaviour
           });
     }
 
+    /// <summary>
+    /// Inserta una transformación de Cloudinary en la URL para forzar que la
+    /// imagen se vea como un cuadro consistente (recorte inteligente + tamaño
+    /// fijo), sin importar el tamaño o proporción original con la que se subió.
+    /// </summary>
+    /// <param name="url">URL original de Cloudinary.</param>
+    /// <param name="size">Tamaño en píxeles del cuadro final (ancho y alto).</param>
+    /// <returns>La URL con la transformación aplicada, o la original si no es de Cloudinary.</returns>
+    // Violeta si ves esto no nos quemes con la profa jajajajaja se nos fueron unos detalles de ultimo minuto jajajajajajajaa
+     
+    private string AplicarTransformacionCuadrada(string url, int size = 512)
+    {
+    if (string.IsNullOrWhiteSpace(url))
+        return url;
+
+    const string marcador = "/upload/";
+    int idx = url.IndexOf(marcador);
+
+    if (idx < 0)
+        return url; // no parece una URL de Cloudinary reconocible, se deja igual
+
+    string transformacion = $"c_fill,g_auto,w_{size},h_{size}/";
+    return url.Insert(idx + marcador.Length, transformacion);
+    }
+
     // =========================
     // CARGAR CARTAS DE UNA LOTERÍA
     // =========================
 
     /// <summary>
-    /// Carga todas las cartas que pertenecen a una lotería específica.
+    /// Carga todas las cartas que pertenecen a una lotería específica, incluyendo
+    /// catálogos de otros esquemas (como el de plantas de un catálogo externo).
+    /// Devuelve una lista de <c>CartaData</c> con los datos de cada carta.
     /// </summary>
     /// <param name="loteriaDocId">ID de la lotería de la que se quieren cargar las cartas.</param>
     /// <param name="onSuccess">Se llama si todo sale bien. Manda la lista de cartas encontradas.</param>
     /// <param name="onError">Se llama si algo falla. Manda un mensaje explicando el error.</param>
+    /// <remarks>
+    /// Antes de asignar los IDs numéricos, los documentos se ordenan de forma
+    /// determinista (por el campo "orden" si existe, y si no por el ID del
+    /// documento). Esto es importante para catálogos externos que no traen un
+    /// campo "id" propio: si cada jugador conectado numerara las cartas según
+    /// el orden en que Firestore se las entrega (que no está garantizado que
+    /// sea el mismo para todos), distintos jugadores podrían terminar viendo
+    /// cartas distintas bajo el mismo número, rompiendo la sincronización en
+    /// modo multijugador.
+    /// </remarks>
     public void CargarCartasDeLoteria(string loteriaDocId, Action<List<CartaData>> onSuccess, Action<string> onError)
     {
         if (!EstaListo())
@@ -245,19 +282,57 @@ public class FirestoreLoteriaService : MonoBehaviour
 
               List<CartaData> cartas = new List<CartaData>();
 
-              // Recorremos cada documento (carta) que llegó de Firestore
-              foreach (DocumentSnapshot doc in task.Result.Documents)
+              // Ordenamos los documentos de forma determinista ANTES de asignar los IDs,
+              // para que todos los jugadores conectados generen exactamente el mismo
+              // mapeo id → carta, sin importar en qué orden Firestore les responda.
+              var documentosOrdenados = new List<DocumentSnapshot>(task.Result.Documents);
+              documentosOrdenados.Sort((a, b) =>
+              {
+                  long ordenA = a.ContainsField("orden") ? a.GetValue<long>("orden") : 0;
+                  long ordenB = b.ContainsField("orden") ? b.GetValue<long>("orden") : 0;
+
+                  if (ordenA != ordenB)
+                      return ordenA.CompareTo(ordenB);
+
+                  // Si "orden" es igual o no existe, usamos el ID del documento como desempate
+                  return string.Compare(a.Id, b.Id, StringComparison.Ordinal);
+              });
+
+              int indice = 0;
+
+              foreach (DocumentSnapshot doc in documentosOrdenados)
               {
                   CartaData carta = new CartaData();
 
-                  // Solo llenamos los campos que sí vienen en el documento,
-                  // así evitamos errores si algún dato falta
-                  if (doc.ContainsField("id")) carta.id = Convert.ToInt32(doc.GetValue<long>("id"));
-                  if (doc.ContainsField("nombre")) carta.nombre = doc.GetValue<string>("nombre");
-                  if (doc.ContainsField("descripcion")) carta.descripcion = doc.GetValue<string>("descripcion");
-                  if (doc.ContainsField("rutaImagen")) carta.rutaImagen = doc.GetValue<string>("rutaImagen");
+                  // ID: si tu esquema ya trae un "id" numérico, se usa tal cual.
+                  // Si no existe (como en catálogos externos), se asigna uno
+                  // basado en el orden ya ordenado, garantizando que no se repita
+                  // ni cambie entre distintos jugadores.
+                  if (doc.ContainsField("id"))
+                      carta.id = Convert.ToInt32(doc.GetValue<long>("id"));
+                  else
+                      carta.id = indice;
+
+                  // Nombre: "nombre" (tu esquema) o "nombreComun" (catálogos externos)
+                  if (doc.ContainsField("nombre"))
+                      carta.nombre = doc.GetValue<string>("nombre");
+                  else if (doc.ContainsField("nombreComun"))
+                      carta.nombre = doc.GetValue<string>("nombreComun");
+
+                  // Descripción: "descripcion" (tuyo) o "descripcionBotanica" (de ella)
+                  if (doc.ContainsField("descripcion"))
+                      carta.descripcion = doc.GetValue<string>("descripcion");
+                  else if (doc.ContainsField("descripcionBotanica"))
+                      carta.descripcion = doc.GetValue<string>("descripcionBotanica");
+
+                  // Imagen: "rutaImagen" (tuyo) o "imagenUrl" (de ella)
+                  if (doc.ContainsField("rutaImagen"))
+                      carta.rutaImagen = AplicarTransformacionCuadrada(doc.GetValue<string>("rutaImagen"));
+                  else if (doc.ContainsField("imagenUrl"))
+                       carta.rutaImagen = AplicarTransformacionCuadrada(doc.GetValue<string>("imagenUrl"));
 
                   cartas.Add(carta);
+                  indice++;
               }
 
               onSuccess?.Invoke(cartas);

@@ -51,11 +51,11 @@ public class FirebaseAuthManager : MonoBehaviour
             if (task.Result == DependencyStatus.Available)
             {
                 auth = FirebaseAuth.DefaultInstance;
-                Debug.Log("Firebase listo ✅");
+                Debug.Log("Firebase listo");
             }
             else
             {
-                Debug.LogError("Firebase NO disponible ❌");
+                Debug.LogError("Firebase NO disponible");
             }
         });
     }
@@ -107,6 +107,13 @@ public class FirebaseAuthManager : MonoBehaviour
     /// </summary>
     public void LoginUsuario()
     {
+
+        if (auth == null)
+        {
+        MostrarEstado("Firebase aún no está listo. Intenta de nuevo en un momento.");
+        return;
+        }
+
         string email = inputEmail.text;
         string password = inputPassword.text;
 
@@ -125,7 +132,7 @@ public class FirebaseAuthManager : MonoBehaviour
 
             // Si todo salió bien, guardamos al usuario que inició sesión
             user = task.Result.User;
-            MostrarEstado("Login exitoso 🎉");
+            MostrarEstado("Login exitoso");
             Debug.Log("Logeado: " + user.Email);
         });
     }
@@ -139,6 +146,13 @@ public class FirebaseAuthManager : MonoBehaviour
     /// </summary>
     public void Logout()
     {
+
+        if (auth == null)
+        {
+        MostrarEstado("Firebase aún no está listo");
+        return;
+        }
+
         auth.SignOut();
         MostrarEstado("Sesión cerrada");
     }

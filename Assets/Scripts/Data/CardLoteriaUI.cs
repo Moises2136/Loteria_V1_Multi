@@ -60,7 +60,7 @@ public class CardLoteriaUI : MonoBehaviour
             txtPrivadaPublica.text = datos.esPublica ? "Pública" : "Privada";
 
         if (txtNumeroCartas != null)
-            txtNumeroCartas.text = datos.cartas.Count + " cartas";
+            txtNumeroCartas.text = datos.cartas.Count.ToString();
 
         if (imgPortada != null)
             imgPortada.sprite = datos.imagenPortada;

@@ -43998,6 +43998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoteriaListManager
   contenedor: {fileID: 8346295512372522405}
   prefabLoteria: {fileID: 722344821977494424, guid: cf003e735a5f6ba488a667ecd23970e1, type: 3}
+  remoteImageLoader: {fileID: 973871202}
 --- !u!114 &8346295511801891890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49847,7 +49848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.00116}
+  m_AnchoredPosition: {x: 0, y: -61.001526}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -53002,11 +53003,6 @@ MonoBehaviour:
     english: TRANSLATOR
     french: TRADUCTEUR
     italian: TRADUTTORE
-  - tmpText: {fileID: 0}
-    spanish: 
-    english: 
-    french: 
-    italian: 
   spanishButton:
     button: {fileID: 8346295512529948543}
     tmpText: {fileID: 8346295512468668619}
@@ -65516,7 +65512,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295513123040141}
   m_HandleRect: {fileID: 8346295513123040140}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -67219,7 +67215,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295513123157217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000059604645, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -68746,8 +68742,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295511597421377}
   m_HandleRect: {fileID: 8346295511597421376}
   m_Direction: 2
-  m_Value: 0.99999976
-  m_Size: 0.60999984
+  m_Value: 1
+  m_Size: 0.60999995
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

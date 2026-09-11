@@ -35,6 +35,7 @@ public class LoteriaDropdownLoader : MonoBehaviour
 
     /// <summary>Llave usada para guardar el nombre de la lotería elegida en PlayerPrefs.</summary>
     private const string KEY_LOTERIA_NOMBRE = "loteria_nombre";
+    
 
     /// <summary>
     /// Al iniciar, conecta Firestore, conecta el dropdown con su función
@@ -116,6 +117,8 @@ public class LoteriaDropdownLoader : MonoBehaviour
     /// <param name="index">Índice de la opción elegida en el dropdown.</param>
     private void OnLoteriaSeleccionada(int index)
     {
+        
+
         if (index <= 0)
         {
             PlayerPrefs.DeleteKey(KEY_LOTERIA_DOC_ID);
@@ -137,7 +140,9 @@ public class LoteriaDropdownLoader : MonoBehaviour
         PlayerPrefs.SetString(KEY_LOTERIA_DOC_ID, docId);
         PlayerPrefs.SetString(KEY_LOTERIA_NOMBRE, nombre);
         PlayerPrefs.Save();
-
+        
+        RecentLoteriasManager.RegistrarJugada(docId);  
+        
         Debug.Log("Lotería seleccionada: " + nombre + " | " + docId);
 
         if (textoEstado != null)

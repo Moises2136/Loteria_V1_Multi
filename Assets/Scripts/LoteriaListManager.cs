@@ -2,94 +2,90 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Este script crea y muestra una lista de tarjetas de lotería en pantalla,
-/// instanciando el prefab de tarjeta y llenándolo con datos.
+/// Muestra en el menú principal las tarjetas de las loterías jugadas
+/// recientemente (hasta 3), con su nombre real, cantidad de cartas, y
+/// una miniatura tomada de cualquiera de sus cartas. Los botones de
+/// Editar/Jugar de cada tarjeta no hacen nada todavía (se dejan tal
+/// cual vienen en CardLoteriaUI).
 /// </summary>
-/// <remarks>
-/// Actualmente solo genera loterías de <b>ejemplo/demo</b> (con datos
-/// inventados y cartas vacías, sin sprite ni nombre real) usando
-/// <see cref="DatosLoteria"/>/<see cref="DatosCarta"/> — no está conectado
-/// a Firestore ni a las loterías reales que crea el jugador con
-/// <c>CreateLotery</c>/<c>LoteriaDropdownLoader</c> (esas usan
-/// <c>LoteriaData</c>/<c>CartaData</c> en su lugar). Es un buen candidato
-/// a reemplazar por datos reales cuando conectes esta lista con Firestore.
-/// </remarks>
 public class LoteriaListManager : MonoBehaviour
 {
-    // =========================
-    // REFERENCIAS
-    // =========================
-
-    /// <summary>Contenedor donde se van a colocar las tarjetas de lotería.</summary>
+    /// <summary>Contenedor donde se instancian las tarjetas de lotería.</summary>
     public Transform contenedor;
 
-    /// <summary>
-    /// Prefab de la tarjeta de lotería. Debe tener el script
-    /// <c>CardLoteriaUI</c> para poder configurarse con los datos.
-    /// </summary>
+    /// <summary>Prefab de la tarjeta de lotería (debe tener CardLoteriaUI).</summary>
     public GameObject prefabLoteria;
 
-    // =========================
-    // INICIALIZACIÓN
-    // =========================
+    /// <summary>Usado para descargar la imagen de miniatura de cada tarjeta.</summary>
+    public RemoteImageLoader remoteImageLoader;
 
-    /// <summary>
-    /// Al iniciar, crea tres tarjetas de lotería de ejemplo, solo para
-    /// tener contenido de prueba visible en pantalla.
-    /// </summary>
     void Start()
     {
-        // Datos de ejemplo (demo)
-        CrearLoteriaDemo("Familia de plantas medicinales", false, 100);
-        CrearLoteriaDemo("Plantas medicinales de mercados", true, 50);
-        CrearLoteriaDemo("Lotería de ejemplo", false, 30);
+        CargarRecientes();
     }
 
-    // =========================
-    // CREACIÓN DE LOTERÍA
-    // =========================
+    /// <summary>
+    /// Borra las tarjetas actuales y vuelve a armar la lista con las
+    /// loterías jugadas recientemente.
+    /// </summary>
+    public void CargarRecientes()
+    {
+        foreach (Transform hijo in contenedor)
+            Destroy(hijo.gameObject);
+
+        List<string> recientes = RecentLoteriasManager.ObtenerRecientes();
+
+        foreach (string docId in recientes)
+            CargarUnaReciente(docId);
+    }
 
     /// <summary>
-    /// Crea una tarjeta de lotería con datos de ejemplo (sin conexión a
-    /// Firestore) y la agrega a la lista en pantalla.
+    /// Pide a Firestore los datos de una lotería reciente (nombre y sus
+    /// cartas) para poder armar su tarjeta.
     /// </summary>
-    /// <param name="nombre">Nombre de la lotería de ejemplo.</param>
-    /// <param name="esPublica">Si la lotería de ejemplo se muestra como pública o privada.</param>
-    /// <param name="numeroCartas">Cuántas cartas (vacías, sin datos reales) tendrá la lotería de ejemplo.</param>
-    public void CrearLoteriaDemo(string nombre, bool esPublica, int numeroCartas)
+    void CargarUnaReciente(string docId)
     {
-        // Validaciones básicas
-        if (contenedor == null || prefabLoteria == null)
-        {
-            Debug.LogWarning("Faltan referencias en LoteriaListManager.");
-            return;
-        }
+        if (FirestoreLoteriaService.Instance == null) return;
 
-        // Instancia el prefab dentro del contenedor
-        GameObject nueva = Instantiate(prefabLoteria, contenedor);
-
-        // Obtiene el script de la tarjeta UI
-        CardLoteriaUI card = nueva.GetComponent<CardLoteriaUI>();
-
-        if (card != null)
-        {
-            // Crear objeto de datos
-            DatosLoteria datos = new DatosLoteria();
-            datos.nombreLoteria = nombre;
-            datos.esPublica = esPublica;
-
-            // Generar cartas simuladas
-            for (int i = 0; i < numeroCartas; i++)
+        FirestoreLoteriaService.Instance.CargarLoteriaPorId(docId,
+            infoLoteria =>
             {
-                datos.cartas.Add(new DatosCarta());
-            }
+                FirestoreLoteriaService.Instance.CargarCartasDeLoteria(docId,
+                    cartas => MostrarTarjeta(infoLoteria.nombre, infoLoteria.esPublica, cartas),
+                    error => Debug.LogWarning("No se pudieron cargar cartas de " + docId + ": " + error)
+                );
+            },
+            error => Debug.LogWarning("No se pudo cargar lotería reciente " + docId + ": " + error)
+        );
+    }
 
-            // Configurar la tarjeta UI con los datos
-            card.Configurar(datos);
-        }
-        else
+    /// <summary>
+    /// Crea la tarjeta visual de una lotería reciente: nombre, cantidad
+    /// de cartas, y una miniatura tomada de cualquiera de sus cartas.
+    /// </summary>
+    void MostrarTarjeta(string nombre, bool esPublica, List<CartaData> cartas)
+    {
+        if (contenedor == null || prefabLoteria == null) return;
+
+        GameObject nueva = Instantiate(prefabLoteria, contenedor);
+        CardLoteriaUI card = nueva.GetComponent<CardLoteriaUI>();
+        if (card == null) return;
+
+        DatosLoteria datos = new DatosLoteria
         {
-            Debug.LogWarning("El prefab no tiene CardLoteriaUI.");
+            nombreLoteria = nombre,
+            esPublica = esPublica
+        };
+
+        foreach (var c in cartas)
+            datos.cartas.Add(new DatosCarta { nombreCarta = c.nombre });
+
+        card.Configurar(datos);
+
+        // Usamos cualquier imagen de sus cartas como miniatura
+        if (cartas.Count > 0 && !string.IsNullOrWhiteSpace(cartas[0].rutaImagen) && remoteImageLoader != null)
+        {
+            StartCoroutine(remoteImageLoader.LoadImage(cartas[0].rutaImagen, card.imgPortada, sprite => { }));
         }
     }
 }

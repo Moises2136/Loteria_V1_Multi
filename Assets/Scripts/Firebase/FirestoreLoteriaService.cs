@@ -237,6 +237,37 @@ public class FirestoreLoteriaService : MonoBehaviour
     return url.Insert(idx + marcador.Length, transformacion);
     }
 
+    /// <summary>
+    /// Carga el nombre y si es pública/privada de una lotería específica, por su ID.
+    /// </summary>
+    /// <param name="loteriaDocId">ID de la lotería que se quiere consultar.</param>
+    /// <param name="onSuccess">Se llama si sale bien. Manda el nombre y si es pública.</param>
+    /// <param name="onError">Se llama si algo falla.</param>
+    public void CargarLoteriaPorId(string loteriaDocId, Action<(string nombre, bool esPublica)> onSuccess, Action<string> onError)
+    {
+        if (!EstaListo())
+        {
+        onError?.Invoke("Firestore no está listo.");
+        return;
+        }
+
+    db.Collection("loterias").Document(loteriaDocId).GetSnapshotAsync()
+      .ContinueWithOnMainThread(task =>
+      {
+          if (task.IsFaulted || task.IsCanceled || !task.Result.Exists)
+          {
+              onError?.Invoke("No se pudo cargar la lotería.");
+              return;
+          }
+
+          var doc = task.Result;
+          string nombre = doc.ContainsField("nombre") ? doc.GetValue<string>("nombre") : "Sin nombre";
+          bool esPublica = doc.ContainsField("esPublica") && doc.GetValue<bool>("esPublica");
+
+          onSuccess?.Invoke((nombre, esPublica));
+      });
+    }
+
     // =========================
     // CARGAR CARTAS DE UNA LOTERÍA
     // =========================

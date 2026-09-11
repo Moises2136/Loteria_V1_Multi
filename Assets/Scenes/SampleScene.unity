@@ -21181,6 +21181,8 @@ GameObject:
   - component: {fileID: 1555618254}
   - component: {fileID: 1555618253}
   - component: {fileID: 1555618255}
+  - component: {fileID: 1555618257}
+  - component: {fileID: 1555618256}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -21238,6 +21240,46 @@ MonoBehaviour:
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
+--- !u!114 &1555618256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555618251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32dca4a01027c847bd32cbeded7a2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  metadata: {fileID: 1555618257}
+  featuresToDisable:
+  - {fileID: 5327496443783433634}
+  - {fileID: 1017861564}
+  - {fileID: 1055720836}
+  - {fileID: 1444963973}
+  - {fileID: 8346295512304748031}
+  - {fileID: 1454840004}
+  - {fileID: 8346295511882024443}
+  - {fileID: 973871200}
+  - {fileID: 1159642028}
+  - {fileID: 286727018}
+  - {fileID: 2018789203}
+  - {fileID: 1603119834}
+  - {fileID: 44587806}
+  - {fileID: 462188908554434867}
+--- !u!114 &1555618257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555618251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2667bff80c0175c4097a006fb9397955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1556277553
 GameObject:
   m_ObjectHideFlags: 0
@@ -40488,7 +40530,7 @@ MonoBehaviour:
   panelResultadosRatio: {fileID: 8346295512359749027}
   panelAmigos: {fileID: 8346295512592763168}
   panelLogros: {fileID: 8346295511895371557}
-  panelCreditos: {fileID: 0}
+  panelCreditos: {fileID: 8346295512275847257}
 --- !u!224 &8346295511582974160
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49848,7 +49890,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.001526}
+  m_AnchoredPosition: {x: 0, y: -61.00122}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269

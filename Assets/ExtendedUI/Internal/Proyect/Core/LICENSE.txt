@@ -1,0 +1,17 @@
+Copyright (c) 2025 Moisés Corpus García
+ 
+Todos los derechos reservados.
+ 
+Este proyecto de software ("Lotería Mexicana de Plantas Medicinales") y todo
+su código fuente, assets, arte, diseño y documentación asociada son propiedad
+exclusiva de Moisés Corpus García.
+ 
+Queda prohibida la reproducción, distribución, modificación, sublicencia,
+venta, o cualquier otro uso de este proyecto o de partes de él, total o
+parcial, sin el permiso previo y por escrito del autor.
+ 
+Este proyecto se comparte únicamente con fines de evaluación académica
+(Facultad de Ciencias, UNAM) y/o colaboración autorizada. No se concede
+ninguna licencia de uso comercial ni de redistribución.
+ 
+Contacto del autor: Moisés Corpus García

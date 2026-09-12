@@ -104,73 +104,87 @@ public class LoteriaDataCache : MonoBehaviour
     /// <param name="loteriaDocId">ID de la lotería cuyas cartas se van a cargar.</param>
     private IEnumerator CargarCoroutine(string loteriaDocId)
     {
-        // Paso 1 — pedir lista de cartas a Firestore (una sola vez)
-        bool firestoreListo = false;
-        string errorFirestore = null;
-        List<CartaData> cartasFirestore = null; // CartaData ya existe en tu proyecto
+    // Paso 1 — pedir lista de cartas a Firestore (una sola vez)
+    bool firestoreListo = false;
+    string errorFirestore = null;
+    List<CartaData> cartasFirestore = null; // CartaData ya existe en tu proyecto
 
-        FirestoreLoteriaService.Instance.CargarCartasDeLoteria(
-            loteriaDocId,
-            cartas => { cartasFirestore = cartas; firestoreListo = true; },
-            error => { errorFirestore = error; firestoreListo = true; }
-        );
+    FirestoreLoteriaService.Instance.CargarCartasDeLoteria(
+        loteriaDocId,
+        cartas => { cartasFirestore = cartas; firestoreListo = true; },
+        error => { errorFirestore = error; firestoreListo = true; }
+    );
 
-        yield return new WaitUntil(() => firestoreListo);
+    yield return new WaitUntil(() => firestoreListo);
 
-        if (errorFirestore != null)
+    if (errorFirestore != null)
         {
-            Cargando = false;
-            OnCacheError?.Invoke(errorFirestore);
-            yield break;
+        Cargando = false;
+        OnCacheError?.Invoke(errorFirestore);
+        yield break;
         }
 
-        if (cartasFirestore == null || cartasFirestore.Count == 0)
+    if (cartasFirestore == null || cartasFirestore.Count == 0)
         {
-            Cargando = false;
-            OnCacheError?.Invoke("La lotería no tiene cartas.");
-            yield break;
+        Cargando = false;
+        OnCacheError?.Invoke("La lotería no tiene cartas.");
+        yield break;
         }
 
-        // Paso 2 — descargar todas las imágenes en paralelo
-        int pendientes = cartasFirestore.Count;
+    // Paso 2 — descargar todas las imágenes en paralelo
+    int pendientes = cartasFirestore.Count;
 
-        foreach (var c in cartasFirestore)
+    foreach (var c in cartasFirestore)
         {
-            var entrada = new CartaCache
+        var entrada = new CartaCache
             {
-                id = c.id,
-                nombre = c.nombre,
-                descripcion = c.descripcion,
-                sprite = null
+            id = c.id,
+            nombre = c.nombre,
+            descripcion = c.descripcion,
+            sprite = null
             };
-            Cartas[c.id] = entrada;
+        Cartas[c.id] = entrada;
 
-            if (string.IsNullOrWhiteSpace(c.rutaImagen))
+        if (string.IsNullOrWhiteSpace(c.rutaImagen))
             {
-                pendientes--;
-                continue;
+            pendientes--;
+            continue;
             }
 
-            // Captura local para el closure
-            CartaCache entradaLocal = entrada;
+        // Captura local para el closure
+        CartaCache entradaLocal = entrada;
 
-            StartCoroutine(remoteImageLoader.LoadImage(
-                c.rutaImagen,
-                null,            // no necesitamos Image de destino aquí
-                sprite =>
-                {
-                    entradaLocal.sprite = sprite;
-                    pendientes--;
-                }
-            ));
+        StartCoroutine(remoteImageLoader.LoadImage(
+            c.rutaImagen,
+            null,            // no necesitamos Image de destino aquí
+            sprite =>
+            {
+                entradaLocal.sprite = sprite;
+                pendientes--;
+            }
+        ));
         }
 
-        // Espera a que todas las imágenes terminen de bajar
-        yield return new WaitUntil(() => pendientes <= 0);
+    // NUEVO: esperamos a que todas las imágenes terminen, pero con un límite
+    // de tiempo. Si alguna imagen falla sin avisar (sin llamar al callback),
+    // esto evita que el caché se quede "cargando" para siempre.
+    float tiempoEsperado = 0f;
+    const float TIEMPO_MAXIMO_ESPERA = 15f;
 
-        Cargando = false;
-        Listo = true;
-        OnCacheListoOK?.Invoke();
+    while (pendientes > 0 && tiempoEsperado < TIEMPO_MAXIMO_ESPERA)
+    {
+        tiempoEsperado += Time.deltaTime;
+        yield return null;
+    }
+
+    if (pendientes > 0)
+    {
+        Debug.LogWarning($"LoteriaDataCache: {pendientes} imagen(es) no terminaron de descargar a tiempo. Se continúa con las que sí cargaron.");
+    }
+
+    Cargando = false;
+    Listo = true;
+    OnCacheListoOK?.Invoke();
     }
 
     /// <summary>

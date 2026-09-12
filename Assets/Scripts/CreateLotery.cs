@@ -353,22 +353,48 @@ public class CreateLotery : MonoBehaviour
     /// </remarks>
     void TerminarLoteria()
     {
-        if (cantidadCartasAgregadas < cartasRequeridas)
-        {
-            if (txtError != null)
-                txtError.text = "Necesitas exactamente " + cartasRequeridas + " cartas para terminar.";
-            return;
-        }
-
+    if (cantidadCartasAgregadas < cartasRequeridas)
+    {
         if (txtError != null)
-            txtError.text = "";
+            txtError.text = "Necesitas exactamente " + cartasRequeridas + " cartas para terminar.";
+        return;
+    }
 
-        Debug.Log("Lotería terminada correctamente con " + cantidadCartasAgregadas + " cartas.");
+    if (txtError != null)
+        txtError.text = "";
 
-        // Aquí luego puedes mandar al siguiente panel o menú
-        // Ejemplo:
-        // panelCrearLoteria.SetActive(false);
-        // panelMenu.SetActive(true);
+    Debug.Log("Lotería terminada correctamente con " + cantidadCartasAgregadas + " cartas.");
+
+    // NUEVO: limpiamos el progreso temporal de esta lotería, para que la
+    // próxima vez que se cree una nueva no arrastre datos de esta.
+    PlayerPrefs.DeleteKey(KEY_LOTERIA_DOC_ID);
+    PlayerPrefs.DeleteKey(KEY_LOTERIA_NOMBRE);
+    PlayerPrefs.DeleteKey("ultimo_id_carta");
+    PlayerPrefs.Save();
+
+    nombreLoteriaActual = "";
+    cantidadCartasAgregadas = 0;
+    LoteriaTemp.totalCartas = 0;
+
+    if (inputNombreLoteria != null)
+        inputNombreLoteria.text = "";
+
+    if (txtNombreGuardado != null)
+        txtNombreGuardado.text = "";
+
+    ActualizarContadorCaracteres("");
+    ActualizarContadorCartas();
+    ActualizarEstadoBotonTerminar();
+
+    CardListManage cardList = FindFirstObjectByType<CardListManage>();
+    if (cardList != null)
+        cardList.LimpiarCartas();
+
+    if (panelCrearLoteria != null)
+        panelCrearLoteria.SetActive(false);
+        
+    if (panelMenu != null)
+        panelMenu.SetActive(true);
     }
 
     // =========================

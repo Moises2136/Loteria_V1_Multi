@@ -6,20 +6,18 @@ using UnityEngine.Networking;
 
 /// <summary>
 /// Este script se encarga de convertir texto en voz usando el servicio de ElevenLabs,
-/// y de reproducir ese audio en el juego. También permite elegir entre voz
-/// femenina o masculina, y guarda esa preferencia para la próxima vez.
+/// pero a través de un proxy propio en Cloudflare Workers — así la llave secreta de
+/// ElevenLabs nunca viaja dentro de la app, solo vive en el servidor.
 /// </summary>
 public class ElevenLabsTTS : MonoBehaviour
 {
     // =========================
-    // CONFIGURACIÓN ELEVENLABS
+    // GATEWAY (CLOUDFLARE)
     // =========================
 
-    /// <summary>
-    /// La clave (API Key) que nos deja usar el servicio de ElevenLabs.
-    /// </summary>
-    [Header("ElevenLabs")]
-    [TextArea] public string apiKey = "TU_API_KEY_AQUI";
+    /// <summary>URL de tu Worker de Cloudflare que actúa como intermediario seguro.</summary>
+    [Header("Gateway (Cloudflare)")]
+    public string gatewayUrl = "https://loteria-api-gateway.moisescg.workers.dev/elevenlabs-tts";
 
     // =========================
     // VOCES
@@ -27,7 +25,7 @@ public class ElevenLabsTTS : MonoBehaviour
 
     /// <summary>ID de la voz femenina disponible.</summary>
     [Header("Voice IDs")]
-    public string femaleVoiceId = "twZzvyYIl5ntDHC1Vatv";
+    public string femaleVoiceId = "EXAVITQu4vr4xnSDxMaL";
 
     /// <summary>ID de la voz masculina disponible.</summary>
     public string maleVoiceId = "ErXwobaYiN019PkySvjV";
@@ -76,7 +74,7 @@ public class ElevenLabsTTS : MonoBehaviour
     [Range(0.7f, 1.2f)] public float speed = 0.95f;
 
     /// <summary>
-    /// Estructura que agrupa los ajustes de voz que se le mandan a ElevenLabs.
+    /// Estructura que agrupa los ajustes de voz que se le mandan al gateway.
     /// </summary>
     [Serializable]
     public class VoiceSettings
@@ -89,12 +87,13 @@ public class ElevenLabsTTS : MonoBehaviour
     }
 
     /// <summary>
-    /// Estructura con toda la información que se le envía a ElevenLabs
-    /// para generar el audio (el texto, el modelo, el idioma y los ajustes de voz).
+    /// Estructura con toda la información que se le envía al gateway de Cloudflare
+    /// (que a su vez la reenvía a ElevenLabs con la llave secreta).
     /// </summary>
     [Serializable]
     public class TTSRequest
     {
+        public string voiceId;
         public string text;
         public string model_id;
         public string language_code;
@@ -108,7 +107,6 @@ public class ElevenLabsTTS : MonoBehaviour
     private void Start()
     {
         SetVoiceByPreference();
-        //SpeakText("Bienvenido a la lotería mexicana de plantas medicinales");
     }
 
     // =========================
@@ -151,29 +149,26 @@ public class ElevenLabsTTS : MonoBehaviour
     }
 
     /// <summary>
-    /// Se encarga de armar la solicitud, mandarla a ElevenLabs,
-    /// y reproducir el audio que llega de vuelta.
+    /// Arma la petición y la manda a tu gateway de Cloudflare (no directo a ElevenLabs),
+    /// y reproduce el audio que llega de vuelta.
     /// </summary>
     /// <param name="text">El texto que se va a convertir en audio.</param>
     private IEnumerator GenerateAndPlay(string text)
     {
-        // Si no hay texto, no hay nada que convertir
         if (string.IsNullOrWhiteSpace(text))
             yield break;
 
-        // Si no hay AudioSource asignado, no podemos reproducir nada
         if (audioSource == null)
         {
             Debug.LogError("No hay AudioSource asignado.");
             yield break;
         }
 
-        // Armamos la URL con la voz que está activa en este momento
-        string url = $"https://api.elevenlabs.io/v1/text-to-speech/{currentVoiceId}?output_format=mp3_44100_128";
-
-        // Armamos los datos que se van a enviar (texto, modelo, idioma y ajustes de voz)
+        // Armamos los datos que se van a enviar al gateway (incluye el voiceId,
+        // que antes iba en la URL directa de ElevenLabs)
         TTSRequest requestData = new TTSRequest
         {
+            voiceId = currentVoiceId,
             text = text,
             model_id = modelId,
             language_code = languageCode,
@@ -187,30 +182,26 @@ public class ElevenLabsTTS : MonoBehaviour
             }
         };
 
-        // Convertimos los datos a JSON y luego a bytes para poder enviarlos
         string json = JsonUtility.ToJson(requestData);
         byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
 
-        // Creamos la solicitud POST hacia ElevenLabs
-        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        // La petición ahora va a TU gateway, no directo a ElevenLabs
+        using (UnityWebRequest request = new UnityWebRequest(gatewayUrl, "POST"))
         {
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerAudioClip(url, AudioType.MPEG);
+            request.downloadHandler = new DownloadHandlerAudioClip(gatewayUrl, AudioType.MPEG);
 
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("xi-api-key", apiKey);
-            request.SetRequestHeader("Accept", "audio/mpeg");
+            // Ya NO se manda la llave de ElevenLabs aquí — vive segura en Cloudflare
 
-            // Enviamos la solicitud y esperamos la respuesta sin trabar el juego
             yield return request.SendWebRequest();
 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error ElevenLabs TTS: " + request.responseCode + " - " + request.error);
+                Debug.LogError("Error TTS (gateway): " + request.responseCode + " - " + request.error);
                 yield break;
             }
 
-            // Convertimos la respuesta en un clip de audio que Unity puede reproducir
             AudioClip clip = DownloadHandlerAudioClip.GetContent(request);
 
             if (clip == null)
@@ -219,7 +210,6 @@ public class ElevenLabsTTS : MonoBehaviour
                 yield break;
             }
 
-            // Reproducimos el audio
             audioSource.Stop();
             audioSource.clip = clip;
             audioSource.Play();

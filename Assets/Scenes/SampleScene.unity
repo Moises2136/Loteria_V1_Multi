@@ -40314,7 +40314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45802,7 +45802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511882024444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45815,7 +45815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bf63c02214ee54c8efcce46af6aec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ElevenLabsTTS
-  apiKey: sk_2dbaa2770684d890cba1a8ebbfbb1be675b3505bfcd8a675
+  gatewayUrl: https://loteria-api-gateway.moisescg.workers.dev/elevenlabs-tts
   femaleVoiceId: EXAVITQu4vr4xnSDxMaL
   maleVoiceId: ErXwobaYiN019PkySvjV
   modelId: eleven_multilingual_v2
@@ -47292,7 +47292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: "Assembly-CSharp::PanelConfiguraci\xF3n"
   sliderVolumen: {fileID: 8346295511528303107}
   textoPorcentajeVolumen: {fileID: 8346295512924442691}
-  audioSourcePrueba: {fileID: 0}
+  audioSourcePrueba: {fileID: 5584685065526456153}
   botonVozHombre: {fileID: 8346295513327386171}
   botonVozMujer: {fileID: 8346295512255065098}
   botonProbarVoz: {fileID: 8346295511236614428}
@@ -50331,7 +50331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.002014}
+  m_AnchoredPosition: {x: 0, y: -61.00232}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269

@@ -40601,7 +40601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47589,7 +47589,7 @@ MonoBehaviour:
   mujerActivado: {fileID: 8346295511279974501}
   clipVozHombre: {fileID: 0}
   clipVozMujer: {fileID: 0}
-  ttsManager: {fileID: 0}
+  ttsManager: {fileID: 8346295511892323496}
   textoPrueba: "Bienvenido a la loter\xEDa mexicana de plantas medicinales."
   botonRegresar: {fileID: 540559599}
   panelAnterior: {fileID: 8346295512117702088}

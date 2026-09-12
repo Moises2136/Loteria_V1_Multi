@@ -182,100 +182,111 @@ public class DarkModeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Para cada botón registrado en <see cref="iconosBotones"/>, decide cuál
-    /// textura debe entrar (aparecer) y cuál debe salir (desaparecer), y
-    /// lanza el crossfade correspondiente.
-    /// </summary>
-    /// <param name="instant">Si es verdadero, cambia sin animar.</param>
-    private void AnimarIconosBotones(bool instant)
+/// Para cada botón registrado en <see cref="iconosBotones"/>, decide cuál
+/// textura debe entrar (aparecer) y cuál debe salir (desaparecer), y
+/// lanza el crossfade correspondiente.
+/// </summary>
+/// <param name="instant">Si es verdadero, cambia sin animar.</param>
+private void AnimarIconosBotones(bool instant)
+{
+    foreach (IconoBoton icono in iconosBotones)
     {
-        foreach (IconoBoton icono in iconosBotones)
+        if (icono == null) continue;
+
+        // En modo oscuro mostramos la textura blanca (contrasta con el fondo oscuro).
+        // En modo claro mostramos la textura negra.
+        Image entrante = darkMode ? icono.iconoBlanco : icono.iconoNegro;
+        Image saliente = darkMode ? icono.iconoNegro : icono.iconoBlanco;
+
+        if (instant)
         {
-            if (icono == null) continue;
-
-            // En modo oscuro mostramos la textura blanca (contrasta con el fondo oscuro).
-            // En modo claro mostramos la textura negra.
-            Image entrante = darkMode ? icono.iconoBlanco : icono.iconoNegro;
-            Image saliente = darkMode ? icono.iconoNegro : icono.iconoBlanco;
-
-            if (instant)
-            {
-                if (saliente != null)
-                {
-                    Color c = saliente.color;
-                    c.a = 0f;
-                    saliente.color = c;
-                }
-
-                if (entrante != null)
-                {
-                    Color c = entrante.color;
-                    c.a = 1f;
-                    entrante.color = c;
-                }
-
-                continue;
-            }
-
-            // Si este ícono ya estaba animando (el usuario cambió de modo muy rápido),
-            // cancelamos la corrutina anterior para que no se pisen entre sí.
-            if (corrutinasActivas.TryGetValue(icono, out Coroutine corrutinaAnterior) && corrutinaAnterior != null)
-            {
-                StopCoroutine(corrutinaAnterior);
-            }
-
-            Coroutine nuevaCorrutina = StartCoroutine(CrossfadeIcono(saliente, entrante));
-            corrutinasActivas[icono] = nuevaCorrutina;
-        }
-    }
-
-    /// <summary>
-    /// Hace un crossfade entre dos Image: baja el alpha del que sale
-    /// mientras sube el alpha del que entra, al mismo tiempo, para que
-    /// la transición sea suave (difuminado) en vez de un cambio brusco.
-    /// </summary>
-    /// <param name="saliente">Image de la textura que se está ocultando.</param>
-    /// <param name="entrante">Image de la textura que se está mostrando.</param>
-    private IEnumerator CrossfadeIcono(Image saliente, Image entrante)
-    {
-        float tiempoTranscurrido = 0f;
-        float alphaInicialSaliente = saliente != null ? saliente.color.a : 0f;
-        float alphaInicialEntrante = entrante != null ? entrante.color.a : 0f;
-
-        while (tiempoTranscurrido < fadeDuration)
-        {
-            tiempoTranscurrido += Time.deltaTime;
-            float progreso = Mathf.Clamp01(tiempoTranscurrido / fadeDuration);
-
             if (saliente != null)
             {
-                Color c = saliente.color;
-                c.a = Mathf.Lerp(alphaInicialSaliente, 0f, progreso);
-                saliente.color = c;
+                saliente.gameObject.SetActive(false);
             }
 
             if (entrante != null)
             {
+                entrante.gameObject.SetActive(true);
                 Color c = entrante.color;
-                c.a = Mathf.Lerp(alphaInicialEntrante, 1f, progreso);
+                c.a = 1f;
                 entrante.color = c;
             }
 
-            yield return null;
+            continue;
         }
+
+        // Si este ícono ya estaba animando (el usuario cambió de modo muy rápido),
+        // cancelamos la corrutina anterior para que no se pisen entre sí.
+        if (corrutinasActivas.TryGetValue(icono, out Coroutine corrutinaAnterior) && corrutinaAnterior != null)
+        {
+            StopCoroutine(corrutinaAnterior);
+        }
+
+        Coroutine nuevaCorrutina = StartCoroutine(CrossfadeIcono(saliente, entrante));
+        corrutinasActivas[icono] = nuevaCorrutina;
+    }
+}
+
+/// <summary>
+/// Hace un crossfade entre dos Image: activa el GameObject que va a
+/// entrar, sube su alpha mientras baja el del que sale, y al terminar
+/// desactiva el GameObject del que salió (para dejarlo tal como estaba:
+/// apagado con SetActive(false)).
+/// </summary>
+/// <param name="saliente">Image de la textura que se está ocultando.</param>
+/// <param name="entrante">Image de la textura que se está mostrando.</param>
+private IEnumerator CrossfadeIcono(Image saliente, Image entrante)
+{
+    // Activamos el que entra ANTES de animar, si no, su fade no se vería.
+    if (entrante != null)
+    {
+        entrante.gameObject.SetActive(true);
+        Color cEntranteInicial = entrante.color;
+        cEntranteInicial.a = 0f;
+        entrante.color = cEntranteInicial;
+    }
+
+    float tiempoTranscurrido = 0f;
+    float alphaInicialSaliente = saliente != null ? saliente.color.a : 0f;
+
+    while (tiempoTranscurrido < fadeDuration)
+    {
+        tiempoTranscurrido += Time.deltaTime;
+        float progreso = Mathf.Clamp01(tiempoTranscurrido / fadeDuration);
 
         if (saliente != null)
         {
             Color c = saliente.color;
-            c.a = 0f;
+            c.a = Mathf.Lerp(alphaInicialSaliente, 0f, progreso);
             saliente.color = c;
         }
 
         if (entrante != null)
         {
             Color c = entrante.color;
-            c.a = 1f;
+            c.a = Mathf.Lerp(0f, 1f, progreso);
             entrante.color = c;
         }
+
+        yield return null;
     }
+
+    // Al terminar, dejamos el saliente apagado (SetActive false) como estaba antes,
+    // y el entrante bien encendido con alpha 1.
+    if (saliente != null)
+    {
+        Color c = saliente.color;
+        c.a = 0f;
+        saliente.color = c;
+        saliente.gameObject.SetActive(false);
+    }
+
+    if (entrante != null)
+    {
+        Color c = entrante.color;
+        c.a = 1f;
+        entrante.color = c;
+    }
+}
 }

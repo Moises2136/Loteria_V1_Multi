@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,8 +6,11 @@ using TMPro;
 
 /// <summary>
 /// Este script controla el modo oscuro/claro del juego: al presionar el
-/// botón de Modo Oscuro o el de Modo Claro, cambia de golpe el color de
-/// todos los fondos, textos e imágenes registrados en las listas del Inspector.
+/// botón de Modo Oscuro (Dark_Button) o el de Modo Claro (Light_Button),
+/// cambia el color de todos los fondos, textos e imágenes registrados en
+/// las listas del Inspector, y además anima con un crossfade (difuminado)
+/// el cambio entre la textura negra y blanca de cada botón, para que no
+/// se sienta brusco.
 /// </summary>
 public class DarkModeManager : MonoBehaviour
 {
@@ -14,11 +18,11 @@ public class DarkModeManager : MonoBehaviour
     [Header("Modo actual")]
     [SerializeField] private bool darkMode = false;
 
-    /// <summary>Botón que activa el modo oscuro.</summary>
+    /// <summary>Botón (padre) que activa el modo oscuro. Ej: Dark_Button.</summary>
     [Header("Botones")]
     [SerializeField] private Button darkModeButton;
 
-    /// <summary>Botón que activa el modo claro.</summary>
+    /// <summary>Botón (padre) que activa el modo claro. Ej: Light_Button.</summary>
     [SerializeField] private Button lightModeButton;
 
     /// <summary>Lista de fondos/paneles cuyo color cambia según el modo.</summary>
@@ -47,9 +51,38 @@ public class DarkModeManager : MonoBehaviour
     [SerializeField] private Color darkText = Color.white;
 
     /// <summary>
+    /// Representa un botón (Light_Button o Dark_Button) que tiene dos hijos
+    /// con la textura negra y blanca, entre los que se hace un crossfade
+    /// al cambiar de modo.
+    /// </summary>
+    [System.Serializable]
+    public class IconoBoton
+    {
+        [Tooltip("Solo para identificar este elemento en el Inspector, no afecta la lógica.")]
+        public string nombre;
+
+        [Tooltip("Image del hijo con la textura NEGRA (ej. Light_Button_Black).")]
+        public Image iconoNegro;
+
+        [Tooltip("Image del hijo con la textura BLANCA (ej. Light_Button_White).")]
+        public Image iconoBlanco;
+    }
+
+    /// <summary>Los 2 botones (Light_Button y Dark_Button) que deben hacer crossfade entre su textura negra y blanca.</summary>
+    [Header("Iconos de botones (crossfade Negro/Blanco)")]
+    [SerializeField] private List<IconoBoton> iconosBotones = new List<IconoBoton>();
+
+    /// <summary>Duración en segundos de la animación de difuminado.</summary>
+    [Header("Animación")]
+    [SerializeField] private float fadeDuration = 0.25f;
+
+    /// <summary>Guarda la corrutina activa de cada icono, para poder cancelarla si el modo cambia rápido varias veces.</summary>
+    private readonly Dictionary<IconoBoton, Coroutine> corrutinasActivas = new Dictionary<IconoBoton, Coroutine>();
+
+    /// <summary>
     /// Al iniciar, conecta cada botón con su modo correspondiente (oscuro
-    /// o claro), y aplica de inmediato el modo actual a todos los
-    /// elementos registrados.
+    /// o claro), y aplica de inmediato (sin animar) el modo actual a todos
+    /// los elementos registrados.
     /// </summary>
     private void Start()
     {
@@ -71,11 +104,12 @@ public class DarkModeManager : MonoBehaviour
             Debug.LogWarning("LightModeButton is not assigned in the inspector.");
         }
 
-        ApplyDarkMode();
+        // "instant: true" evita que los íconos hagan fade la primera vez que carga la escena.
+        ApplyDarkMode(instant: true);
     }
 
     /// <summary>
-    /// Activa el modo oscuro (llamado por el botón de Modo Oscuro).
+    /// Activa el modo oscuro (llamado por el botón Dark_Button).
     /// </summary>
     public void ActivarModoOscuro()
     {
@@ -83,7 +117,7 @@ public class DarkModeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Activa el modo claro / blanco (llamado por el botón de Modo Claro).
+    /// Activa el modo claro / blanco (llamado por el botón Light_Button).
     /// </summary>
     public void ActivarModoClaro()
     {
@@ -100,7 +134,7 @@ public class DarkModeManager : MonoBehaviour
 
     /// <summary>
     /// Establece directamente el modo oscuro como activado o desactivado,
-    /// y aplica el cambio de inmediato a todos los elementos registrados.
+    /// y aplica el cambio (con animación) a todos los elementos registrados.
     /// </summary>
     /// <param name="enabled">Verdadero para activar el modo oscuro, falso para el modo claro.</param>
     public void SetDarkMode(bool enabled)
@@ -112,17 +146,17 @@ public class DarkModeManager : MonoBehaviour
     /// <summary>
     /// Recorre las tres listas (fondos, textos, imágenes) y les aplica el
     /// color correspondiente según si el modo oscuro está activo o no.
+    /// Además dispara el crossfade de las texturas de los botones.
     /// </summary>
-    private void ApplyDarkMode()
+    /// <param name="instant">Si es verdadero, aplica el cambio sin animar (usado al iniciar la escena).</param>
+    private void ApplyDarkMode(bool instant = false)
     {
         // Fondos de los paneles y extras que manejen colores
         foreach (Image background in backgrounds)
         {
             if (background != null)
             {
-                background.color = darkMode
-                    ? darkBackground
-                    : lightBackground;
+                background.color = darkMode ? darkBackground : lightBackground;
             }
         }
 
@@ -131,9 +165,7 @@ public class DarkModeManager : MonoBehaviour
         {
             if (text != null)
             {
-                text.color = darkMode
-                    ? darkText
-                    : lightText;
+                text.color = darkMode ? darkText : lightText;
             }
         }
 
@@ -142,10 +174,108 @@ public class DarkModeManager : MonoBehaviour
         {
             if (image != null)
             {
-                image.color = darkMode
-                    ? darkText
-                    : lightText;
+                image.color = darkMode ? darkText : lightText;
             }
+        }
+
+        AnimarIconosBotones(instant);
+    }
+
+    /// <summary>
+    /// Para cada botón registrado en <see cref="iconosBotones"/>, decide cuál
+    /// textura debe entrar (aparecer) y cuál debe salir (desaparecer), y
+    /// lanza el crossfade correspondiente.
+    /// </summary>
+    /// <param name="instant">Si es verdadero, cambia sin animar.</param>
+    private void AnimarIconosBotones(bool instant)
+    {
+        foreach (IconoBoton icono in iconosBotones)
+        {
+            if (icono == null) continue;
+
+            // En modo oscuro mostramos la textura blanca (contrasta con el fondo oscuro).
+            // En modo claro mostramos la textura negra.
+            Image entrante = darkMode ? icono.iconoBlanco : icono.iconoNegro;
+            Image saliente = darkMode ? icono.iconoNegro : icono.iconoBlanco;
+
+            if (instant)
+            {
+                if (saliente != null)
+                {
+                    Color c = saliente.color;
+                    c.a = 0f;
+                    saliente.color = c;
+                }
+
+                if (entrante != null)
+                {
+                    Color c = entrante.color;
+                    c.a = 1f;
+                    entrante.color = c;
+                }
+
+                continue;
+            }
+
+            // Si este ícono ya estaba animando (el usuario cambió de modo muy rápido),
+            // cancelamos la corrutina anterior para que no se pisen entre sí.
+            if (corrutinasActivas.TryGetValue(icono, out Coroutine corrutinaAnterior) && corrutinaAnterior != null)
+            {
+                StopCoroutine(corrutinaAnterior);
+            }
+
+            Coroutine nuevaCorrutina = StartCoroutine(CrossfadeIcono(saliente, entrante));
+            corrutinasActivas[icono] = nuevaCorrutina;
+        }
+    }
+
+    /// <summary>
+    /// Hace un crossfade entre dos Image: baja el alpha del que sale
+    /// mientras sube el alpha del que entra, al mismo tiempo, para que
+    /// la transición sea suave (difuminado) en vez de un cambio brusco.
+    /// </summary>
+    /// <param name="saliente">Image de la textura que se está ocultando.</param>
+    /// <param name="entrante">Image de la textura que se está mostrando.</param>
+    private IEnumerator CrossfadeIcono(Image saliente, Image entrante)
+    {
+        float tiempoTranscurrido = 0f;
+        float alphaInicialSaliente = saliente != null ? saliente.color.a : 0f;
+        float alphaInicialEntrante = entrante != null ? entrante.color.a : 0f;
+
+        while (tiempoTranscurrido < fadeDuration)
+        {
+            tiempoTranscurrido += Time.deltaTime;
+            float progreso = Mathf.Clamp01(tiempoTranscurrido / fadeDuration);
+
+            if (saliente != null)
+            {
+                Color c = saliente.color;
+                c.a = Mathf.Lerp(alphaInicialSaliente, 0f, progreso);
+                saliente.color = c;
+            }
+
+            if (entrante != null)
+            {
+                Color c = entrante.color;
+                c.a = Mathf.Lerp(alphaInicialEntrante, 1f, progreso);
+                entrante.color = c;
+            }
+
+            yield return null;
+        }
+
+        if (saliente != null)
+        {
+            Color c = saliente.color;
+            c.a = 0f;
+            saliente.color = c;
+        }
+
+        if (entrante != null)
+        {
+            Color c = entrante.color;
+            c.a = 1f;
+            entrante.color = c;
         }
     }
 }

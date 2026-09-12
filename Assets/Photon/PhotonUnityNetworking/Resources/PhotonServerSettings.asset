@@ -44,6 +44,7 @@ MonoBehaviour:
   - RPC_PedirLoteria
   - RPC_IniciarPartidaVisual
   - RPC_ReportarAcierto
+  - RPC_LoteriaRechazada
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

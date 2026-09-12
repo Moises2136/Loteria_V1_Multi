@@ -69,6 +69,9 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
     /// <summary>Se dispara cuando alguien gana la partida. Manda el nombre del ganador y si el ganador es el jugador local.</summary>
     public event System.Action<string, bool> OnLoteriaGanada;   // nombre, ¿soy yo?
 
+    /// <summary>Se dispara cuando el jugador local pide Lotería pero es rechazado por no tener el tablero completo. Manda aciertos actuales y necesarios.</summary>
+    public event System.Action<int, int> OnLoteriaRechazada;
+
     /// <summary>Se dispara cuando ya no quedan más cartas por cantar, sin que nadie haya ganado.</summary>
     public event System.Action OnCartasAgotadas;
 
@@ -270,20 +273,38 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
     /// error de sincronización) no recibe ningún aviso de vuelta.
     /// </remarks>
     [PunRPC]
-    void RPC_PedirLoteria(int actorNumber, string nombreJugador)
+void RPC_PedirLoteria(int actorNumber, string nombreJugador)
     {
-        if (!PhotonNetwork.IsMasterClient) return;
+    if (!PhotonNetwork.IsMasterClient) return;
 
-        int aciertos = aciertosPorJugador.TryGetValue(actorNumber, out int a) ? a : 0;
+    int aciertos = aciertosPorJugador.TryGetValue(actorNumber, out int a) ? a : 0;
 
-        if (aciertos < totalCartasTablero)
+    if (aciertos < totalCartasTablero)
         {
-            Debug.LogWarning($"Jugador {nombreJugador} pidió Lotería con solo {aciertos} aciertos. Rechazado.");
-            return; // opcional: mandar RPC de vuelta solo a ese cliente para avisarle "no tienes tablero completo"
+        Debug.LogWarning($"Jugador {nombreJugador} pidió Lotería con solo {aciertos} aciertos. Rechazado.");
+
+        // NUEVO: avisamos al jugador que lo pidió, no solo a la consola del MasterClient
+        Photon.Realtime.Player jugador = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
+        if (jugador != null)
+            {
+            photonView.RPC(nameof(RPC_LoteriaRechazada), jugador, aciertos, totalCartasTablero);
+            }
+
+        return;
         }
 
-        photonView.RPC("RPC_LoteriaCantada", RpcTarget.All, actorNumber, nombreJugador);
+    photonView.RPC("RPC_LoteriaCantada", RpcTarget.All, actorNumber, nombreJugador);
     }
+
+    // Se ejecuta solo en el jugador que pidió Lotería sin tener el tablero completo.
+    [PunRPC]
+    void RPC_LoteriaRechazada(int aciertosActuales, int aciertosNecesarios)
+    {
+    Debug.Log($"Tu Lotería fue rechazada: tienes {aciertosActuales}/{aciertosNecesarios} aciertos.");
+    OnLoteriaRechazada?.Invoke(aciertosActuales, aciertosNecesarios);
+    }
+
+
 
     /// <summary>
     /// Se ejecuta en TODOS los jugadores cuando el MasterClient canta una

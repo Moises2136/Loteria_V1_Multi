@@ -39938,7 +39938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49952,7 +49952,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.001648}
+  m_AnchoredPosition: {x: 0, y: -61.00171}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -52753,11 +52753,11 @@ MonoBehaviour:
     english: Your lotteries
     french: Vos loteries
     italian: Le tue lotterie
-  - tmpText: {fileID: 0}
-    spanish: 
-    english: 
-    french: 
-    italian: 
+  - tmpText: {fileID: 8346295511642208276}
+    spanish: Traductor
+    english: TRANSLATOR
+    french: TRADUCTEUR
+    italian: TRADUTTORE
   - tmpText: {fileID: 8346295512890685287}
     spanish: Perfil
     english: Profile
@@ -52773,11 +52773,6 @@ MonoBehaviour:
     english: Match history
     french: Historique des parties
     italian: Cronologia partite
-  - tmpText: {fileID: 8346295511609117099}
-    spanish: "Clasificaci\xF3n"
-    english: Rankings
-    french: Classement
-    italian: Classifica
   - tmpText: {fileID: 8346295511454488298}
     spanish: Logros
     english: Achievements
@@ -53102,11 +53097,6 @@ MonoBehaviour:
     english: Supervisors
     french: RESPONSABLES
     italian: RESPONSABILI
-  - tmpText: {fileID: 8346295511642208276}
-    spanish: Traductor
-    english: TRANSLATOR
-    french: TRADUCTEUR
-    italian: TRADUTTORE
   spanishButton:
     button: {fileID: 8346295512529948543}
     tmpText: {fileID: 8346295512468668619}
@@ -58932,7 +58922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8346295512607765466
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Firebase.Auth;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -363,24 +364,31 @@ public class MenuHamburguesaControl : MonoBehaviour
 
     /// <summary>
     /// Cierra todos los paneles de contenido, oculta el menú principal,
-    /// muestra la pantalla de inicio de sesión, y cierra el menú lateral.
+    /// muestra la pantalla de inicio de sesión, cierra el menú lateral y cierra la sesión de Firebase.
     /// </summary>
     void CerrarSesion()
     {
-        foreach (GameObject panel in allPanels)
-        {
-            if (panel != null)
-                panel.SetActive(false);
-        }
+    // NUEVO: cerramos la sesión real de Firebase, y limpiamos los datos locales
+    FirebaseAuth.DefaultInstance.SignOut();
 
-        if (panelMenuPrincipal != null)
-            panelMenuPrincipal.SetActive(false);
+    PlayerPrefs.DeleteKey("nombreCompleto");
+    PlayerPrefs.DeleteKey("usuario");
+    PlayerPrefs.DeleteKey("correo");
+    PlayerPrefs.DeleteKey("uid");
+    PlayerPrefs.Save();
 
-        if (panelInicioSesion != null)
-            panelInicioSesion.SetActive(true);
+    foreach (GameObject panel in allPanels)
+    {
+        if (panel != null)
+            panel.SetActive(false);
+    }
 
-        CerrarMenu();
+    if (panelMenuPrincipal != null)
+        panelMenuPrincipal.SetActive(false);
 
-        Debug.Log("Sesión cerrada");
+    if (panelInicioSesion != null)
+        panelInicioSesion.SetActive(true);
+
+    Debug.Log("Sesión cerrada");
     }
 }

@@ -128,11 +128,11 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
     public Button botonLoteria;
 
     // =========================
-    // FEEDBACK INCORRECTO
+    // FEEDBACK INCORRECTO y CORRECTO
     // =========================
 
     /// <summary>Cuántos segundos se muestra el aviso de "incorrecta" antes de quitarlo.</summary>
-    [Header("Feedback incorrecto")]
+    [Header("Feedback incorrecto y correcto")]
     public float tiempoFeedbackIncorrecto = 0.7f;
 
     /// <summary>Cuántas casillas ha marcado correctamente el jugador local hasta ahora.</summary>
@@ -140,6 +140,16 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
 
     /// <summary>Indica si la partida ya terminó (por victoria propia, de otro jugador, o porque se acabó el mazo).</summary>
     private bool juegoTerminado = false;
+
+    /// <summary>Da retroalimentación sonora cuando el jugador marca una casilla correctamente.</summary>
+    public AudioSource audioCorrecto;
+    public AudioClip sonidoCorrecto;
+
+    /// <summary>Da retroalimentación sonora cuando el jugador marca una casilla incorrectamente.</summary>
+    public AudioSource audioIncorrecto;
+    public AudioClip sonidoIncorrecto;
+
+
 
     // ── Lifecycle ─────────────────────────────────────────────────
 
@@ -336,6 +346,9 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
         if (casilla.overlayIncorrecta != null) casilla.overlayIncorrecta.SetActive(false);
         if (casilla.overlayCorrecta != null) casilla.overlayCorrecta.SetActive(true);
 
+        if (audioCorrecto != null && sonidoCorrecto != null)
+            audioCorrecto.PlayOneShot(sonidoCorrecto);
+
         aciertos++;
         ActualizarContador();
         SetEstado("¡Correcta!");
@@ -364,6 +377,9 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
         casilla.bloqueada = true;
         if (casilla.overlayIncorrecta != null) casilla.overlayIncorrecta.SetActive(true);
         SetEstado("Carta incorrecta");
+
+        if (audioIncorrecto != null && sonidoIncorrecto != null)
+            audioIncorrecto.PlayOneShot(sonidoIncorrecto);
 
         yield return new WaitForSeconds(tiempoFeedbackIncorrecto);
 

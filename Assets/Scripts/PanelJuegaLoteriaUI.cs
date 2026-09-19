@@ -137,6 +137,19 @@ public class PanelJuegaLoteriaSoloUI : MonoBehaviour
     public GameObject panelMenu;
 
     // =========================
+    // FX Sound
+    // =========================
+
+    /// <summary>Da retroalimentación sonora cuando el jugador marca una casilla correctamente.</summary>
+    public AudioSource audioCorrecto;
+    public AudioClip sonidoCorrecto;
+
+    /// <summary>Da retroalimentación sonora cuando el jugador marca una casilla incorrectamente.</summary>
+    public AudioSource audioIncorrecto;
+    public AudioClip sonidoIncorrecto;
+
+
+    // =========================
     // CONFIGURACIÓN
     // =========================
 

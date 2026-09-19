@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 33d529cb0e0cc7645af2bf67215b027c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 337608
+  packageName: Hierarchy Styler Pro
+  packageVersion: 1.3
+  assetPath: Assets/HierarchyStylerPro/Scripts/HierarchyStylerSettings.cs
+  uploadId: 814646

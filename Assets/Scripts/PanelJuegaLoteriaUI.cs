@@ -502,6 +502,9 @@ public class PanelJuegaLoteriaSoloUI : MonoBehaviour
         if (casilla.overlayIncorrecta != null) casilla.overlayIncorrecta.SetActive(false);
         if (casilla.overlayCorrecta != null) casilla.overlayCorrecta.SetActive(true);
 
+        if (audioCorrecto != null && sonidoCorrecto != null)
+            audioCorrecto.PlayOneShot(sonidoCorrecto);
+
         aciertos++;
         ActualizarContador();
         SetEstado("¡Correcta!");
@@ -542,6 +545,9 @@ public class PanelJuegaLoteriaSoloUI : MonoBehaviour
         if (casilla.overlayIncorrecta != null) casilla.overlayIncorrecta.SetActive(true);
         SetEstado("Carta incorrecta");
 
+        if (audioIncorrecto != null && sonidoIncorrecto != null)
+            audioIncorrecto.PlayOneShot(sonidoIncorrecto);
+            
         yield return new WaitForSeconds(tiempoFeedbackIncorrecto);
 
         if (!casilla.marcada && casilla.overlayIncorrecta != null)

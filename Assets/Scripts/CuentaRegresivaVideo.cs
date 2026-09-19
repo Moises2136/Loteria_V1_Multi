@@ -30,6 +30,14 @@ public class CuentaRegresivaVideo : MonoBehaviour
     [Header("Modo")]
     public bool esMultijugador = false;
 
+    [Header("FX Sound")]
+
+    /// <summary>FX contador regresivo.</summary>
+    public AudioSource audioRegresivo;
+    public AudioClip sonidoRegresivo;
+
+
+
     /// <summary>
     /// Cada vez que se activa este panel, reproduce el video de cuenta
     /// regresiva si hay uno asignado; si no, pasa de inmediato al
@@ -70,6 +78,11 @@ public class CuentaRegresivaVideo : MonoBehaviour
 
         videoCuentaRegresiva.frame = 0;
         videoCuentaRegresiva.time = 0;
+
+        if (audioRegresivo != null && sonidoRegresivo != null)
+            audioRegresivo.PlayOneShot(sonidoRegresivo);
+
+        
         videoCuentaRegresiva.Play();
 
         Debug.Log("Cuenta regresiva iniciada.");

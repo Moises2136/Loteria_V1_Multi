@@ -30058,7 +30058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1968239120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35213,13 +35213,13 @@ MonoBehaviour:
   botonLoteria: {fileID: 8346295511360199939}
   botonSalir: {fileID: 1040810882}
   panelMenu: {fileID: 8346295512117702088}
-  audioCorrecto: {fileID: 0}
-  sonidoCorrecto: {fileID: 0}
-  audioIncorrecto: {fileID: 0}
-  sonidoIncorrecto: {fileID: 0}
+  audioCorrecto: {fileID: 5584685065526456153}
+  sonidoCorrecto: {fileID: 8300000, guid: 757a33a7e7707204fabd7ad15567aaee, type: 3}
+  audioIncorrecto: {fileID: 5584685065526456153}
+  sonidoIncorrecto: {fileID: 8300000, guid: 9baaa94b8bcef024e9594107ea02d2c5, type: 3}
   totalCartasTablero: 9
   tiempoEntreCartas: 10
-  tiempoFeedbackIncorrecto: 0.7
+  tiempoFeedbackIncorrecto: 1
 --- !u!114 &8346295511228594168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50484,7 +50484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295512104287478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50502,6 +50502,8 @@ MonoBehaviour:
   panelJuegaLoteriaMultiplayer: {fileID: 1968239119}
   videoCuentaRegresiva: {fileID: 388849752}
   esMultijugador: 0
+  audioRegresivo: {fileID: 5584685065526456153}
+  sonidoRegresivo: {fileID: 8300000, guid: 6e6233699b2bb144784c36d45b1f9d0d, type: 3}
 --- !u!1 &8346295512117702088
 GameObject:
   m_ObjectHideFlags: 0

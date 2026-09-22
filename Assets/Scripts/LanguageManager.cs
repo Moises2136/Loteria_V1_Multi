@@ -59,6 +59,43 @@ public class LanguageManager : MonoBehaviour
     public LanguageButtonUI italianButton;
 
     // =========================
+    // DROPDOWN DE IDIOMA (panel de inicio de sesión)
+    // =========================
+    /// <summary>Desplegable de idioma (panel de inicio de sesión).</summary>
+    [Header("Dropdown de idioma (panel de inicio de sesión)")]
+
+    public TMP_Dropdown languageDropdownInicio;
+     /// <summary>Texto corto del dropdown cerrado ("ES", "EN"...).</summary>
+    public TMP_Text dropdownLabelInicio;
+
+    private readonly string[] dropdownNames = { "Español", "English", "Français", "Italiano" };
+    private readonly string[] dropdownCodes = { "ES", "EN", "FR", "IT" };
+
+
+    // =========================
+    // DROPDOWN DE IDIOMA (panel Registrarse)
+    // =========================
+    /// <summary>Desplegable de idioma (panel registro).</summary>
+    [Header("Dropdown de idioma (panel registro)")]
+    public TMP_Dropdown languageDropdownRegistro;
+     /// <summary>Texto corto del dropdown cerrado ("ES", "EN"...).</summary>
+    public TMP_Text dropdownLabelRegistro;
+
+    [Header("Banderas de los idiomas")]
+
+    /// <summary>Banderas, en el mismo orden que el enum Language.</summary>
+    public Sprite flagSpanish, flagEnglish, flagFrench, flagItalian;
+
+    /// <summary>Imagen de la bandera del dropdown cerrado (inicio de sesión).</summary>
+    public Image dropdownFlagInicio;
+
+    /// <summary>Imagen de la bandera del dropdown cerrado (registro).</summary>
+    public Image dropdownFlagRegistro;
+
+        /// <summary>Las banderas en el mismo orden que el enum Language.</summary>
+    public Sprite[] Flags => new[] { flagSpanish, flagEnglish, flagFrench, flagItalian };
+
+    // =========================
     // COLORES
     // =========================
 
@@ -98,8 +135,11 @@ public class LanguageManager : MonoBehaviour
         Debug.Log("LanguageManager iniciado");
 
         SetupButtons();
+        SetupDropdownIniciarSesion();
+        SetupDropdownRegistroR();
         LoadLanguage();
         ApplyLanguage();
+
     }
 
     /// <summary>
@@ -149,6 +189,94 @@ public class LanguageManager : MonoBehaviour
         }
 
         Debug.Log("Botones de idioma enlazados");
+    }
+
+    #endregion
+
+    #region DROPDOWNIniciarSesion
+
+    /// <summary>Llena el dropdown con banderas y nombres, y lo conecta.</summary>
+    private void SetupDropdownIniciarSesion()
+    {
+        if (languageDropdownInicio == null)
+            return;
+
+        languageDropdownInicio.ClearOptions();
+        languageDropdownInicio.AddOptions(new List<TMP_Dropdown.OptionData>
+        {
+            new TMP_Dropdown.OptionData(dropdownNames[0], flagSpanish, Color.white),
+            new TMP_Dropdown.OptionData(dropdownNames[1], flagEnglish, Color.white),
+            new TMP_Dropdown.OptionData(dropdownNames[2], flagFrench, Color.white),
+            new TMP_Dropdown.OptionData(dropdownNames[3], flagItalian, Color.white),
+        });
+
+        languageDropdownInicio.onValueChanged.RemoveListener(OnDropdownChangedI);
+        languageDropdownInicio.onValueChanged.AddListener(OnDropdownChangedI);
+    }
+
+    /// <summary>Se llama cuando el usuario elige un idioma en el dropdown.</summary>
+    private void OnDropdownChangedI(int index)
+    {
+        SetLanguage((Language)index);
+    }
+
+    /// <summary>Pone el dropdown en el idioma actual sin disparar OnDropdownChangedI.</summary>
+    private void UpdateDropdownI()
+    {
+        if (languageDropdownInicio == null || languageDropdownInicio.options.Count == 0)
+            return;
+
+        languageDropdownInicio.SetValueWithoutNotify((int)currentLanguage);
+
+        if (dropdownLabelInicio != null)
+            dropdownLabelInicio.text = dropdownCodes[(int)currentLanguage];
+
+        if (dropdownFlagInicio != null)
+            dropdownFlagInicio.sprite = Flags[(int)currentLanguage];
+    }
+
+    #endregion
+
+    #region DROPDOWNRegistro
+
+    /// <summary>Llena el dropdown con banderas y nombres, y lo conecta.</summary>
+    private void SetupDropdownRegistroR()
+    {
+        if (languageDropdownRegistro == null)
+            return;
+
+        languageDropdownRegistro.ClearOptions();
+        languageDropdownRegistro.AddOptions(new List<TMP_Dropdown.OptionData>
+        {
+            new TMP_Dropdown.OptionData(dropdownNames[0], flagSpanish, Color.white),
+            new TMP_Dropdown.OptionData(dropdownNames[1], flagEnglish, Color.white),
+            new TMP_Dropdown.OptionData(dropdownNames[2], flagFrench, Color.white),
+            new TMP_Dropdown.OptionData(dropdownNames[3], flagItalian, Color.white),
+        });
+
+        languageDropdownRegistro.onValueChanged.RemoveListener(OnDropdownChangedR);
+        languageDropdownRegistro.onValueChanged.AddListener(OnDropdownChangedR);
+    }
+
+    /// <summary>Se llama cuando el usuario elige un idioma en el dropdown.</summary>
+    private void OnDropdownChangedR(int index)
+    {
+        SetLanguage((Language)index);
+    }
+
+    /// <summary>Pone el dropdown en el idioma actual sin disparar OnDropdownChangedR.</summary>
+    private void UpdateDropdownR()
+    {
+        if (languageDropdownRegistro == null || languageDropdownRegistro.options.Count == 0)
+            return;
+
+        languageDropdownRegistro.SetValueWithoutNotify((int)currentLanguage);
+
+        if (dropdownLabelRegistro != null)
+            dropdownLabelRegistro.text = dropdownCodes[(int)currentLanguage];
+
+        if (dropdownFlagRegistro != null)
+            dropdownFlagRegistro.sprite = Flags[(int)currentLanguage];
     }
 
     #endregion
@@ -210,6 +338,8 @@ public class LanguageManager : MonoBehaviour
 
         UpdateLocalizedTexts();
         UpdateLanguageButtons();
+        UpdateDropdownI();
+        UpdateDropdownR();
     }
 
     /// <summary>

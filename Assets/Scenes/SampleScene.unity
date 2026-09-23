@@ -792,7 +792,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.73
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &30452167
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -826,6 +826,7 @@ GameObject:
   - component: {fileID: 31144181}
   - component: {fileID: 31144180}
   - component: {fileID: 31144179}
+  - component: {fileID: 31144182}
   m_Layer: 5
   m_Name: Panel_Meter_Code
   m_TagString: Untagged
@@ -936,6 +937,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 31144177}
   m_CullTransparentMesh: 1
+--- !u!114 &31144182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31144177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &37929370
 GameObject:
   m_ObjectHideFlags: 0
@@ -5076,7 +5089,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Espa\xF1ol"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -7249,7 +7262,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: ES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -10131,7 +10144,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Modalidad de Juego
+  m_text: "Seleccionar loter\xEDa"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -14851,7 +14864,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 919364062}
   m_Template: {fileID: 160652331}
-  m_CaptionText: {fileID: 1338354712}
+  m_CaptionText: {fileID: 0}
   m_CaptionImage: {fileID: 0}
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 999820803}
@@ -15836,7 +15849,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Espa\xF1ol"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -20708,7 +20721,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Option A
+  m_text: ES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -20873,7 +20886,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1347000503}
   m_Template: {fileID: 149269789}
-  m_CaptionText: {fileID: 417505999}
+  m_CaptionText: {fileID: 0}
   m_CaptionImage: {fileID: 0}
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 298527799}
@@ -36822,6 +36835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnGoogle: {fileID: 8346295511391751577}
   txtEstado: {fileID: 0}
+  webClientId: 
   panelInicioSesion: {fileID: 8346295512607765465}
   panelMenu: {fileID: 8346295512117702088}
 --- !u!224 &5584685065526456102
@@ -39444,6 +39458,7 @@ GameObject:
   - component: {fileID: 8346295511320363391}
   - component: {fileID: 8346295511320363390}
   - component: {fileID: 8346295511320363388}
+  - component: {fileID: 8346295511320363392}
   m_Layer: 5
   m_Name: PanelCrearLoteria
   m_TagString: Untagged
@@ -39548,6 +39563,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8346295511320363376}
   m_CullTransparentMesh: 1
+--- !u!114 &8346295511320363392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511320363376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8346295511330385692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40601,6 +40628,7 @@ GameObject:
   - component: {fileID: 8346295511393006263}
   - component: {fileID: 8346295511393006262}
   - component: {fileID: 8346295511393006260}
+  - component: {fileID: 8346295511393006264}
   m_Layer: 5
   m_Name: PanelRegistro
   m_TagString: Untagged
@@ -40702,6 +40730,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8346295511393006248}
   m_CullTransparentMesh: 1
+--- !u!114 &8346295511393006264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511393006248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8346295511402044488
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47318,7 +47358,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 2.38
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &8346295511801891891
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -61971,13 +62011,14 @@ GameObject:
   - component: {fileID: 8346295512607765287}
   - component: {fileID: 8346295512607765285}
   - component: {fileID: 8346295512607765466}
+  - component: {fileID: 8346295512607765467}
   m_Layer: 5
   m_Name: PanelInicioSesion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8346295512607765466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61992,8 +62033,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoginGoogle
   btnGoogle: {fileID: 8346295511391751577}
   txtEstado: {fileID: 0}
+  webClientId: 
   panelInicioSesion: {fileID: 8346295512607765465}
   panelMenu: {fileID: 8346295512117702088}
+--- !u!114 &8346295512607765467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512607765465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8346295512609686184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63060,7 +63114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Modalidad de Juego
+  m_text: "N\xFAmero de jugadores "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -70625,8 +70679,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295512665362574}
   m_HandleRect: {fileID: 8346295512665362561}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -71649,6 +71703,7 @@ GameObject:
   - component: {fileID: 8346295513198748201}
   - component: {fileID: 8346295513198748200}
   - component: {fileID: 8346295513198748204}
+  - component: {fileID: 8346295513198748205}
   m_Layer: 5
   m_Name: PanelAgregarCartaPaso1
   m_TagString: Untagged
@@ -71719,6 +71774,18 @@ MonoBehaviour:
   cardListManage: {fileID: 8346295513018877279}
   createLotery: {fileID: 8346295511320363388}
   cloudinaryUploader: {fileID: 973871203}
+--- !u!114 &8346295513198748205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513198748202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8346295513203072288
 RectTransform:
   m_ObjectHideFlags: 0

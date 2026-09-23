@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1059175276629-v7s35744pbsnu0s7brt3nj4qjjcguo8n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.DefaultCompany.Loteria_Mexicana_Plantas_ICAT",
+            "certificate_hash": "17a7e47aa424dea831f23b70bae141db99cf788f"
+          }
+        },
+        {
           "client_id": "1059175276629-226f7v1iflofktvt8nir5qvuuuavsk63.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "1059175276629-226f7v1iflofktvt8nir5qvuuuavsk63.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1059175276629-qntaonh6oi16id2u7q3mrio9aasre22a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mx.icatalogos"
+              }
             }
           ]
         }

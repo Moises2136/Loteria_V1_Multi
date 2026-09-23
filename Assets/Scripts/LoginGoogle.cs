@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using Google;
 using UnityEngine.UI;
 using TMPro;
 using Firebase;
@@ -22,6 +24,11 @@ public class LoginGoogle : MonoBehaviour
     /// <summary>Texto usado para mostrar mensajes de estado (cargando, error, bienvenida, etc).</summary>
     public TMP_Text txtEstado;
 
+
+    /// <summary>Web Client ID (auth_client con client_type 3 en google-services.json).</summary>
+    [Header("Google")]
+    public string webClientId;
+
     /// <summary>Panel de inicio de sesión.</summary>
     [Header("Paneles")]
     public GameObject panelInicioSesion;
@@ -44,6 +51,13 @@ public class LoginGoogle : MonoBehaviour
     /// </summary>
     void Start()
     {
+        GoogleSignIn.Configuration = new GoogleSignInConfiguration
+        {
+            WebClientId = webClientId,
+            RequestEmail = true,
+            RequestIdToken = true
+        };
+        
         if (btnGoogle != null)
         {
             btnGoogle.onClick.RemoveAllListeners();
@@ -71,45 +85,42 @@ public class LoginGoogle : MonoBehaviour
     /// muestra el mensaje correspondiente; si sale bien, continúa
     /// guardando los datos del usuario.
     /// </summary>
-    void IniciarFlujoGoogle()
+        void IniciarFlujoGoogle()
     {
         if (!firebaseListo) { SetEstado("Firebase no listo."); return; }
 
         SetEstado("Abriendo Google...");
 
-        // En Android/iOS Firebase abre el selector de cuenta nativo
-        auth.SignInWithProviderAsync(BuildGoogleProvider())
-            .ContinueWithOnMainThread(task =>
+        // Paso 1: Google nos da el token de la cuenta elegida
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(signInTask =>
+        {
+            if (signInTask.IsCanceled) { SetEstado("Cancelado."); return; }
+            if (signInTask.IsFaulted)
             {
-                if (task.IsCanceled) { SetEstado("Cancelado."); return; }
-                if (task.IsFaulted)
+                Debug.LogError(signInTask.Exception);
+                SetEstado("Error: " + ObtenerMensaje(signInTask.Exception?.ToString()));
+                return;
+            }
+
+            // Paso 2: con ese token iniciamos sesión en Firebase
+            Credential credential = GoogleAuthProvider.GetCredential(signInTask.Result.IdToken, null);
+
+            auth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(authTask =>
+            {
+                if (authTask.IsCanceled) { SetEstado("Cancelado."); return; }
+                if (authTask.IsFaulted)
                 {
-                    Debug.LogError(task.Exception);
-                    SetEstado("Error: " + ObtenerMensaje(task.Exception?.ToString()));
+                    Debug.LogError(authTask.Exception);
+                    SetEstado("Error: " + ObtenerMensaje(authTask.Exception?.ToString()));
                     return;
                 }
 
-                GuardarYNavegar(task.Result.User);
+                GuardarYNavegar(authTask.Result);
             });
-    }
-
-    /// <summary>
-    /// Arma el proveedor de autenticación de Google, pidiendo acceso al
-    /// correo y al perfil básico del usuario.
-    /// </summary>
-    /// <returns>El proveedor configurado, listo para usarse con Firebase Auth.</returns>
-    FederatedOAuthProvider BuildGoogleProvider()
-    {
-        var provider = new FederatedOAuthProvider();
-        provider.SetProviderData(new FederatedOAuthProviderData
-        {
-            ProviderId = "google.com",
-            Scopes = new System.Collections.Generic.List<string> { "email", "profile" }
         });
-        return provider;
     }
 
-    /// <summary>
+    /// <summary> No olvidar 1059175276629-226f7v1iflofktvt8nir5qvuuuavsk63.apps.googleusercontent.com
     /// Revisa si el usuario ya tiene un documento en Firestore; si no
     /// existe (es su primer login con Google), lo crea. Después guarda
     /// los datos localmente y pasa al menú principal.

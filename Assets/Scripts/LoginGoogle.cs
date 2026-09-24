@@ -24,6 +24,13 @@ public class LoginGoogle : MonoBehaviour
     /// <summary>Texto usado para mostrar mensajes de estado (cargando, error, bienvenida, etc).</summary>
     public TMP_Text txtEstado;
 
+    /// <summary>Botón para Registrarse con Google.</summary>
+    [Header("UI")]
+    public Button btnGoogleRegistro;
+
+    /// <summary>Texto usado para mostrar mensajes de estado (cargando, error, bienvenida, etc).</summary>
+    public TMP_Text txtEstadoRegistro;
+
 
     /// <summary>Web Client ID (auth_client con client_type 3 en google-services.json).</summary>
     [Header("Google")]
@@ -126,34 +133,43 @@ public class LoginGoogle : MonoBehaviour
     /// los datos localmente y pasa al menú principal.
     /// </summary>
     /// <param name="user">El usuario que acaba de iniciar sesión con Google.</param>
-    void GuardarYNavegar(FirebaseUser user)
+        void GuardarYNavegar(FirebaseUser user)
     {
         string correo = user.Email ?? "";
         string nombre = user.DisplayName ?? "";
         string uid = user.UserId ?? "";
+        string username = correo.Split('@')[0];
 
-        // Crear documento en Firestore si no existe
         db.Collection("usuarios").Document(uid)
           .GetSnapshotAsync()
           .ContinueWithOnMainThread(snap =>
           {
+              var docRef = db.Collection("usuarios").Document(uid);
+
               if (!snap.IsFaulted && !snap.Result.Exists)
               {
-                  db.Collection("usuarios").Document(uid).SetAsync(
-                      new System.Collections.Generic.Dictionary<string, object>
-                      {
-                          { "correo", correo },
-                          { "nombreCompleto", nombre },
-                          { "username", nombre },
-                          { "uid", uid },
-                          { "loginTipo", "google" }
-                      });
+                  // Primera vez: mismo formato que RegisterUser
+                  docRef.SetAsync(new Dictionary<string, object>
+                  {
+                      { "uid", uid },
+                      { "nombreCompleto", nombre },
+                      { "username", username },
+                      { "correo", correo },
+                      { "loginTipo", "google" },
+                      { "fechaRegistro", Timestamp.GetCurrentTimestamp() },
+                      { "ultimoLogin", Timestamp.GetCurrentTimestamp() }
+                  });
+              }
+              else if (!snap.IsFaulted)
+              {
+                  // Ya existía: solo actualizamos su último login
+                  docRef.UpdateAsync("ultimoLogin", Timestamp.GetCurrentTimestamp());
               }
 
               PlayerPrefs.SetString("correo", correo);
               PlayerPrefs.SetString("nombreCompleto", nombre);
               PlayerPrefs.SetString("uid", uid);
-              PlayerPrefs.SetString("usuario", nombre);
+              PlayerPrefs.SetString("usuario", username);
               PlayerPrefs.Save();
 
               SetEstado("¡Bienvenido, " + nombre + "!");

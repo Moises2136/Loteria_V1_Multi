@@ -119,6 +119,7 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
     /// <summary>Cuántas cartas tiene el tablero del jugador (por defecto 9).</summary>
     public int totalCartasTablero = 9;
 
+
     // =========================
     // BOTÓN LOTERÍA
     // =========================
@@ -126,6 +127,12 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
     /// <summary>Botón para declarar "¡Lotería!" cuando se completó el tablero.</summary>
     [Header("Botón Lotería")]
     public Button botonLoteria;
+
+    /// <summary>Botón para salir de la partida y volver al menú.</summary>
+    public Button botonSalir;
+
+/// <summary>Panel del menú principal, al que se vuelve al salir.</summary>
+    public GameObject panelMenu;
 
     // =========================
     // FEEDBACK INCORRECTO y CORRECTO
@@ -310,6 +317,12 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
             botonLoteria.onClick.RemoveAllListeners();
             botonLoteria.onClick.AddListener(ValidarLoteria);
         }
+
+        if (botonSalir != null)
+        {
+            botonSalir.onClick.RemoveAllListeners();
+            botonSalir.onClick.AddListener(SalirAlMenu);
+            }
     }
 
     /// <summary>
@@ -442,6 +455,18 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
 
         if (textoJugadores != null && Photon.Pun.PhotonNetwork.InRoom)
             textoJugadores.text = Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount + " jugadores";
+        
+        if (textoTituloLoteria != null)
+        {
+            string nombre = PlayerPrefs.GetString("loteria_nombre", "");
+            
+            var room = Photon.Pun.PhotonNetwork.CurrentRoom;
+            if (room != null && room.CustomProperties.TryGetValue("loteriaNombre", out object n))
+            nombre = n as string;
+            
+            if (!string.IsNullOrWhiteSpace(nombre))
+            textoTituloLoteria.text = nombre;
+        }
 
         foreach (var c in casillas)
         {
@@ -493,6 +518,20 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
             txt += nombre.Trim();
         }
         ttsManager.SpeakText(txt);
+    }
+
+    void SalirAlMenu()
+    {
+    StopAllCoroutines();
+    juegoTerminado = true;
+
+    if (Photon.Pun.PhotonNetwork.InRoom)
+        Photon.Pun.PhotonNetwork.LeaveRoom();
+
+    SalaSessionManager.Instance?.Reiniciar();
+
+    if (panelJuegoActual != null) panelJuegoActual.SetActive(false);
+    if (panelMenu != null) panelMenu.SetActive(true);
     }
 
     /// <summary>

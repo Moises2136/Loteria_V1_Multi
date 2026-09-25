@@ -10674,7 +10674,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Modalidad de Juego
+  m_text: "Seleccionar loter\xEDa"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -33505,6 +33505,8 @@ MonoBehaviour:
     bloqueada: 0
   totalCartasTablero: 9
   botonLoteria: {fileID: 843316708}
+  botonSalir: {fileID: 353495838}
+  panelMenu: {fileID: 8346295512117702088}
   tiempoFeedbackIncorrecto: 1
   audioCorrecto: {fileID: 5584685065526456153}
   sonidoCorrecto: {fileID: 8300000, guid: 757a33a7e7707204fabd7ad15567aaee, type: 3}
@@ -64194,7 +64196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Modalidad de Juego
+  m_text: "N\xFAmero de jugadores "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -72073,7 +72075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8346295513166340705
 RectTransform:
   m_ObjectHideFlags: 0

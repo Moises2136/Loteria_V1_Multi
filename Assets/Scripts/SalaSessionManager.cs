@@ -76,4 +76,12 @@ public class SalaSessionManager : MonoBehaviour
         rolActual = RolSala.Player;
         codigoSala = codigo;
     }
+
+    /// <summary>Deja la sesión como si no estuviera en ninguna sala.</summary>
+    public void Reiniciar()
+    {
+    rolActual = RolSala.Ninguno;
+    codigoSala = "";
+    jugadoresEnSala = 1;
+    }
 }

@@ -109,6 +109,7 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
             {
                 { "roomCode", roomCode },
                 { "loteriaDocId", loteriaDocId },
+                { "loteriaNombre", PlayerPrefs.GetString("loteria_nombre", "") },
                 { "started", false },
                 { "currentCardId", -1 }
             },
@@ -135,6 +136,12 @@ public class PhotonRoomManager : MonoBehaviourPunCallbacks
 
         currentRoomCode = roomCode;
         PhotonNetwork.JoinRoom(roomCode);
+    }
+
+    public override void OnLeftRoom()
+    {
+    isHost = false;
+    currentRoomCode = "";
     }
 
     // =========================

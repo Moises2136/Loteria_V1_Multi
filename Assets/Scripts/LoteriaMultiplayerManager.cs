@@ -87,6 +87,9 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
     /// <summary>Permite que la UI consulte cuál es la carta actual, para comparar contra lo que el jugador toca.</summary>
     public int CartaActualId => cartaActualId;
 
+    private Coroutine rutinaFlujoJuego;
+    private bool partidaIniciada = false;
+
     /// <summary>
     /// Se ejecuta al cargar el script. Aquí se asegura de que solo exista
     /// una instancia de este manager en la escena (patrón singleton).
@@ -110,7 +113,7 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
         juegoTerminado = false;
         cartaActualId = -1;
         PrepararMazo();
-        StartCoroutine(FlujoJuego());
+        rutinaFlujoJuego = StartCoroutine(FlujoJuego());
     }
 
     /// <summary>
@@ -208,6 +211,10 @@ public class LoteriaMultiplayerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RPC_IniciarPartidaVisual()
     {
+        partidaIniciada = true;
+        juegoTerminado = false;
+        cartaActualId = -1;
+
         if (panelSalaEsperaAnfitrion != null) panelSalaEsperaAnfitrion.SetActive(false);
         if (panelSalaEsperaPlayer != null) panelSalaEsperaPlayer.SetActive(false);
 
@@ -371,11 +378,23 @@ void RPC_PedirLoteria(int actorNumber, string nombreJugador)
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         // Si el nuevo MasterClient es este cliente, retoma el flujo
-        if (PhotonNetwork.IsMasterClient && !juegoTerminado)
+        if (PhotonNetwork.IsMasterClient && partidaIniciada && !juegoTerminado && rutinaFlujoJuego == null)
         {
-            Debug.Log("Retomando como nuevo MasterClient");
-            RetomarComoMaster();
+        Debug.Log("Retomando como nuevo MasterClient");
+        RetomarComoMaster();
         }
+    }
+
+    /// <summary>Al salir de la sala, detiene el mazo y limpia el estado local.</summary>
+    public override void OnLeftRoom()
+    {
+    StopAllCoroutines();
+    rutinaFlujoJuego = null;
+    partidaIniciada = false;
+    juegoTerminado = true;
+    cartaActualId = -1;
+    mazoCantado.Clear();
+    aciertosPorJugador.Clear();
     }
 
     /// <summary>
@@ -419,7 +438,7 @@ void RPC_PedirLoteria(int actorNumber, string nombreJugador)
                 mazoCantado.Add(id);
 
         Shuffle(mazoCantado);
-        StartCoroutine(FlujoJuego());
+        rutinaFlujoJuego = StartCoroutine(FlujoJuego());
     }
 
     /// <summary>

@@ -1,70 +1,35 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Firebase.Auth;
+using Firebase.Firestore;
+using Firebase.Extensions;
 
 /// <summary>
-/// Este script controla el panel de resultados generales del jugador:
-/// cuántas partidas ha jugado, ganado, perdido, su porcentaje de victorias,
-/// y cuál fue el resultado de la última partida. También se encarga de
-/// guardar esas estadísticas cada vez que el jugador gana o pierde.
+/// Controla el panel de resultados generales del jugador. Las estadísticas
+/// se guardan en Firestore dentro de usuarios/{uid}, así pertenecen a la
+/// cuenta y no al dispositivo.
 /// </summary>
 public class PanelResultados : MonoBehaviour
 {
-    // =========================
-    // TEXTOS
-    // =========================
-
-    /// <summary>Texto que muestra el total de partidas jugadas.</summary>
     [Header("Textos")]
     public TMP_Text txtPartidasJugadas;
-
-    /// <summary>Texto que muestra el número de partidas ganadas.</summary>
     public TMP_Text txtGanadas;
-
-    /// <summary>Texto que muestra el número de partidas perdidas.</summary>
     public TMP_Text txtPerdidas;
-
-    /// <summary>Texto que muestra el porcentaje de victorias.</summary>
     public TMP_Text txtRatio;
-
-    /// <summary>Texto que muestra el resultado de la última partida jugada.</summary>
     public TMP_Text txtUltimoResultado;
 
-    // =========================
-    // 🔙 NAVEGACIÓN
-    // =========================
-
-    /// <summary>Botón para regresar al panel anterior.</summary>
     [Header("Boton regresar")]
     public Button btnRegresar;
-
-    /// <summary>Este mismo panel de resultados.</summary>
     public GameObject panelResultados;
-
-    /// <summary>Panel al que se regresa al presionar el botón.</summary>
     public GameObject panelAnterior;
 
-    // =========================
-    // CLAVES PLAYERPREFS
-    // =========================
-    // Estas llaves se usan para guardar y leer las estadísticas en PlayerPrefs.
+    // Nombres de los campos dentro del documento usuarios/{uid}
+    private const string CAMPO_GANADAS = "stats_ganadas";
+    private const string CAMPO_PERDIDAS = "stats_perdidas";
+    private const string CAMPO_ULTIMO = "stats_ultimo_resultado";
 
-    /// <summary>Llave para guardar el número de partidas ganadas.</summary>
-    private const string KEY_GANADAS = "stats_ganadas";
-
-    /// <summary>Llave para guardar el número de partidas perdidas.</summary>
-    private const string KEY_PERDIDAS = "stats_perdidas";
-
-    /// <summary>Llave para guardar el resultado de la última partida.</summary>
-    private const string KEY_ULTIMO = "stats_ultimo_resultado";
-
-    // =========================
-    // INICIALIZACIÓN
-    // =========================
-
-    /// <summary>
-    /// Al iniciar, conecta el botón de regresar con su función correspondiente.
-    /// </summary>
     void Start()
     {
         if (btnRegresar != null)
@@ -74,104 +39,104 @@ public class PanelResultados : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Cada vez que se activa este panel, recarga las estadísticas más recientes.
-    /// </summary>
     void OnEnable()
     {
         CargarResultados();
     }
 
-    // =========================
-    // CARGA DE DATOS
-    // =========================
+    /// <summary>
+    /// Devuelve el uid del usuario actual (Firebase primero, PlayerPrefs como respaldo).
+    /// </summary>
+    private static string ObtenerUid()
+    {
+        FirebaseUser user = FirebaseAuth.DefaultInstance.CurrentUser;
+        if (user != null) return user.UserId;
+        return PlayerPrefs.GetString("uid", "");
+    }
 
     /// <summary>
-    /// Lee las estadísticas guardadas en PlayerPrefs (partidas ganadas y perdidas),
-    /// calcula el porcentaje de victorias, y actualiza todos los textos en pantalla.
+    /// Lee las estadísticas desde Firestore y actualiza los textos.
     /// </summary>
     public void CargarResultados()
     {
-        int ganadas = PlayerPrefs.GetInt(KEY_GANADAS, 0);
-        int perdidas = PlayerPrefs.GetInt(KEY_PERDIDAS, 0);
-        int jugadas = ganadas + perdidas;
+        string uid = ObtenerUid();
+        if (string.IsNullOrEmpty(uid))
+        {
+            MostrarEnPantalla(0, 0, "Sin sesión");
+            return;
+        }
 
-        // Cálculo de porcentaje de victorias
-        float ratio = 0f;
-        if (jugadas > 0)
-            ratio = ((float)ganadas / jugadas) * 100f;
+        FirebaseFirestore.DefaultInstance
+            .Collection("usuarios").Document(uid)
+            .GetSnapshotAsync()
+            .ContinueWithOnMainThread(task =>
+            {
+                if (this == null) return; // el panel se destruyó mientras esperábamos
 
-        if (txtPartidasJugadas != null)
-            txtPartidasJugadas.text = jugadas.ToString();
+                if (task.IsFaulted || task.IsCanceled)
+                {
+                    Debug.LogWarning("No se pudieron cargar estadísticas: " + task.Exception);
+                    return;
+                }
 
-        if (txtGanadas != null)
-            txtGanadas.text = ganadas.ToString();
+                DocumentSnapshot doc = task.Result;
+                long ganadas = doc.Exists && doc.ContainsField(CAMPO_GANADAS) ? doc.GetValue<long>(CAMPO_GANADAS) : 0;
+                long perdidas = doc.Exists && doc.ContainsField(CAMPO_PERDIDAS) ? doc.GetValue<long>(CAMPO_PERDIDAS) : 0;
+                string ultimo = doc.Exists && doc.ContainsField(CAMPO_ULTIMO) ? doc.GetValue<string>(CAMPO_ULTIMO) : "Sin partidas";
 
-        if (txtPerdidas != null)
-            txtPerdidas.text = perdidas.ToString();
-
-        if (txtRatio != null)
-            txtRatio.text = ratio.ToString("F1") + "%";
-
-        if (txtUltimoResultado != null)
-            txtUltimoResultado.text = "Último resultado: " +
-                PlayerPrefs.GetString(KEY_ULTIMO, "Sin partidas");
+                MostrarEnPantalla(ganadas, perdidas, ultimo);
+            });
     }
 
-    // =========================
-    // REGISTRO DE RESULTADOS
-    // =========================
-
     /// <summary>
-    /// Suma una victoria más a las estadísticas guardadas y actualiza
-    /// el último resultado a "Ganaste".
+    /// Pinta los números en los textos y calcula el porcentaje de victorias.
     /// </summary>
-    /// <remarks>
-    /// Es un método <c>static</c>, así que se puede llamar desde cualquier
-    /// parte del juego (por ejemplo, desde el script que detecta cuándo
-    /// termina una partida) sin necesidad de tener este panel abierto en pantalla.
-    /// </remarks>
-    public static void RegistrarVictoria()
+    private void MostrarEnPantalla(long ganadas, long perdidas, string ultimo)
     {
-        int ganadas = PlayerPrefs.GetInt(KEY_GANADAS, 0);
-        ganadas++;
+        long jugadas = ganadas + perdidas;
+        float ratio = jugadas > 0 ? (float)ganadas / jugadas * 100f : 0f;
 
-        PlayerPrefs.SetInt(KEY_GANADAS, ganadas);
-        PlayerPrefs.SetString(KEY_ULTIMO, "Ganaste");
-        PlayerPrefs.Save();
+        if (txtPartidasJugadas != null) txtPartidasJugadas.text = jugadas.ToString();
+        if (txtGanadas != null) txtGanadas.text = ganadas.ToString();
+        if (txtPerdidas != null) txtPerdidas.text = perdidas.ToString();
+        if (txtRatio != null) txtRatio.text = ratio.ToString("F1") + "%";
+        if (txtUltimoResultado != null) txtUltimoResultado.text = "Último resultado: " + ultimo;
     }
 
+    public static void RegistrarVictoria() => Registrar(true);
+    public static void RegistrarDerrota() => Registrar(false);
+
     /// <summary>
-    /// Suma una derrota más a las estadísticas guardadas y actualiza
-    /// el último resultado a "Perdiste".
+    /// Suma 1 a ganadas o perdidas directamente en Firestore y guarda el último resultado.
     /// </summary>
-    /// <remarks>
-    /// Igual que <see cref="RegistrarVictoria"/>, es <c>static</c> y se
-    /// puede llamar desde cualquier parte del juego.
-    /// </remarks>
-    public static void RegistrarDerrota()
+    private static void Registrar(bool gano)
     {
-        int perdidas = PlayerPrefs.GetInt(KEY_PERDIDAS, 0);
-        perdidas++;
+        string uid = ObtenerUid();
+        if (string.IsNullOrEmpty(uid))
+        {
+            Debug.LogWarning("No hay uid; no se registró el resultado.");
+            return;
+        }
 
-        PlayerPrefs.SetInt(KEY_PERDIDAS, perdidas);
-        PlayerPrefs.SetString(KEY_ULTIMO, "Perdiste");
-        PlayerPrefs.Save();
+        var data = new Dictionary<string, object>
+        {
+            { gano ? CAMPO_GANADAS : CAMPO_PERDIDAS, FieldValue.Increment(1L) },
+            { CAMPO_ULTIMO, gano ? "Ganaste" : "Perdiste" }
+        };
+
+        FirebaseFirestore.DefaultInstance
+            .Collection("usuarios").Document(uid)
+            .SetAsync(data, SetOptions.MergeAll)
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsFaulted || task.IsCanceled)
+                    Debug.LogError("Error registrando resultado: " + task.Exception);
+            });
     }
 
-    // =========================
-    // NAVEGACIÓN
-    // =========================
-
-    /// <summary>
-    /// Cierra el panel de resultados y regresa al panel anterior.
-    /// </summary>
     public void Regresar()
     {
-        if (panelResultados != null)
-            panelResultados.SetActive(false);
-
-        if (panelAnterior != null)
-            panelAnterior.SetActive(true);
+        if (panelResultados != null) panelResultados.SetActive(false);
+        if (panelAnterior != null) panelAnterior.SetActive(true);
     }
 }

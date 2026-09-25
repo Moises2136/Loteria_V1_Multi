@@ -354,15 +354,22 @@ void RPC_PedirLoteria(int actorNumber, string nombreJugador)
     /// Se ejecuta en TODOS los jugadores cuando el MasterClient confirma
     /// que alguien ganó. Marca la partida como terminada y avisa a la UI
     /// mediante el evento <see cref="OnLoteriaGanada"/>, indicando si el
-    /// ganador es el jugador local.
+    /// ganador es el jugador local y ahí se puede mostrar la pantalla de resultados correspondiente
+    /// contador de partidas y victorias/perdidas
     /// </summary>
     /// <param name="actorNumber">Número de actor de Photon del jugador ganador.</param>
     /// <param name="nombreJugador">Nombre del jugador ganador.</param>
     [PunRPC]
     void RPC_LoteriaCantada(int actorNumber, string nombreJugador)
     {
+        if (juegoTerminado) return;  // ya salimos de la sala
+
         juegoTerminado = true;
         bool soyYo = actorNumber == PhotonNetwork.LocalPlayer.ActorNumber;
+
+        if (soyYo) PanelResultados.RegistrarVictoria();
+        else PanelResultados.RegistrarDerrota();
+
         OnLoteriaGanada?.Invoke(nombreJugador, soyYo);
     }
 

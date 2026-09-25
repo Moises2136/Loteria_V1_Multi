@@ -30,6 +30,9 @@ public class SalaFlowManager : MonoBehaviour
     /// <summary>Botón para regresar a la pantalla anterior.</summary>
     public Button botonRegresar;
 
+    /// <summary>Botón para jugar en modo solo</summary>
+    public Button botonPlaySolo;
+
     // =========================
     // PANELES PRINCIPALES
     // =========================
@@ -162,6 +165,7 @@ public class SalaFlowManager : MonoBehaviour
         {
             botonJugarSolo.onClick.RemoveAllListeners();
             botonJugarSolo.onClick.AddListener(SeleccionarModoSolo);
+            botonPlaySolo.gameObject.SetActive(false);
         }
 
         if (botonJugarMultijugador != null)
@@ -273,6 +277,8 @@ public class SalaFlowManager : MonoBehaviour
         modoMultijugador = false;
         ActualizarVistaModo();
 
+        if (botonPlaySolo != null) botonPlaySolo.gameObject.SetActive(false);
+
         if (textoEstado != null)
             textoEstado.text = "Modo Solo seleccionado.";
     }
@@ -314,8 +320,19 @@ public class SalaFlowManager : MonoBehaviour
         modoMultijugador = true;
         ActualizarVistaModo();
 
+        if (botonPlaySolo != null) botonPlaySolo.gameObject.SetActive(false);
+
         if (textoEstado != null)
             textoEstado.text = "Modo Multijugador seleccionado.";
+    }
+
+    /// <summary>Oculta el panel de selección y abre el panel de juego en modo Solo.</summary>
+    public void IrAJugarSolo()
+    {
+    if (modoMultijugador) return;
+
+    if (panelJuegaLoteria != null) panelJuegaLoteria.SetActive(false);
+    if (panelJuegaLoteriaSolo != null) panelJuegaLoteriaSolo.SetActive(true);
     }
 
     public void RegresarAMenu()

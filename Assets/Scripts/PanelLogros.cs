@@ -1,185 +1,209 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Firebase.Auth;
+using Firebase.Firestore;
+using Firebase.Extensions;
 
 /// <summary>
-/// Este script controla el panel de logros del juego: muestra cuáles logros
-/// ya están desbloqueados y cuáles siguen bloqueados, usando los datos
-/// guardados en PlayerPrefs. También ofrece funciones para desbloquear
-/// cada logro desde cualquier parte del juego.
+/// Controla el panel de logros. Los logros se configuran en el Inspector y
+/// se desbloquean calculándolos a partir de las estadísticas del jugador
+/// (stats_ganadas / stats_perdidas en usuarios/{uid}), así que no se guardan
+/// por separado y pertenecen a la cuenta, no al dispositivo.
 /// </summary>
 public class PanelLogros : MonoBehaviour
 {
+    /// <summary>Qué estadística se usa para medir el progreso de un logro.</summary>
+    public enum TipoCondicion { PartidasJugadas, PartidasGanadas }
+
+    /// <summary>
+    /// Un logro configurable desde el Inspector: su nombre, cómo se desbloquea,
+    /// la meta a alcanzar y el botón que lo representa en pantalla.
+    /// </summary>
+    [Serializable]
+    public class Logro
+    {
+        public string nombre;
+        [TextArea] public string comoDesbloquear;
+        public TipoCondicion condicion;
+        public int meta = 1;
+        public Button boton;
+
+        /// <summary>Candado o sombra encima del botón. Si no se asigna, el botón se tiñe de gris.(aun revisando consideración)</summary>
+        public GameObject overlayBloqueado;
+
+        [HideInInspector] public bool desbloqueado;
+    }
+
     // =========================
     // LOGROS
     // =========================
 
-    /// <summary>Objeto visual (ícono) del logro de completar una lotería.</summary>
-    [Header("Logros")]
-    public GameObject logroLoteria;
-
-    /// <summary>Objeto visual (ícono) del logro botánico.</summary>
-    public GameObject logroBotanico;
+    [Header("Logros (se configuran aquí)")]
+    public Logro[] logros;
 
     // =========================
-    // TEXTO ESTADO
+    // POPUP DE DETALLE
     // =========================
 
-    /// <summary>Texto que indica si el logro de lotería está desbloqueado o bloqueado.</summary>
-    [Header("Texto estado (opcional)")]
-    public TMP_Text textoEstadoLoteria;
+    /// <summary>Raíz del popup (contiene el fondo oscuro y la tarjeta como hermanos).</summary>
+    [Header("Popup de detalle")]
+    public GameObject panelDetalle;
 
-    /// <summary>Texto que indica si el logro botánico está desbloqueado o bloqueado.</summary>
-    public TMP_Text textoEstadoBotanico;
+    /// <summary>Fondo oscuro a pantalla completa; al tocarlo se cierra el popup.</summary>
+    public Button btnFondoOscuro;
+
+    public TMP_Text txtTitulo;
+    public TMP_Text txtDescripcion;
+    public TMP_Text txtEstado;
 
     // =========================
     // NAVEGACIÓN
     // =========================
 
-    /// <summary>Botón para regresar al panel anterior.</summary>
     [Header("Botón regresar")]
-    public Button botonRegresar;
-
-    /// <summary>Este mismo panel de logros.</summary>
-    public GameObject panelActual;
-
-    /// <summary>Panel al que se regresa al presionar el botón.</summary>
+    public Button btnRegresar;
+    public GameObject panelLogros;
     public GameObject panelAnterior;
 
-    // =========================
-    // CLAVES PLAYERPREFS
-    // =========================
+    /// <summary>Colores del botón según su estado (solo se usan si no hay overlay).</summary>
+    private static readonly Color COLOR_DESBLOQUEADO = Color.white;
+    private static readonly Color COLOR_BLOQUEADO = new Color(0.7f, 0.7f, 0.7f);
 
-    /// <summary>Llave para guardar si el logro de lotería está desbloqueado.</summary>
-    private const string KEY_LOGRO_LOTERIA = "logro_loteria";
-
-    /// <summary>Llave para guardar si el logro botánico está desbloqueado.</summary>
-    private const string KEY_LOGRO_BOTANICO = "logro_botanico";
+    private long ganadas;
+    private long jugadas;
 
     // =========================
     // INICIALIZACIÓN
     // =========================
 
-    /// <summary>
-    /// Al iniciar, conecta el botón de regresar con su función correspondiente.
-    /// </summary>
     void Start()
     {
-        ConfigurarBoton();
-    }
-
-    /// <summary>
-    /// Cada vez que se activa este panel, recarga el estado de los logros.
-    /// </summary>
-    void OnEnable()
-    {
-        CargarLogros();
-    }
-
-    /// <summary>
-    /// Conecta el botón de regresar con su función.
-    /// </summary>
-    void ConfigurarBoton()
-    {
-        if (botonRegresar != null)
+        for (int i = 0; i < logros.Length; i++)
         {
-            botonRegresar.onClick.RemoveAllListeners();
-            botonRegresar.onClick.AddListener(Regresar);
-        }
-    }
-
-    // =========================
-    // CARGA DE LOGROS
-    // =========================
-
-    /// <summary>
-    /// Lee de PlayerPrefs si cada logro está desbloqueado o no,
-    /// y actualiza cómo se ve cada uno en pantalla.
-    /// </summary>
-    void CargarLogros()
-    {
-        bool logroLoteriaActivo = PlayerPrefs.GetInt(KEY_LOGRO_LOTERIA, 0) == 1;
-        bool logroBotanicoActivo = PlayerPrefs.GetInt(KEY_LOGRO_BOTANICO, 0) == 1;
-
-        ActualizarLogro(logroLoteria, textoEstadoLoteria, logroLoteriaActivo, "Logro desbloqueado");
-        ActualizarLogro(logroBotanico, textoEstadoBotanico, logroBotanicoActivo, "Logro desbloqueado");
-    }
-
-    /// <summary>
-    /// Actualiza cómo se ve un logro en pantalla según si ya está desbloqueado.
-    /// Si está desbloqueado, se ve a color; si está bloqueado, se ve gris.
-    /// </summary>
-    /// <param name="logro">Objeto visual del logro (su ícono).</param>
-    /// <param name="texto">Texto que muestra el estado del logro.</param>
-    /// <param name="activo">Verdadero si el logro ya está desbloqueado.</param>
-    /// <param name="mensaje">Mensaje a mostrar cuando el logro está desbloqueado.</param>
-    void ActualizarLogro(GameObject logro, TMP_Text texto, bool activo, string mensaje)
-    {
-        if (logro != null)
-        {
-            Image img = logro.GetComponent<Image>();
-
-            if (img != null)
+            int idx = i;
+            if (logros[i].boton != null)
             {
-                // Blanco = desbloqueado, gris = bloqueado
-                if (activo)
-                    img.color = Color.white;
-                else
-                    img.color = new Color(0.7f, 0.7f, 0.7f);
+                logros[i].boton.onClick.RemoveAllListeners();
+                logros[i].boton.onClick.AddListener(() => AbrirDetalle(idx));
             }
         }
 
-        if (texto != null)
+        if (btnFondoOscuro != null)
         {
-            texto.text = activo ? mensaje : "Bloqueado";
+            btnFondoOscuro.onClick.RemoveAllListeners();
+            btnFondoOscuro.onClick.AddListener(CerrarDetalle);
         }
+
+        if (btnRegresar != null)
+        {
+            btnRegresar.onClick.RemoveAllListeners();
+            btnRegresar.onClick.AddListener(Regresar);
+        }
+    }
+
+    /// <summary>
+    /// Cada vez que se abre el panel: cierra el popup, pinta con lo último
+    /// conocido y pide las estadísticas actualizadas a Firestore.
+    /// </summary>
+    void OnEnable()
+    {
+        CerrarDetalle();
+        PintarLogros();
+        CargarStats();
+    }
+
+    // =========================
+    // CARGA DE ESTADÍSTICAS
+    // =========================
+
+    /// <summary>Lee ganadas/perdidas del usuario y vuelve a evaluar los logros.</summary>
+    void CargarStats()
+    {
+        FirebaseUser user = FirebaseAuth.DefaultInstance.CurrentUser;
+        string uid = user != null ? user.UserId : PlayerPrefs.GetString("uid", "");
+        if (string.IsNullOrEmpty(uid)) return;
+
+        FirebaseFirestore.DefaultInstance
+            .Collection("usuarios").Document(uid)
+            .GetSnapshotAsync()
+            .ContinueWithOnMainThread(task =>
+            {
+                if (this == null) return; // el panel se destruyó mientras esperábamos
+
+                if (task.IsFaulted || task.IsCanceled)
+                {
+                    Debug.LogWarning("No se pudieron cargar stats para logros: " + task.Exception);
+                    return;
+                }
+
+                DocumentSnapshot doc = task.Result;
+                ganadas = LeerLong(doc, PanelResultados.CAMPO_GANADAS);
+                jugadas = ganadas + LeerLong(doc, PanelResultados.CAMPO_PERDIDAS);
+
+                PintarLogros();
+            });
+    }
+
+    static long LeerLong(DocumentSnapshot doc, string campo) =>
+        doc.Exists && doc.ContainsField(campo) ? doc.GetValue<long>(campo) : 0;
+
+    long Progreso(Logro l) =>
+        l.condicion == TipoCondicion.PartidasGanadas ? ganadas : jugadas;
+
+    // =========================
+    // PINTAR LOGROS
+    // =========================
+
+    /// <summary>
+    /// Marca cada logro como desbloqueado o no. Usa el overlay si está asignado;
+    /// si no, tiñe el botón de gris cuando está bloqueado.
+    /// </summary>
+    void PintarLogros()
+    {
+        foreach (var l in logros)
+        {
+            l.desbloqueado = Progreso(l) >= l.meta;
+
+            if (l.overlayBloqueado != null)
+                l.overlayBloqueado.SetActive(!l.desbloqueado);
+            else if (l.boton != null && l.boton.image != null)
+                l.boton.image.color = l.desbloqueado ? COLOR_DESBLOQUEADO : COLOR_BLOQUEADO;
+        }
+    }
+
+    // =========================
+    // POPUP
+    // =========================
+
+    /// <summary>Abre el popup con el nombre, cómo desbloquearlo y el progreso del logro.</summary>
+    void AbrirDetalle(int idx)
+    {
+        var l = logros[idx];
+        long progreso = Math.Min(Progreso(l), l.meta);
+
+        if (txtTitulo != null) txtTitulo.text = l.nombre;
+        if (txtDescripcion != null) txtDescripcion.text = l.comoDesbloquear;
+        if (txtEstado != null)
+            txtEstado.text = l.desbloqueado ? "¡Desbloqueado!" : $"Progreso: {progreso}/{l.meta}";
+
+        if (panelDetalle != null) panelDetalle.SetActive(true);
+    }
+
+    void CerrarDetalle()
+    {
+        if (panelDetalle != null) panelDetalle.SetActive(false);
     }
 
     // =========================
     // NAVEGACIÓN
     // =========================
 
-    /// <summary>
-    /// Cierra este panel y regresa al panel anterior.
-    /// </summary>
     public void Regresar()
     {
-        if (panelActual != null)
-            panelActual.SetActive(false);
-
-        if (panelAnterior != null)
-            panelAnterior.SetActive(true);
-    }
-
-    // =========================
-    // DESBLOQUEO DE LOGROS
-    // =========================
-
-    /// <summary>
-    /// Marca el logro de lotería como desbloqueado y lo guarda de forma permanente.
-    /// </summary>
-    /// <remarks>
-    /// Es un método <c>static</c>, así que se puede llamar desde cualquier parte
-    /// del juego (por ejemplo, desde el script que detecta cuándo se completa una
-    /// partida) sin necesitar tener este panel abierto en pantalla — igual que
-    /// <c>RegistrarVictoria</c> en <c>PanelResultados</c>.
-    /// </remarks>
-    public static void DesbloquearLogroLoteria()
-    {
-        PlayerPrefs.SetInt(KEY_LOGRO_LOTERIA, 1);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Marca el logro botánico como desbloqueado y lo guarda de forma permanente.
-    /// </summary>
-    /// <remarks>
-    /// Igual que <see cref="DesbloquearLogroLoteria"/>, es <c>static</c> y se
-    /// puede llamar desde cualquier parte del juego.
-    /// </remarks>
-    public static void DesbloquearLogroBotanico()
-    {
-        PlayerPrefs.SetInt(KEY_LOGRO_BOTANICO, 1);
-        PlayerPrefs.Save();
+        CerrarDetalle();
+        if (panelLogros != null) panelLogros.SetActive(false);
+        if (panelAnterior != null) panelAnterior.SetActive(true);
     }
 }

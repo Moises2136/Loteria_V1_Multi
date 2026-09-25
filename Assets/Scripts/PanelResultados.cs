@@ -26,8 +26,8 @@ public class PanelResultados : MonoBehaviour
     public GameObject panelAnterior;
 
     // Nombres de los campos dentro del documento usuarios/{uid}
-    private const string CAMPO_GANADAS = "stats_ganadas";
-    private const string CAMPO_PERDIDAS = "stats_perdidas";
+    public const string CAMPO_GANADAS = "stats_ganadas";
+    public const string CAMPO_PERDIDAS = "stats_perdidas";
     private const string CAMPO_ULTIMO = "stats_ultimo_resultado";
 
     void Start()

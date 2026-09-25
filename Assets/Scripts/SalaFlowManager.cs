@@ -165,6 +165,12 @@ public class SalaFlowManager : MonoBehaviour
         {
             botonJugarSolo.onClick.RemoveAllListeners();
             botonJugarSolo.onClick.AddListener(SeleccionarModoSolo);
+        }
+
+        if (botonPlaySolo != null)
+        {
+            botonPlaySolo.onClick.RemoveAllListeners();
+            botonPlaySolo.onClick.AddListener(ComenzarFlujo);
             botonPlaySolo.gameObject.SetActive(false);
         }
 
@@ -277,7 +283,7 @@ public class SalaFlowManager : MonoBehaviour
         modoMultijugador = false;
         ActualizarVistaModo();
 
-        if (botonPlaySolo != null) botonPlaySolo.gameObject.SetActive(false);
+        if (botonPlaySolo != null) botonPlaySolo.gameObject.SetActive(true);
 
         if (textoEstado != null)
             textoEstado.text = "Modo Solo seleccionado.";
@@ -558,6 +564,12 @@ public class SalaFlowManager : MonoBehaviour
 
             if (cuenta != null)
                 cuenta.ConfigurarModo(false);
+        }
+
+        if (string.IsNullOrWhiteSpace(PlayerPrefs.GetString(KEY_LOTERIA_DOC_ID, "")))
+        {
+            if (textoEstado != null) textoEstado.text = "Primero selecciona una lotería.";
+            return;
         }
 
         if (panelJuegaLoteria != null)

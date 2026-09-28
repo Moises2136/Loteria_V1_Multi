@@ -47,7 +47,7 @@ public class PanelResultadosPartidaUI : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-        CargarNombreGanador();   // valor por defecto — correcto para modo solo
+        CargarNombreGanador();
     }
 
     /// <summary>
@@ -91,9 +91,9 @@ public class PanelResultadosPartidaUI : MonoBehaviour
     /// <param name="nombreGanador">Nombre del jugador que ganó la partida.</param>
     public void MostrarGanador(string nombreGanador)
     {
-        if (txtWinnerName != null)
-            txtWinnerName.text = nombreGanador;
-    }
+    if (txtWinnerName != null)
+        txtWinnerName.text = nombreGanador;
+        }
 
     /// <summary>
     /// Cierra el panel de resultados y regresa al menú principal.

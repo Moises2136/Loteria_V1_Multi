@@ -367,8 +367,7 @@ void RPC_PedirLoteria(int actorNumber, string nombreJugador)
         juegoTerminado = true;
         bool soyYo = actorNumber == PhotonNetwork.LocalPlayer.ActorNumber;
 
-        if (soyYo) PanelResultados.RegistrarVictoria();
-        else PanelResultados.RegistrarDerrota();
+        EstadisticasGameService.RegistrarResultado(soyYo);
 
         OnLoteriaGanada?.Invoke(nombreJugador, soyYo);
     }

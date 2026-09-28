@@ -29,8 +29,6 @@ public class MenuHamburguesaControl : MonoBehaviour
     /// <summary>Botón para abrir el panel de configuración.</summary>
     public Button btnConfiguracion;
 
-    /// <summary>Botón para abrir el panel de historial.</summary>
-    public Button btnHistorial;
 
     /// <summary>Botón para abrir el panel de clasificación (ranking).</summary>
     public Button btnClasificacion;
@@ -57,8 +55,6 @@ public class MenuHamburguesaControl : MonoBehaviour
     /// <summary>Panel de configuración.</summary>
     public GameObject panelConfiguracion;
 
-    /// <summary>Panel de historial.</summary>
-    public GameObject panelHistorial;
 
     /// <summary>Panel de selección de idioma.</summary>
     public GameObject panelIdioma;
@@ -174,7 +170,6 @@ public class MenuHamburguesaControl : MonoBehaviour
         {
             panelPerfil,
             panelConfiguracion,
-            panelHistorial,
             panelIdioma,
             panelClasificacion,
             panelCreditos
@@ -199,9 +194,6 @@ public class MenuHamburguesaControl : MonoBehaviour
 
         if (btnConfiguracion != null)
             btnConfiguracion.onClick.AddListener(() => AbrirPanelDesdeMenu(panelConfiguracion));
-
-        if (btnHistorial != null)
-            btnHistorial.onClick.AddListener(() => AbrirPanelDesdeMenu(panelHistorial));
 
         if (btnClasificacion != null)
             btnClasificacion.onClick.AddListener(() => AbrirPanelDesdeMenu(panelClasificacion));

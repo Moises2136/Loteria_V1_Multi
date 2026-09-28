@@ -65,27 +65,60 @@ public class LoteriaListManager : MonoBehaviour
     /// </summary>
     void MostrarTarjeta(string nombre, bool esPublica, List<CartaData> cartas)
     {
-        if (contenedor == null || prefabLoteria == null) return;
+       if (contenedor == null || prefabLoteria == null) return;
 
-        GameObject nueva = Instantiate(prefabLoteria, contenedor);
-        CardLoteriaUI card = nueva.GetComponent<CardLoteriaUI>();
-        if (card == null) return;
+    GameObject nueva = Instantiate(prefabLoteria, contenedor);
+    CardLoteriaUI card = nueva.GetComponent<CardLoteriaUI>();
+    if (card == null) return;
 
-        DatosLoteria datos = new DatosLoteria
+    DatosLoteria datos = new DatosLoteria
+    {
+        nombreLoteria = nombre,
+        esPublica = esPublica
+    };
+
+    foreach (var c in cartas)
+        datos.cartas.Add(new DatosCarta { nombreCarta = c.nombre });
+
+    card.Configurar(datos);
+
+    // Buscamos la primera carta que sí tenga imagen
+    string urlPortada = null;
+    foreach (var c in cartas)
+    {
+        if (!string.IsNullOrWhiteSpace(c.rutaImagen))
         {
-            nombreLoteria = nombre,
-            esPublica = esPublica
-        };
-
-        foreach (var c in cartas)
-            datos.cartas.Add(new DatosCarta { nombreCarta = c.nombre });
-
-        card.Configurar(datos);
-
-        // Usamos cualquier imagen de sus cartas como miniatura
-        if (cartas.Count > 0 && !string.IsNullOrWhiteSpace(cartas[0].rutaImagen) && remoteImageLoader != null)
-        {
-            StartCoroutine(remoteImageLoader.LoadImage(cartas[0].rutaImagen, card.imgPortada, sprite => { }));
+            urlPortada = c.rutaImagen;
+            break;
         }
+    }
+
+    if (urlPortada == null)
+    {
+        Debug.LogWarning($"La lotería '{nombre}' no tiene cartas con imagen.");
+        return;
+    }
+
+    if (remoteImageLoader == null)
+    {
+        Debug.LogWarning("remoteImageLoader no está asignado en LoteriaListManager.");
+        return;
+    }
+
+    StartCoroutine(remoteImageLoader.LoadImage(urlPortada, card.imgPortada, sprite =>
+    {
+        if (card == null || card.imgPortada == null) return;
+
+        if (sprite != null)
+        {
+            card.imgPortada.sprite = sprite;
+            card.imgPortada.color = Color.white;   // quita el tinte negro
+            card.imgPortada.preserveAspect = true;
+        }
+        else
+        {
+            Debug.LogWarning("No se pudo descargar la portada: " + urlPortada);
+        }
+    }));
     }
 }

@@ -2,50 +2,66 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Script que aplica esquinas redondeadas dinámicamente a un Image de UI
-/// usando un shader personalizado.
+/// Aplica esquinas redondeadas a un Image de UI usando el shader "UI/RoundedCorners".
+/// Funciona también en modo edición gracias a [ExecuteAlways].
 /// </summary>
+[ExecuteAlways]
 [RequireComponent(typeof(Image))]
 public class Modificador : MonoBehaviour
 {
-    /// <summary>
-    /// Radio de las esquinas redondeadas (0 - 100).
-    /// Se puede modificar desde el Inspector en tiempo real.
-    /// </summary>
+    /// <summary>Radio de las esquinas en píxeles.</summary>
     [Range(0, 100)]
     public float cornerRadius = 20f;
 
-    /// <summary>
-    /// Material instanciado que usa el shader de esquinas redondeadas.
-    /// </summary>
+    private Image img;
+    private RectTransform rt;
     private Material mat;
 
-    // =========================
-    // INICIALIZACIÓN
-    // =========================
-
-    void Awake()
+    void OnEnable()
     {
-        // Obtiene el componente Image automáticamente (garantizado por RequireComponent)
-        Image img = GetComponent<Image>();
+        img = GetComponent<Image>();
+        rt = GetComponent<RectTransform>();
 
-        // Crea un nuevo material basado en el shader personalizado
-        mat = new Material(Shader.Find("UI/RoundedCorners"));
+        Shader sh = Shader.Find("UI/RoundedCorners");
+        if (sh == null)
+        {
+            Debug.LogError("No se encontró el shader UI/RoundedCorners");
+            return;
+        }
 
-        // Asigna el material al Image
+        // Material propio para este Image (no se guarda en la escena)
+        mat = new Material(sh);
+        mat.hideFlags = HideFlags.HideAndDontSave;
         img.material = mat;
+
+        Actualizar();
     }
 
-    // =========================
-    // ACTUALIZACIÓN
-    // =========================
+    void OnDisable()
+    {
+        // Regresa al material por defecto y libera el creado
+        if (img != null) img.material = null;
+        if (mat != null)
+        {
+            if (Application.isPlaying) Destroy(mat);
+            else DestroyImmediate(mat);
+            mat = null;
+        }
+    }
 
     void Update()
     {
-        // Actualiza el valor del radio en el shader cada frame
-        if (mat != null)
-        {
-            mat.SetFloat("_Radius", cornerRadius);
-        }
+        Actualizar();
+    }
+
+    /// <summary>Envía al shader el radio y el tamaño actual del rect.</summary>
+    private void Actualizar()
+    {
+        if (mat == null) return;
+
+        Rect r = rt.rect;
+        mat.SetFloat("_Radius", cornerRadius);
+        mat.SetFloat("_Width", r.width);
+        mat.SetFloat("_Height", r.height);
     }
 }

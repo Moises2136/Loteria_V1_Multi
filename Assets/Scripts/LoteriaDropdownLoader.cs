@@ -35,22 +35,30 @@ public class LoteriaDropdownLoader : MonoBehaviour
 
     /// <summary>Llave usada para guardar el nombre de la lotería elegida en PlayerPrefs.</summary>
     private const string KEY_LOTERIA_NOMBRE = "loteria_nombre";
-    
 
     /// <summary>
-    /// Al iniciar, conecta Firestore, conecta el dropdown con su función
-    /// de selección, y carga la lista de loterías disponibles.
+    /// Al iniciar, conecta el dropdown con su función de selección.
     /// </summary>
     void Start()
     {
-        db = FirebaseFirestore.DefaultInstance;
-
         if (dropdownLoterias != null)
         {
             dropdownLoterias.onValueChanged.RemoveAllListeners();
             dropdownLoterias.onValueChanged.AddListener(OnLoteriaSeleccionada);
         }
+    }
 
+    /// <summary>
+    /// Cada vez que se abre el panel, vuelve a pedir las loterías. Así, si la
+    /// primera carga falló (sin sesión o sin permisos), se reintenta sola.
+    /// </summary>
+    /// <remarks>
+    /// La primera vez, <c>OnEnable</c> corre antes que <c>Start</c>, por eso
+    /// la referencia a Firestore se asigna aquí y no en <c>Start</c>.
+    /// </remarks>
+    void OnEnable()
+    {
+        db = FirebaseFirestore.DefaultInstance;
         CargarLoterias();
     }
 
@@ -73,6 +81,8 @@ public class LoteriaDropdownLoader : MonoBehaviour
           .GetSnapshotAsync()
           .ContinueWithOnMainThread(task =>
           {
+              if (this == null) return; // el objeto se destruyó mientras esperábamos
+
               if (task.IsFaulted || task.IsCanceled)
               {
                   Debug.LogError("Error cargando loterías: " + task.Exception);
@@ -117,8 +127,6 @@ public class LoteriaDropdownLoader : MonoBehaviour
     /// <param name="index">Índice de la opción elegida en el dropdown.</param>
     private void OnLoteriaSeleccionada(int index)
     {
-        
-
         if (index <= 0)
         {
             PlayerPrefs.DeleteKey(KEY_LOTERIA_DOC_ID);
@@ -140,9 +148,9 @@ public class LoteriaDropdownLoader : MonoBehaviour
         PlayerPrefs.SetString(KEY_LOTERIA_DOC_ID, docId);
         PlayerPrefs.SetString(KEY_LOTERIA_NOMBRE, nombre);
         PlayerPrefs.Save();
-        
-        RecentLoteriasManager.RegistrarJugada(docId);  
-        
+
+        RecentLoteriasManager.RegistrarJugada(docId);
+
         Debug.Log("Lotería seleccionada: " + nombre + " | " + docId);
 
         if (textoEstado != null)

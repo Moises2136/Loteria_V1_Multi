@@ -10930,7 +10930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Seleccionar loter\xEDa"
+  m_text: Modalidad de Juego
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -28836,6 +28836,15 @@ MonoBehaviour:
   panelAmigos: {fileID: 8346295512592763168}
   panelLogros: {fileID: 8346295511895371557}
   panelCreditos: {fileID: 8346295512275847257}
+  btnMenu: {fileID: 0}
+  btnPerfil: {fileID: 0}
+  btnConfig: {fileID: 0}
+  btnResultadosRatio: {fileID: 0}
+  btnAmigos: {fileID: 0}
+  btnLogros: {fileID: 0}
+  btnCreditos: {fileID: 0}
+  btnCerrarSesion: {fileID: 0}
+  btnSalir: {fileID: 0}
 --- !u!1 &1752562945
 GameObject:
   m_ObjectHideFlags: 0
@@ -45504,6 +45513,15 @@ MonoBehaviour:
   panelAmigos: {fileID: 8346295512592763168}
   panelLogros: {fileID: 8346295511895371557}
   panelCreditos: {fileID: 8346295512275847257}
+  btnMenu: {fileID: 0}
+  btnPerfil: {fileID: 0}
+  btnConfig: {fileID: 0}
+  btnResultadosRatio: {fileID: 0}
+  btnAmigos: {fileID: 0}
+  btnLogros: {fileID: 0}
+  btnCreditos: {fileID: 0}
+  btnCerrarSesion: {fileID: 0}
+  btnSalir: {fileID: 0}
 --- !u!224 &8346295511582974160
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50351,7 +50369,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511882024444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54787,7 +54805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.002075}
+  m_AnchoredPosition: {x: 0, y: -61.00232}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -64872,7 +64890,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "N\xFAmero de jugadores "
+  m_text: Modalidad de Juego
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -70488,7 +70506,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8346295513123040140}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -72235,7 +72253,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295513123157217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000059604645, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -72483,7 +72501,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8346295512665362561}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999998
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -73779,7 +73797,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8346295511597421376}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.6099999
+  m_Size: 0.60999995
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

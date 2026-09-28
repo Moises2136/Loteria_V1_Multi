@@ -217,6 +217,7 @@ public class SessionManager : MonoBehaviour
 
                   PlayerPrefs.Save();
 
+                  PhotonLauncher.Instance?.ConfigurarUsuario(uid, PlayerPrefs.GetString("usuario", ""));
                   MostrarMenu();
                   return;
               }
@@ -258,7 +259,7 @@ public class SessionManager : MonoBehaviour
 
                   PlayerPrefs.Save();
               }
-
+              PhotonLauncher.Instance?.ConfigurarUsuario(uid, PlayerPrefs.GetString("usuario", ""));
               MostrarMenu();
           });
     }

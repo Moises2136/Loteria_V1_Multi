@@ -1,6 +1,8 @@
 using Photon.Pun;
 using Photon.Realtime;
+using Firebase.Auth;
 using UnityEngine;
+
 
 /// <summary>
 /// Este script se encarga de conectar el juego al servidor de Photon
@@ -11,9 +13,15 @@ using UnityEngine;
 public class PhotonLauncher : MonoBehaviourPunCallbacks
 {
     /// <summary>
-    /// La única instancia de este script que existe en el juego.
+    /// Instancia de este script que existe en el juego.
     /// </summary>
     public static PhotonLauncher Instance;
+
+    /// <summary>
+    /// La variable que indica si el juego debe reconectarse automáticamente a Photon
+    /// después de una desconexión. Se puede activar desde cualquier parte del juego
+    /// </summary
+    private bool reconectarDespuesDeDesconexion = false;
 
     /// <summary>
     /// Si está activado, el juego intenta conectarse a Photon automáticamente
@@ -58,6 +66,13 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     /// </summary>
     public void Connect()
     {
+        FirebaseUser user = FirebaseAuth.DefaultInstance.CurrentUser;
+
+        if (user == null)
+        {
+            PhotonNetwork.AuthValues = new AuthenticationValues(user.UserId);
+        }
+
         if (PhotonNetwork.IsConnected)
         {
             Debug.Log("Photon ya está conectado.");
@@ -68,6 +83,33 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.ConnectUsingSettings();
         Debug.Log("Conectando a Photon...");
+    }
+
+    /// <summary>
+    /// Llamar después del login: hace que Photon use el UID de Firebase
+    /// (necesario para amigos) y el nombre real del jugador.
+    /// Si ya estaba conectado con otro UserId, reconecta.
+    /// </summary>
+    public void ConfigurarUsuario(string uid, string nombre)
+    {
+        if (!string.IsNullOrWhiteSpace(nombre))
+        PhotonNetwork.NickName = nombre;
+        
+        if (PhotonNetwork.AuthValues != null && PhotonNetwork.AuthValues.UserId == uid)
+        return;
+        
+        PhotonNetwork.AuthValues = new AuthenticationValues(uid);
+        
+        if (PhotonNetwork.IsConnected)
+        {
+        if (PhotonNetwork.InRoom) return; // no cortar una partida
+        reconectarDespuesDeDesconexion = true;
+        PhotonNetwork.Disconnect();
+        }
+        else
+        {
+        Connect();
+        }
     }
 
     /// <summary>
@@ -91,5 +133,11 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarning("Photon desconectado: " + cause);
+
+        if (reconectarDespuesDeDesconexion)
+        {
+            Debug.Log("Intentando reconectar a Photon...");
+            Connect();
+        }
     }
 }

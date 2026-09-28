@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon;
+using Firebase;
 using UnityEngine;
 
 public class Panel_Amigos_UI : MonoBehaviour

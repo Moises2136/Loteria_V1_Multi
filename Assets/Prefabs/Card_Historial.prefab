@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 7869165564241167622}
   - component: {fileID: 1093453668356356275}
   - component: {fileID: 2515152896696914836}
+  - component: {fileID: 4640471678422431534}
   m_Layer: 5
   m_Name: Image_Card_H
   m_TagString: Untagged
@@ -231,6 +232,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4640471678422431534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2346118018722994741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fc18c2b2ee2cd1409accabe8a46df3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerRadius: 9.8
 --- !u!1 &4178994769499409910
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +348,6 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

@@ -264,7 +264,7 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
             textoNombreCartaActual.text = carta.nombre;
 
         AgregarHistorial(idCarta);
-        LeerCarta(carta.descripcion, carta.nombre);
+        LeerCarta(carta.nombre);
     }
 
     /// <summary>
@@ -503,22 +503,14 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Arma el texto a leer en voz alta (descripción seguida del nombre de la carta)
-    /// y se lo manda al sistema de texto a voz.
+    /// Lee en voz alta solo el nombre de la carta
     /// </summary>
-    /// <param name="descripcion">Descripción de la carta.</param>
     /// <param name="nombre">Nombre de la carta.</param>
-    void LeerCarta(string descripcion, string nombre)
-    {
-        if (ttsManager == null) return;
-        string txt = string.IsNullOrWhiteSpace(descripcion) ? "" : descripcion.Trim();
-        if (!string.IsNullOrWhiteSpace(nombre))
-        {
-            if (!string.IsNullOrWhiteSpace(txt)) txt += ". ";
-            txt += nombre.Trim();
-        }
-        ttsManager.SpeakText(txt);
-    }
+    void LeerCarta(string nombre)
+{
+    if (ttsManager == null || string.IsNullOrWhiteSpace(nombre)) return;
+    ttsManager.SpeakText(nombre.Trim());
+}
 
     void SalirAlMenu()
     {

@@ -14212,7 +14212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &753018346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43280,7 +43280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &8346295511228594166
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -55795,7 +55795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8346295511964345901
 RectTransform:
   m_ObjectHideFlags: 0
@@ -55867,8 +55867,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e165d6a6373ac4884fa66439afd416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pestanas: []
-  pestanaInicial: 0
+  pestanas:
+  - boton: {fileID: 0}
+    etiqueta: {fileID: 0}
+    panel: {fileID: 0}
+    sombra: {fileID: 0}
+  - boton: {fileID: 0}
+    etiqueta: {fileID: 0}
+    panel: {fileID: 0}
+    sombra: {fileID: 0}
+  - boton: {fileID: 0}
+    etiqueta: {fileID: 0}
+    panel: {fileID: 0}
+    sombra: {fileID: 0}
+  pestanaInicial: 1
   indicador: {fileID: 0}
   duracionAnimacion: 0.15
   colorActiva: {r: 0, g: 0, b: 0, a: 1}
@@ -58779,7 +58791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.002502}
+  m_AnchoredPosition: {x: 0, y: -61.002563}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269

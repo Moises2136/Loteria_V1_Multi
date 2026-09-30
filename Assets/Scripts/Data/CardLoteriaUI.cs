@@ -5,8 +5,9 @@ using TMPro;
 /// <summary>
 /// Este script controla cómo se ve una tarjeta de lotería en la pantalla
 /// (por ejemplo en una lista de loterías disponibles). Muestra su nombre,
-/// si es pública o privada, cuántas cartas tiene, su imagen de portada,
-/// y maneja los botones para editarla o jugarla.
+/// si es pública o privada, cuántas cartas tiene, una portada elegida de
+/// la carpeta local Resources/Portadas, y maneja los botones para editarla
+/// o jugarla.
 /// </summary>
 public class CardLoteriaUI : MonoBehaviour
 {
@@ -43,6 +44,16 @@ public class CardLoteriaUI : MonoBehaviour
     /// </summary>
     private DatosLoteria datosLoteria;
 
+    // =========================
+    // PORTADAS LOCALES
+    // =========================
+
+    /// <summary>
+    /// Portadas cargadas una sola vez desde Assets/Resources/Portadas
+    /// (compartidas por todas las tarjetas).
+    /// </summary>
+    private static Sprite[] portadas;
+
     /// <summary>
     /// Llena la tarjeta con la información de una lotería específica:
     /// su nombre, si es pública o privada, cuántas cartas tiene, su portada,
@@ -63,7 +74,11 @@ public class CardLoteriaUI : MonoBehaviour
             txtNumeroCartas.text = datos.cartas.Count.ToString();
 
         if (imgPortada != null)
-            imgPortada.sprite = datos.imagenPortada;
+        {
+            imgPortada.sprite = ObtenerPortada(datos.nombreLoteria);
+            imgPortada.color = Color.white;   // quita el tinte negro del prefab
+            imgPortada.preserveAspect = true;
+        }
 
         // Quitamos cualquier acción anterior antes de asignar la nueva,
         // así evitamos que el botón haga cosas duplicadas si esta tarjeta se reutiliza
@@ -78,6 +93,34 @@ public class CardLoteriaUI : MonoBehaviour
             btnJugar.onClick.RemoveAllListeners();
             btnJugar.onClick.AddListener(JugarLoteria);
         }
+    }
+
+    /// <summary>
+    /// Elige una portada de la carpeta Resources/Portadas. Usa el nombre de
+    /// la lotería para que cada lotería tenga siempre la misma portada
+    /// (no cambia cada vez que se abre la lista).
+    /// </summary>
+    /// <param name="clave">Texto con el que se elige la portada (ej. nombre de la lotería).</param>
+    /// <returns>Un sprite de la carpeta, o null si está vacía.</returns>
+    Sprite ObtenerPortada(string clave)
+    {
+        if (portadas == null)
+            portadas = Resources.LoadAll<Sprite>("Portadas");
+
+        if (portadas.Length == 0)
+        {
+            Debug.LogWarning("No hay imágenes en Assets/Resources/Portadas.");
+            return null;
+        }
+
+        int hash = 0;
+        foreach (char ch in clave ?? "")
+            hash = hash * 31 + ch;
+
+        return portadas[(hash & 0x7fffffff) % portadas.Length];
+
+        // Si prefieres una portada al azar cada vez, usa esta línea en lugar de la anterior:
+        // return portadas[Random.Range(0, portadas.Length)];
     }
 
     /// <summary>

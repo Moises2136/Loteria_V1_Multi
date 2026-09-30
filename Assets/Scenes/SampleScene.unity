@@ -49032,7 +49032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49873,8 +49873,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295511842948441}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3900001}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -53129,7 +53129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoteriaListManager
   contenedor: {fileID: 8346295512372522405}
   prefabLoteria: {fileID: 722344821977494424, guid: cf003e735a5f6ba488a667ecd23970e1, type: 3}
-  remoteImageLoader: {fileID: 973871202}
 --- !u!114 &8346295511801891890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54993,9 +54992,9 @@ RectTransform:
   m_Father: {fileID: 8346295513148943080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: -17}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8346295511902059445
 MonoBehaviour:
@@ -55985,7 +55984,7 @@ MonoBehaviour:
   mujerActivado: {fileID: 8346295511279974501}
   clipVozHombre: {fileID: 0}
   clipVozMujer: {fileID: 0}
-  ttsManager: {fileID: 8346295511892323496}
+  ttsManager: {fileID: 0}
   textoPrueba: "Bienvenido a la loter\xEDa mexicana de plantas medicinales."
   botonRegresar: {fileID: 540559599}
   panelAnterior: {fileID: 8346295512117702088}
@@ -58639,7 +58638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8346295512117702089
 RectTransform:
   m_ObjectHideFlags: 0
@@ -58926,7 +58925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.00244}
+  m_AnchoredPosition: {x: 0, y: -61.002075}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -74335,7 +74334,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295513123040141}
   m_HandleRect: {fileID: 8346295513123040140}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -74406,9 +74405,9 @@ RectTransform:
   m_Father: {fileID: 8346295513148943080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &8346295513041292710
 MonoBehaviour:
@@ -76083,8 +76082,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295513123157217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000059604645, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -77495,9 +77494,9 @@ RectTransform:
   m_Father: {fileID: 8346295513148943080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: -17}
+  m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &8346295513220195544
 MonoBehaviour:

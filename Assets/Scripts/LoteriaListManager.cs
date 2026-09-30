@@ -3,10 +3,10 @@ using UnityEngine;
 
 /// <summary>
 /// Muestra en el menú principal las tarjetas de las loterías jugadas
-/// recientemente (hasta 3), con su nombre real, cantidad de cartas, y
-/// una miniatura tomada de cualquiera de sus cartas. Los botones de
-/// Editar/Jugar de cada tarjeta no hacen nada todavía (se dejan tal
-/// cual vienen en CardLoteriaUI).
+/// recientemente (hasta 3), con su nombre real y cantidad de cartas.
+/// La portada de cada tarjeta la elige CardLoteriaUI desde la carpeta
+/// local Resources/Portadas. Los botones de Editar/Jugar de cada tarjeta
+/// no hacen nada todavía (se dejan tal cual vienen en CardLoteriaUI).
 /// </summary>
 public class LoteriaListManager : MonoBehaviour
 {
@@ -15,9 +15,6 @@ public class LoteriaListManager : MonoBehaviour
 
     /// <summary>Prefab de la tarjeta de lotería (debe tener CardLoteriaUI).</summary>
     public GameObject prefabLoteria;
-
-    /// <summary>Usado para descargar la imagen de miniatura de cada tarjeta.</summary>
-    public RemoteImageLoader remoteImageLoader;
 
     void Start()
     {
@@ -43,6 +40,7 @@ public class LoteriaListManager : MonoBehaviour
     /// Pide a Firestore los datos de una lotería reciente (nombre y sus
     /// cartas) para poder armar su tarjeta.
     /// </summary>
+    /// <param name="docId">ID de la lotería en Firestore.</param>
     void CargarUnaReciente(string docId)
     {
         if (FirestoreLoteriaService.Instance == null) return;
@@ -60,65 +58,29 @@ public class LoteriaListManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Crea la tarjeta visual de una lotería reciente: nombre, cantidad
-    /// de cartas, y una miniatura tomada de cualquiera de sus cartas.
+    /// Crea la tarjeta visual de una lotería reciente: nombre, si es pública
+    /// y cantidad de cartas. La portada la elige CardLoteriaUI.
     /// </summary>
+    /// <param name="nombre">Nombre de la lotería.</param>
+    /// <param name="esPublica">Si la lotería es pública o privada.</param>
+    /// <param name="cartas">Cartas de la lotería (se usan para contarlas).</param>
     void MostrarTarjeta(string nombre, bool esPublica, List<CartaData> cartas)
     {
-       if (contenedor == null || prefabLoteria == null) return;
+        if (contenedor == null || prefabLoteria == null) return;
 
-    GameObject nueva = Instantiate(prefabLoteria, contenedor);
-    CardLoteriaUI card = nueva.GetComponent<CardLoteriaUI>();
-    if (card == null) return;
+        GameObject nueva = Instantiate(prefabLoteria, contenedor);
+        CardLoteriaUI card = nueva.GetComponent<CardLoteriaUI>();
+        if (card == null) return;
 
-    DatosLoteria datos = new DatosLoteria
-    {
-        nombreLoteria = nombre,
-        esPublica = esPublica
-    };
-
-    foreach (var c in cartas)
-        datos.cartas.Add(new DatosCarta { nombreCarta = c.nombre });
-
-    card.Configurar(datos);
-
-    // Buscamos la primera carta que sí tenga imagen
-    string urlPortada = null;
-    foreach (var c in cartas)
-    {
-        if (!string.IsNullOrWhiteSpace(c.rutaImagen))
+        DatosLoteria datos = new DatosLoteria
         {
-            urlPortada = c.rutaImagen;
-            break;
-        }
-    }
+            nombreLoteria = nombre,
+            esPublica = esPublica
+        };
 
-    if (urlPortada == null)
-    {
-        Debug.LogWarning($"La lotería '{nombre}' no tiene cartas con imagen.");
-        return;
-    }
+        foreach (var c in cartas)
+            datos.cartas.Add(new DatosCarta { nombreCarta = c.nombre });
 
-    if (remoteImageLoader == null)
-    {
-        Debug.LogWarning("remoteImageLoader no está asignado en LoteriaListManager.");
-        return;
-    }
-
-    StartCoroutine(remoteImageLoader.LoadImage(urlPortada, card.imgPortada, sprite =>
-    {
-        if (card == null || card.imgPortada == null) return;
-
-        if (sprite != null)
-        {
-            card.imgPortada.sprite = sprite;
-            card.imgPortada.color = Color.white;   // quita el tinte negro
-            card.imgPortada.preserveAspect = true;
-        }
-        else
-        {
-            Debug.LogWarning("No se pudo descargar la portada: " + urlPortada);
-        }
-    }));
+        card.Configurar(datos);
     }
 }

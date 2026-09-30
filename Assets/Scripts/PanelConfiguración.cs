@@ -66,8 +66,8 @@ public class PanelConfiguración : MonoBehaviour
     // OPENAI TTS
     // =========================
 
-    /// <summary>Referencia al script que genera audio con OpenAI (texto a voz).</summary>
-    public OpenIAVoice ttsManager;
+    /// <summary>Referencia al script que genera audio con ElevenLabsTTs (texto a voz).</summary>
+    public ElevenLabsTTS ttsManager;
 
     /// <summary>Texto de ejemplo que se lee en voz alta al probar la voz.</summary>
     [TextArea] public string textoPrueba = "Bienvenido a la lotería mexicana de plantas medicinales.";
@@ -180,8 +180,8 @@ public class PanelConfiguración : MonoBehaviour
     /// </summary>
     void CargarConfiguracion()
     {
-        volumenActual = PlayerPrefs.GetFloat(KEY_VOLUMEN, 0f);
-        vozSeleccionada = PlayerPrefs.GetInt(KEY_VOZ, 0);
+        volumenActual = PlayerPrefs.GetFloat(KEY_VOLUMEN, 1f);
+        vozSeleccionada = PlayerPrefs.GetString("VOICE_TYPE", "female") == "male" ? 0 : 1;
     }
 
     /// <summary>
@@ -191,7 +191,6 @@ public class PanelConfiguración : MonoBehaviour
     void GuardarConfiguracion()
     {
         PlayerPrefs.SetFloat(KEY_VOLUMEN, volumenActual);
-        PlayerPrefs.SetInt(KEY_VOZ, vozSeleccionada);
         PlayerPrefs.Save();
     }
 
@@ -248,6 +247,8 @@ public class PanelConfiguración : MonoBehaviour
         vozSeleccionada = 0;
         AplicarEstadoVisualVoz();
         GuardarConfiguracion();
+        if (ttsManager != null) ttsManager.SetVoice("male");
+        else PlayerPrefs.SetString("VOICE_TYPE", "male");
     }
 
     /// <summary>
@@ -258,6 +259,8 @@ public class PanelConfiguración : MonoBehaviour
         vozSeleccionada = 1;
         AplicarEstadoVisualVoz();
         GuardarConfiguracion();
+        if (ttsManager != null) ttsManager.SetVoice("female");
+        else PlayerPrefs.SetString("VOICE_TYPE", "female");
     }
 
     /// <summary>
@@ -282,45 +285,37 @@ public class PanelConfiguración : MonoBehaviour
 
     /// <summary>
     /// Reproduce un texto de ejemplo usando la voz seleccionada. Primero
-    /// intenta generar el audio con OpenAI TTS (usando la voz "onyx" para
-    /// hombre o "nova" para mujer); si no hay un <see cref="ttsManager"/>
+    /// intenta generar el audio con ElevenLabs si no hay un <see cref="ttsManager"/>
     /// asignado, usa un clip de audio local guardado como respaldo.
     /// </summary>
     public void ProbarVozSeleccionada()
+{
+    if (ttsManager != null)
     {
-        string vozOpenAI = vozSeleccionada == 0 ? "onyx" : "nova";
-        string instrucciones = vozSeleccionada == 0
-            ? "Habla con voz clara, seria y natural en español."
-            : "Habla con voz cálida, clara y natural en español.";
-
-        // Uso de TTS online
-        if (ttsManager != null)
-        {
-            ttsManager.audioSource = audioSourcePrueba;
-            ttsManager.GenerarYReproducir(textoPrueba, vozOpenAI, instrucciones);
-            return;
-        }
-
-        // Respaldo local
-        if (audioSourcePrueba == null)
-        {
-            Debug.LogWarning("No asignaste audioSourcePrueba.");
-            return;
-        }
-
-        AudioClip clipAReproducir = vozSeleccionada == 0 ? clipVozHombre : clipVozMujer;
-
-        if (clipAReproducir == null)
-        {
-            Debug.LogWarning("No asignaste clip local y tampoco TTS online.");
-            return;
-        }
-
-        audioSourcePrueba.Stop();
-        audioSourcePrueba.clip = clipAReproducir;
-        audioSourcePrueba.volume = volumenActual;
-        audioSourcePrueba.Play();
+        ttsManager.SpeakText(textoPrueba);
+        return;
     }
+
+    // Respaldo local
+    if (audioSourcePrueba == null)
+    {
+        Debug.LogWarning("No asignaste audioSourcePrueba.");
+        return;
+    }
+
+    AudioClip clipAReproducir = vozSeleccionada == 0 ? clipVozHombre : clipVozMujer;
+
+    if (clipAReproducir == null)
+    {
+        Debug.LogWarning("No asignaste clip local y tampoco TTS.");
+        return;
+    }
+
+    audioSourcePrueba.Stop();
+    audioSourcePrueba.clip = clipAReproducir;
+    audioSourcePrueba.volume = volumenActual;
+    audioSourcePrueba.Play();
+}
 
     // =========================
     // NAVEGACIÓN

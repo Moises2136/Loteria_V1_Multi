@@ -68,8 +68,8 @@ public class MenuHamburguesaControl : MonoBehaviour
     /// <summary>Panel de clasificación (ranking).</summary>
     public GameObject panelClasificacion;
 
-    /// <summary>Panel de créditos.</summary>
-    public GameObject panelCreditos;
+    /// <summary>Panel de Logros.</summary>
+    public GameObject panelLogros;
 
     /// <summary>Panel de créditos alterno/final.</summary>
     public GameObject panelCreditosFinal;
@@ -178,7 +178,7 @@ public class MenuHamburguesaControl : MonoBehaviour
             panelConfiguracion,
             panelIdioma,
             panelClasificacion,
-            panelCreditos
+            panelLogros,
         };
     }
 

@@ -42,6 +42,20 @@ public class Panel_Amigos_UI : MonoBehaviourPunCallbacks
     public TMP_Text textoMensaje;
 
     // =========================
+    // NAVEGACIÓN
+    // =========================
+    
+    /// <summary>Botón (casita) para regresar al menú.</summary>
+    [Header("Botón regresar")]
+    public Button botonRegresar;
+    
+    /// <summary>Este mismo panel de amigos.</summary>
+    public GameObject panelAmigos;
+    
+    /// <summary>Panel del menú principal, al que se regresa.</summary>
+    public GameObject panelMenu;
+
+    // =========================
     // LISTA
     // =========================
 
@@ -91,6 +105,12 @@ public class Panel_Amigos_UI : MonoBehaviourPunCallbacks
         {
             botonCopiar.onClick.RemoveAllListeners();
             botonCopiar.onClick.AddListener(CopiarCodigo);
+        }
+
+        if (botonRegresar != null)
+        {
+            botonRegresar.onClick.RemoveAllListeners();
+            botonRegresar.onClick.AddListener(Regresar);
         }
 
         if (inputCodigo != null)
@@ -347,6 +367,13 @@ public class Panel_Amigos_UI : MonoBehaviourPunCallbacks
 
         GUIUtility.systemCopyBuffer = codigo;
         SetMensaje("Código copiado.");
+    }
+
+    /// <summary>Cierra el panel de amigos y regresa al menú principal.</summary>
+    public void Regresar()
+    {
+        if (panelAmigos != null) panelAmigos.SetActive(false);
+        if (panelMenu != null) panelMenu.SetActive(true);
     }
 
     void SetMensaje(string msg)

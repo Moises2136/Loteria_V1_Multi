@@ -68,7 +68,7 @@ public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
         FirebaseUser user = FirebaseAuth.DefaultInstance.CurrentUser;
 
-        if (user == null)
+        if (user != null)
         {
             PhotonNetwork.AuthValues = new AuthenticationValues(user.UserId);
         }

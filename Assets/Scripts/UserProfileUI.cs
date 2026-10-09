@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -121,6 +122,20 @@ public class UserProfileUI : MonoBehaviour
 
     /// <summary>Botón para cancelar el cambio de contraseña.</summary>
     public Button btnCancelarPassword;
+
+    // =========================
+    // FONDO Y TRANSICIÓN DE SUBPANELES
+    // =========================
+     
+    /// <summary>Fondo oscuro semitransparente que aparece detrás de los subpaneles de edición.</summary>
+    [Header("Fondo y transición de subpaneles")]
+    public GameObject fondoOscuro;
+    
+    /// <summary>Duración del fade al abrir/cerrar subpaneles (0 = instantáneo).</summary>
+    [Min(0f)] public float duracionFade = 0.2f;
+    
+    /// <summary>Animación en curso, para cortarla si se abre/cierra otra.</summary>
+    private Coroutine rutinaFade;
 
     // =========================
     // PANELES PRINCIPALES
@@ -424,19 +439,10 @@ public class UserProfileUI : MonoBehaviour
     {
         SetEstado("");
 
-        string usernameActual = PlayerPrefs.GetString("usuario", "");
-
         if (inputNuevoUsername != null)
-            inputNuevoUsername.text = usernameActual;
+            inputNuevoUsername.text = PlayerPrefs.GetString("usuario", "");
 
-        if (panelCambiarUsername != null)
-            panelCambiarUsername.SetActive(true);
-
-        if (panelCambiarCorreo != null)
-            panelCambiarCorreo.SetActive(false);
-
-        if (panelCambiarPassword != null)
-            panelCambiarPassword.SetActive(false);
+        MostrarSubpanel(panelCambiarUsername);
     }
 
     /// <summary>
@@ -444,9 +450,7 @@ public class UserProfileUI : MonoBehaviour
     /// </summary>
     void CerrarPanelCambiarUsername()
     {
-        if (panelCambiarUsername != null)
-            panelCambiarUsername.SetActive(false);
-
+        CerrarSubpaneles();
         SetEstado("");
     }
 
@@ -594,14 +598,7 @@ public class UserProfileUI : MonoBehaviour
         if (inputNuevoCorreo != null)
             inputNuevoCorreo.text = correoActual;
 
-        if (panelCambiarCorreo != null)
-            panelCambiarCorreo.SetActive(true);
-
-        if (panelCambiarUsername != null)
-            panelCambiarUsername.SetActive(false);
-
-        if (panelCambiarPassword != null)
-            panelCambiarPassword.SetActive(false);
+        MostrarSubpanel(panelCambiarCorreo);
     }
 
     /// <summary>
@@ -609,9 +606,7 @@ public class UserProfileUI : MonoBehaviour
     /// </summary>
     void CerrarPanelCambiarCorreo()
     {
-        if (panelCambiarCorreo != null)
-            panelCambiarCorreo.SetActive(false);
-
+        CerrarSubpaneles();
         SetEstado("");
     }
 
@@ -798,14 +793,7 @@ public class UserProfileUI : MonoBehaviour
         SetEstado("");
         LimpiarInputsPassword();
 
-        if (panelCambiarPassword != null)
-            panelCambiarPassword.SetActive(true);
-
-        if (panelCambiarUsername != null)
-            panelCambiarUsername.SetActive(false);
-
-        if (panelCambiarCorreo != null)
-            panelCambiarCorreo.SetActive(false);
+        MostrarSubpanel(panelCambiarPassword);
     }
 
     /// <summary>
@@ -814,9 +802,7 @@ public class UserProfileUI : MonoBehaviour
     /// </summary>
     void CerrarPanelCambiarPassword()
     {
-        if (panelCambiarPassword != null)
-            panelCambiarPassword.SetActive(false);
-
+        CerrarSubpaneles();
         LimpiarInputsPassword();
         SetEstado("");
     }
@@ -971,17 +957,6 @@ public class UserProfileUI : MonoBehaviour
         if (panelLogin != null)
             panelLogin.SetActive(true);
 
-        if (panelCambiarUsername != null)
-            panelCambiarUsername.SetActive(false);
-
-        if (panelCambiarCorreo != null)
-            panelCambiarCorreo.SetActive(false);
-
-        if (panelCambiarPassword != null)
-            panelCambiarPassword.SetActive(false);
-
-        if (panelLogin != null)
-            panelLogin.SetActive(true);
     }
 
     /// <summary>
@@ -1019,19 +994,138 @@ public class UserProfileUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Oculta los tres paneles secundarios (cambiar username, correo y contraseña),
+/// Abre un subpanel de edición con el fondo oscuro, ambos con fade.
+/// Los otros subpaneles se apagan al instante.
+/// </summary>
+/// <param name="panel">Subpanel a mostrar.</param>
+void MostrarSubpanel(GameObject panel)
+{
+    if (panel == null) return;
+
+    foreach (GameObject p in Subpaneles())
+    {
+        if (p != null && p != panel)
+        {
+            RestaurarAlpha(p);
+            p.SetActive(false);
+        }
+    }
+
+    if (duracionFade <= 0f || !isActiveAndEnabled)
+    {
+        if (fondoOscuro != null) fondoOscuro.SetActive(true);
+        panel.SetActive(true);
+        return;
+    }
+
+    if (rutinaFade != null) StopCoroutine(rutinaFade);
+    rutinaFade = StartCoroutine(Fade(true, panel));
+}
+
+/// <summary>Cierra con fade el subpanel abierto y el fondo oscuro.</summary>
+void CerrarSubpaneles()
+{
+    if (duracionFade <= 0f || !isActiveAndEnabled)
+    {
+        OcultarPanelesInternos();
+        return;
+    }
+
+    if (rutinaFade != null) StopCoroutine(rutinaFade);
+    rutinaFade = StartCoroutine(Fade(false, null));
+}
+
+/// <summary>
+/// Anima el alpha del fondo y del subpanel. Al mostrar: de transparente a visible.
+/// Al cerrar: de visible a transparente y luego los apaga.
+/// </summary>
+IEnumerator Fade(bool mostrar, GameObject panel)
+{
+    var objetos = new List<GameObject>();
+    if (fondoOscuro != null) objetos.Add(fondoOscuro);
+
+    if (mostrar)
+        objetos.Add(panel);
+    else
+        foreach (GameObject p in Subpaneles())
+            if (p != null && p.activeSelf) objetos.Add(p);
+
+    var grupos = new List<CanvasGroup>();
+    foreach (GameObject obj in objetos)
+    {
+        CanvasGroup cg = ObtenerCanvasGroup(obj);
+
+        if (mostrar && !obj.activeSelf)
+        {
+            cg.alpha = 0f;          // solo empieza en 0 si estaba apagado (evita parpadeo del fondo)
+            obj.SetActive(true);
+        }
+
+        cg.blocksRaycasts = false;  // sin toques durante la animación
+        grupos.Add(cg);
+    }
+
+    var inicio = new List<float>();
+    foreach (CanvasGroup cg in grupos) inicio.Add(cg.alpha);
+
+    float destino = mostrar ? 1f : 0f;
+
+    for (float t = 0f; t < duracionFade; t += Time.unscaledDeltaTime)
+    {
+        float p = Mathf.SmoothStep(0f, 1f, t / duracionFade);
+        for (int i = 0; i < grupos.Count; i++)
+            grupos[i].alpha = Mathf.Lerp(inicio[i], destino, p);
+
+        yield return null;
+    }
+
+    for (int i = 0; i < grupos.Count; i++)
+    {
+        grupos[i].alpha = 1f;
+        grupos[i].blocksRaycasts = true;
+
+        if (!mostrar)
+            objetos[i].SetActive(false);
+    }
+
+    rutinaFade = null;
+}
+
+GameObject[] Subpaneles() =>
+    new[] { panelCambiarUsername, panelCambiarCorreo, panelCambiarPassword };
+
+CanvasGroup ObtenerCanvasGroup(GameObject obj) =>
+    obj.TryGetComponent(out CanvasGroup cg) ? cg : obj.AddComponent<CanvasGroup>();
+
+void RestaurarAlpha(GameObject obj)
+{
+    if (obj != null && obj.TryGetComponent(out CanvasGroup cg))
+    {
+        cg.alpha = 1f;
+        cg.blocksRaycasts = true;
+    }
+}
+
+    /// <summary>
+    /// Apaga al instante los tres subpaneles y el fondo oscuro,
     /// dejando visible solo el perfil principal.
     /// </summary>
     void OcultarPanelesInternos()
     {
-        if (panelCambiarUsername != null)
-            panelCambiarUsername.SetActive(false);
+            if (rutinaFade != null)
+            {
+                StopCoroutine(rutinaFade);
+                rutinaFade = null;
+            }
 
-        if (panelCambiarCorreo != null)
-            panelCambiarCorreo.SetActive(false);
+        foreach (GameObject p in Subpaneles())
+        {
+            RestaurarAlpha(p);
+            if (p != null) p.SetActive(false);
+        }
 
-        if (panelCambiarPassword != null)
-            panelCambiarPassword.SetActive(false);
+        RestaurarAlpha(fondoOscuro);
+        if (fondoOscuro != null) fondoOscuro.SetActive(false);
     }
 
     /// <summary>

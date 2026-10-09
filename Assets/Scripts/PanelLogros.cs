@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,6 +18,12 @@ public class PanelLogros : MonoBehaviour
 {
     /// <summary>Qué estadística se usa para medir el progreso de un logro.</summary>
     public enum TipoCondicion { PartidasJugadas, PartidasGanadas }
+
+    /// <summary>Duración del fade al abrir/cerrar el popup (0 = instantáneo).</summary>
+    [Min(0f)] public float duracionFade = 0.2f;
+
+    /// <summary>Animación en curso, para cortarla si se abre/cierra otra.</summary>
+    private Coroutine rutinaFade;
 
     /// <summary>
     /// Un logro configurable desde el Inspector: su nombre, cómo se desbloquea,
@@ -109,7 +117,7 @@ public class PanelLogros : MonoBehaviour
     /// </summary>
     void OnEnable()
     {
-        CerrarDetalle();
+        CerrarDetalleInstantaneo();
         PintarLogros();
         CargarStats();
     }
@@ -188,12 +196,115 @@ public class PanelLogros : MonoBehaviour
         if (txtEstado != null)
             txtEstado.text = l.desbloqueado ? "¡Desbloqueado!" : $"Progreso: {progreso}/{l.meta}";
 
-        if (panelDetalle != null) panelDetalle.SetActive(true);
+        if (duracionFade <= 0f || !isActiveAndEnabled)
+        {
+            foreach (GameObject obj in ObjetosPopup()) obj.SetActive(true);
+            return;
+        }
+
+        IniciarFade(true);
     }
 
+    /// <summary>Cierra el popup con fade (lo llama el fondo oscuro).</summary>
     void CerrarDetalle()
     {
-        if (panelDetalle != null) panelDetalle.SetActive(false);
+        bool abierto = panelDetalle != null && panelDetalle.activeSelf;
+
+        if (duracionFade <= 0f || !isActiveAndEnabled || !abierto)
+        {
+            CerrarDetalleInstantaneo();
+            return;
+        }
+
+        IniciarFade(false);
+    }
+
+    /// <summary>Apaga el popup y el fondo al instante, dejando su alpha listo para la próxima vez.</summary>
+    void CerrarDetalleInstantaneo()
+    {
+        if (rutinaFade != null)
+        {
+            StopCoroutine(rutinaFade);
+            rutinaFade = null;
+        }
+
+        foreach (GameObject obj in ObjetosPopup())
+        {
+            RestaurarAlpha(obj);
+            obj.SetActive(false);
+        }
+    }
+
+    void IniciarFade(bool mostrar)
+    {
+        if (rutinaFade != null) StopCoroutine(rutinaFade);
+            rutinaFade = StartCoroutine(Fade(mostrar));
+    }
+
+    /// <summary>
+    /// Anima el alpha del fondo oscuro y del popup. Al mostrar: de transparente a visible.
+    /// Al cerrar: de visible a transparente y luego los apaga.
+    /// </summary>
+    IEnumerator Fade(bool mostrar)
+    {
+        List<GameObject> objetos = ObjetosPopup();
+        var grupos = new List<CanvasGroup>();
+        var inicio = new List<float>();
+
+        foreach (GameObject obj in objetos)
+        {
+            CanvasGroup cg = obj.TryGetComponent(out CanvasGroup c) ? c : obj.AddComponent<CanvasGroup>();
+
+            if (mostrar && !obj.activeSelf)
+            {
+                cg.alpha = 0f;
+                obj.SetActive(true);
+            }
+
+            cg.blocksRaycasts = false;   // sin toques durante la animación
+            grupos.Add(cg);
+            inicio.Add(cg.alpha);
+        }
+
+        float destino = mostrar ? 1f : 0f;
+
+        for (float t = 0f; t < duracionFade; t += Time.unscaledDeltaTime)
+        {
+            float p = Mathf.SmoothStep(0f, 1f, t / duracionFade);
+            for (int i = 0; i < grupos.Count; i++)
+                grupos[i].alpha = Mathf.Lerp(inicio[i], destino, p);
+
+            yield return null;
+        }
+
+        for (int i = 0; i < grupos.Count; i++)
+        {
+            grupos[i].alpha = 1f;
+            grupos[i].blocksRaycasts = true;
+
+            if (!mostrar)
+                objetos[i].SetActive(false);
+        }
+
+        rutinaFade = null;
+    }
+
+    /// <summary>El fondo oscuro (el objeto del botón) y el popup.</summary>
+    List<GameObject> ObjetosPopup()
+    {
+        var lista = new List<GameObject>();
+        if (btnFondoOscuro != null) lista.Add(btnFondoOscuro.gameObject);
+        if (panelDetalle != null) lista.Add(panelDetalle);
+        return lista;
+    }
+
+    void RestaurarAlpha(GameObject obj)
+    {
+        if (obj != null && obj.TryGetComponent(out CanvasGroup cg))
+        {
+            cg.alpha = 1f;
+            cg.blocksRaycasts = true;
+        }
     }
 
     // =========================

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -108,6 +109,28 @@ public class LanguageManager : MonoBehaviour
 
     /// <summary>Llave usada para guardar el idioma elegido en PlayerPrefs.</summary>
     private const string LANGUAGE_KEY = "GAME_LANGUAGE";
+
+    // =========================
+    // TRANSICION DE IDIOMA 
+    // =========================
+
+    /// <summary>
+    /// Duración de cada mitad de la transición (desvanecer y aparecer).
+    /// La transición completa dura el doble. En 0, el cambio es instantáneo.
+    /// </summary>
+    
+    [Header("Transición al cambiar idioma")]
+    [Min(0f)] public float duracionTransicion = 0.2f;
+    
+    ///<summary>Transición en curso, para poder reiniciarla si se cambia de idioma a media animación.</summary>
+     
+    private Coroutine rutinaTransicion;
+    
+    /// <summary>
+    /// Alpha original de cada texto. Se guarda la primera vez para que, si una
+    /// transición se interrumpe, los textos no se queden medio transparentes.
+    /// </summary>
+    private readonly Dictionary<TMP_Text, float> alfaOriginal = new Dictionary<TMP_Text, float>();
 
     /// <summary>
     /// Se ejecuta al cargar el script. Aquí se asegura de que solo exista
@@ -320,12 +343,118 @@ public class LanguageManager : MonoBehaviour
     /// <param name="newLanguage">El nuevo idioma a activar.</param>
     public void SetLanguage(Language newLanguage)
     {
-        currentLanguage = newLanguage;
+    currentLanguage = newLanguage;
+    SaveLanguage();
 
-        Debug.Log("Idioma cambiado a: " + currentLanguage);
+    Debug.Log("Idioma cambiado a: " + currentLanguage);
 
-        SaveLanguage();
+    if (duracionTransicion <= 0f || !isActiveAndEnabled)
+    {
         ApplyLanguage();
+        return;
+    }
+
+    if (rutinaTransicion != null)
+        StopCoroutine(rutinaTransicion);
+
+    rutinaTransicion = StartCoroutine(TransicionIdioma());
+    }
+
+    /// <summary>
+    /// Desvanece todos los textos traducibles, aplica el nuevo idioma
+    /// y los vuelve a mostrar suavemente.
+    /// </summary>
+    
+    private IEnumerator TransicionIdioma()
+    {
+    List<TMP_Text> textos = ObtenerTextosAnimables();
+
+    foreach (TMP_Text t in textos)
+    {
+        if (!alfaOriginal.ContainsKey(t))
+            alfaOriginal[t] = t.alpha;
+    }
+
+    // 1) Desvanecer
+    yield return Fundir(textos, false);
+
+    // 2) Cambiar textos (invisibles)
+    ApplyLanguage();
+
+    // ApplyLanguage le pone color con alpha 1 a los botones de idioma; los regresamos a 0
+    foreach (TMP_Text t in textos)
+    {
+        if (t != null) t.alpha = 0f;
+    }
+
+    // 3) Aparecer
+    yield return Fundir(textos, true);
+
+    rutinaTransicion = null;
+    }
+    
+    /// <summary>
+    /// Anima el alpha de los textos: hacia 0 (desvanecer) o hacia su alpha original (aparecer).
+    /// </summary>
+    /// <param name="textos">Textos a animar.</param>
+    /// <param name="aparecer">true = aparecer, false = desvanecer.</param>
+    
+    private IEnumerator Fundir(List<TMP_Text> textos, bool aparecer)
+    {
+    var inicio = new Dictionary<TMP_Text, float>();
+    foreach (TMP_Text t in textos)
+    {
+        if (t != null) inicio[t] = t.alpha;
+    }
+
+    for (float tiempo = 0f; tiempo < duracionTransicion; tiempo += Time.unscaledDeltaTime)
+    {
+        float p = Mathf.SmoothStep(0f, 1f, tiempo / duracionTransicion);
+
+        foreach (TMP_Text t in textos)
+        {
+            if (t == null) continue;
+            float destino = aparecer ? alfaOriginal[t] : 0f;
+            t.alpha = Mathf.Lerp(inicio[t], destino, p);
+        }
+
+        yield return null;
+    }
+
+    foreach (TMP_Text t in textos)
+    {
+        if (t != null) t.alpha = aparecer ? alfaOriginal[t] : 0f;
+    }
+    }
+    
+    /// <summary>
+    /// Junta todos los textos que cambian con el idioma: los de la lista,
+    /// los de los botones de idioma y las etiquetas de los dropdowns.
+    /// </summary>
+    private List<TMP_Text> ObtenerTextosAnimables()
+    {
+    var lista = new List<TMP_Text>();
+
+    foreach (LocalizedText item in localizedTexts)
+    {
+        if (item != null && item.tmpText != null)
+            lista.Add(item.tmpText);
+    }
+
+    AgregarSiExiste(lista, spanishButton?.tmpText);
+    AgregarSiExiste(lista, englishButton?.tmpText);
+    AgregarSiExiste(lista, frenchButton?.tmpText);
+    AgregarSiExiste(lista, italianButton?.tmpText);
+    AgregarSiExiste(lista, dropdownLabelInicio);
+    AgregarSiExiste(lista, dropdownLabelRegistro);
+
+    return lista;
+    }
+    
+    private void AgregarSiExiste(List<TMP_Text> lista, TMP_Text texto)
+    {
+    if (texto != null && !lista.Contains(texto))
+        lista.Add(texto);
     }
 
     /// <summary>

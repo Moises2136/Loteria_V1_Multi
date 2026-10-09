@@ -126,14 +126,8 @@ public class UserProfileUI : MonoBehaviour
     // PANELES PRINCIPALES
     // =========================
 
-    /// <summary>Panel completo del perfil.</summary>
-    [Header("Paneles principales")]
-    public GameObject panelPerfil;
-
-    /// <summary>Panel del menú principal del juego.</summary>
-    public GameObject panelMenu;
-
     /// <summary>Panel de inicio de sesión (se muestra al cerrar sesión).</summary>
+    [Header("Paneles principales")]
     public GameObject panelLogin;
 
     // =========================
@@ -228,6 +222,7 @@ public class UserProfileUI : MonoBehaviour
     /// </summary>
     void ConfigurarBotones()
     {
+
         if (btnRegresar != null)
         {
             btnRegresar.onClick.RemoveAllListeners();
@@ -408,11 +403,13 @@ public class UserProfileUI : MonoBehaviour
     /// </summary>
     void RegresarMenu()
     {
-        if (panelPerfil != null)
-            panelPerfil.SetActive(false);
+        OcultarPanelesInternos();
+        
+        if (ScreensManage.Instance != null)
+        {
+            ScreensManage.Instance.ShowMenu();
+        }
 
-        if (panelMenu != null)
-            panelMenu.SetActive(true);
     }
 
     // =========================
@@ -966,6 +963,13 @@ public class UserProfileUI : MonoBehaviour
         auth.SignOut();
 
         LimpiarDatosLocalesSesion();
+        OcultarPanelesInternos();
+
+        if (ScreensManage.Instance != null)
+            ScreensManage.Instance.OcultarTodos();
+        
+        if (panelLogin != null)
+            panelLogin.SetActive(true);
 
         if (panelCambiarUsername != null)
             panelCambiarUsername.SetActive(false);
@@ -975,12 +979,6 @@ public class UserProfileUI : MonoBehaviour
 
         if (panelCambiarPassword != null)
             panelCambiarPassword.SetActive(false);
-
-        if (panelPerfil != null)
-            panelPerfil.SetActive(false);
-
-        if (panelMenu != null)
-            panelMenu.SetActive(false);
 
         if (panelLogin != null)
             panelLogin.SetActive(true);

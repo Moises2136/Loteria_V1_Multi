@@ -4097,7 +4097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -8956,7 +8956,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -10254,7 +10254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -11849,7 +11849,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Seleccionar loter\xEDa"
+  m_text: Modalidad de Juego
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -12422,7 +12422,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -13180,7 +13180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -14509,7 +14509,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -20088,7 +20088,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -20224,7 +20224,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -22166,7 +22166,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -26491,7 +26491,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -27434,7 +27434,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -28888,7 +28888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -30152,7 +30152,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -30550,7 +30550,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -32331,17 +32331,17 @@ MonoBehaviour:
   panelConfig: {fileID: 8346295511964345900}
   panelResultadosRatio: {fileID: 8346295512359749027}
   panelAmigos: {fileID: 8346295512592763168}
+  panelIdioma: {fileID: 8346295513065191515}
   panelLogros: {fileID: 8346295511895371557}
   panelCreditos: {fileID: 8346295512275847257}
-  btnMenu: {fileID: 0}
   btnPerfil: {fileID: 0}
   btnConfig: {fileID: 0}
-  btnResultadosRatio: {fileID: 0}
+  btnClasificacion: {fileID: 0}
   btnAmigos: {fileID: 0}
+  btnIdioma: {fileID: 0}
   btnLogros: {fileID: 0}
   btnCreditos: {fileID: 0}
-  btnCerrarSesion: {fileID: 0}
-  btnSalir: {fileID: 0}
+  botonesRegresar: []
 --- !u!1 &1751537308
 GameObject:
   m_ObjectHideFlags: 0
@@ -34182,7 +34182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -34637,7 +34637,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -35304,7 +35304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -35576,7 +35576,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -38085,7 +38085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1968239120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41408,7 +41408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -44253,6 +44253,8 @@ MonoBehaviour:
   btnClasificacion: {fileID: 8346295512041738294}
   btnIdioma: {fileID: 1988628417}
   btnCreditos: {fileID: 8346295512359617492}
+  btnAmigos: {fileID: 136390066}
+  btnLogros: {fileID: 8346295512359617492}
   btnCreditosFinal: {fileID: 8346295511438749340}
   btnCerrarSesion: {fileID: 8346295512047282272}
   panelPerfil: {fileID: 8346295511956919343}
@@ -49258,7 +49260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49938,17 +49940,17 @@ MonoBehaviour:
   panelConfig: {fileID: 8346295511964345900}
   panelResultadosRatio: {fileID: 8346295512359749027}
   panelAmigos: {fileID: 8346295512592763168}
+  panelIdioma: {fileID: 8346295513065191515}
   panelLogros: {fileID: 8346295511895371557}
   panelCreditos: {fileID: 8346295512275847257}
-  btnMenu: {fileID: 0}
   btnPerfil: {fileID: 0}
   btnConfig: {fileID: 0}
-  btnResultadosRatio: {fileID: 0}
+  btnClasificacion: {fileID: 0}
   btnAmigos: {fileID: 0}
+  btnIdioma: {fileID: 0}
   btnLogros: {fileID: 0}
   btnCreditos: {fileID: 0}
-  btnCerrarSesion: {fileID: 0}
-  btnSalir: {fileID: 0}
+  botonesRegresar: []
 --- !u!224 &8346295511582974160
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50099,7 +50101,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295511842948441}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.39000005}
+  m_AnchorMin: {x: 0, y: 0.3900001}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -54692,7 +54694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511882024444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55920,8 +55922,6 @@ MonoBehaviour:
   inputConfirmarNuevaPassword: {fileID: 103389679}
   btnGuardarPassword: {fileID: 1849816688}
   btnCancelarPassword: {fileID: 944693005}
-  panelPerfil: {fileID: 8346295511956919343}
-  panelMenu: {fileID: 8346295512117702088}
   panelLogin: {fileID: 8346295512607765465}
 --- !u!224 &8346295511963507410
 RectTransform:
@@ -59151,7 +59151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.001892}
+  m_AnchoredPosition: {x: 0, y: -61.00244}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -60404,7 +60404,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -62244,6 +62244,7 @@ MonoBehaviour:
   dropdownFlagRegistro: {fileID: 623709019}
   activeTextColor: {r: 0.47, g: 0.71, b: 0.21, a: 1}
   inactiveTextColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  duracionTransicion: 0.2
 --- !u!224 &8346295512311510954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -69040,7 +69041,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "N\xFAmero de jugadores "
+  m_text: Modalidad de Juego
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -70779,7 +70780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8346295512820174015
 RectTransform:
   m_ObjectHideFlags: 0
@@ -74562,7 +74563,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8346295513123040140}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -76309,8 +76310,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295513123157217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000059604645, y: 0}
-  m_AnchorMax: {x: 0.99999994, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -76556,8 +76557,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295512665362574}
   m_HandleRect: {fileID: 8346295512665362561}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -77650,8 +77651,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295511597421377}
   m_HandleRect: {fileID: 8346295511597421376}
   m_Direction: 2
-  m_Value: 1.0000002
-  m_Size: 0.60999995
+  m_Value: 1
+  m_Size: 0.6099999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -79607,6 +79608,7 @@ GameObject:
   - component: {fileID: 8346295513294817664}
   - component: {fileID: 8346295513294817667}
   - component: {fileID: 8346295513294817666}
+  - component: {fileID: 8346295513294817670}
   m_Layer: 5
   m_Name: LoteriaName
   m_TagString: Untagged
@@ -79634,6 +79636,18 @@ RectTransform:
   m_AnchoredPosition: {x: 6, y: 614}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8346295513294817670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513294817668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8346295513299173713
 GameObject:
   m_ObjectHideFlags: 0

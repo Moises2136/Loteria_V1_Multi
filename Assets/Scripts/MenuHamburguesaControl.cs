@@ -39,6 +39,12 @@ public class MenuHamburguesaControl : MonoBehaviour
     /// <summary>Botón para abrir el panel de créditos.</summary>
     public Button btnCreditos;
 
+    /// <summary>Botón para abrir el panel de amigos.</summary>
+    public Button btnAmigos;
+    
+    /// <summary>Botón para abrir el panel de logros.</summary>
+    public Button btnLogros;
+
     /// <summary>Botón para abrir un panel de créditos alterno/final.</summary>
     public Button btnCreditosFinal;
 
@@ -177,42 +183,55 @@ public class MenuHamburguesaControl : MonoBehaviour
     }
 
     /// <summary>
-    /// Conecta el botón principal (abrir/cerrar menú), cada botón de
-    /// navegación con su panel correspondiente, el botón de cerrar sesión,
-    /// y el botón invisible del fondo.
-    /// </summary>
-    void AsignarListeners()
+/// Conecta el botón de abrir/cerrar menú, cada botón de navegación con su
+/// panel (tomado de ScreensManage), cerrar sesión y el fondo oscuro.
+/// </summary>
+void AsignarListeners()
+{
+    if (btnAbrirMenu != null)
     {
-        if (btnAbrirMenu != null)
-        {
-            btnAbrirMenu.onClick.RemoveAllListeners();
-            btnAbrirMenu.onClick.AddListener(ToggleMenu);
-        }
-
-        if (btnPerfil != null)
-            btnPerfil.onClick.AddListener(() => AbrirPanelDesdeMenu(panelPerfil));
-
-        if (btnConfiguracion != null)
-            btnConfiguracion.onClick.AddListener(() => AbrirPanelDesdeMenu(panelConfiguracion));
-
-        if (btnClasificacion != null)
-            btnClasificacion.onClick.AddListener(() => AbrirPanelDesdeMenu(panelClasificacion));
-
-        if (btnCreditos != null)
-            btnCreditos.onClick.AddListener(() => AbrirPanelDesdeMenu(panelCreditos));
-
-        if (btnIdioma != null)
-            btnIdioma.onClick.AddListener(() => AbrirPanelDesdeMenu(panelIdioma));
-
-        if (btnCreditosFinal != null)
-            btnCreditosFinal.onClick.AddListener(() => AbrirPanelDesdeMenu(panelCreditosFinal));
-
-        if (btnCerrarSesion != null)
-            btnCerrarSesion.onClick.AddListener(CerrarSesion);
-
-        if (btnFondoCerrar != null)
-            btnFondoCerrar.onClick.AddListener(CerrarMenu);
+        btnAbrirMenu.onClick.RemoveAllListeners();
+        btnAbrirMenu.onClick.AddListener(ToggleMenu);
     }
+
+    Conectar(btnPerfil,        () => ScreensManage.Instance.panelPerfil);
+    Conectar(btnConfiguracion, () => ScreensManage.Instance.panelConfig);
+    Conectar(btnClasificacion, () => ScreensManage.Instance.panelResultadosRatio);
+    Conectar(btnAmigos,        () => ScreensManage.Instance.panelAmigos);
+    Conectar(btnIdioma,        () => ScreensManage.Instance.panelIdioma);
+    Conectar(btnLogros,        () => ScreensManage.Instance.panelLogros);
+    Conectar(btnCreditos,      () => ScreensManage.Instance.panelCreditos);
+
+    if (btnCerrarSesion != null)
+    {
+        btnCerrarSesion.onClick.RemoveAllListeners();
+        btnCerrarSesion.onClick.AddListener(CerrarSesion);
+    }
+
+    if (btnFondoCerrar != null)
+    {
+        btnFondoCerrar.onClick.RemoveAllListeners();
+        btnFondoCerrar.onClick.AddListener(CerrarMenu);
+    }
+}
+
+/// <summary>
+/// Hace que un botón del menú abra un panel de ScreensManage.
+/// El panel se busca al momento del clic, no al iniciar.
+/// </summary>
+/// <param name="boton">Botón del menú lateral.</param>
+/// <param name="panel">Función que devuelve el panel a abrir.</param>
+void Conectar(Button boton, System.Func<GameObject> panel)
+{
+    if (boton == null) return;
+
+    boton.onClick.RemoveAllListeners();
+    boton.onClick.AddListener(() =>
+    {
+        if (ScreensManage.Instance != null)
+            AbrirPanelDesdeMenu(panel());
+    });
+}
 
     /// <summary>
     /// Deja el menú de golpe en su posición cerrada, sin animación, y
@@ -336,31 +355,24 @@ public class MenuHamburguesaControl : MonoBehaviour
     // =========================
 
     /// <summary>
-    /// Cierra todos los paneles de contenido del menú, abre únicamente
-    /// el panel indicado, y cierra el menú lateral.
-    /// </summary>
-    /// <param name="panelToOpen">El panel que se quiere mostrar.</param>
-    void AbrirPanelDesdeMenu(GameObject panelToOpen)
-    {
-        foreach (GameObject panel in allPanels)
-        {
-            if (panel != null)
-                panel.SetActive(false);
-        }
+/// Cierra el menú lateral al instante y muestra el panel indicado
+/// a través de ScreensManage (que oculta todos los demás, incluido el menú).
+/// </summary>
+/// <param name="panelToOpen">El panel que se quiere mostrar.</param>
+void AbrirPanelDesdeMenu(GameObject panelToOpen)
+{
+    ForzarEstadoInicial();  
 
-        if (panelToOpen != null)
-            panelToOpen.SetActive(true);
-
-        CerrarMenu();
-    }
+    if (ScreensManage.Instance != null)
+        ScreensManage.Instance.ShowPanel(panelToOpen);
+}
 
     /// <summary>
     /// Cierra todos los paneles de contenido, oculta el menú principal,
     /// muestra la pantalla de inicio de sesión, cierra el menú lateral y cierra la sesión de Firebase.
     /// </summary>
-    void CerrarSesion()
-    {
-    // NUEVO: cerramos la sesión real de Firebase, y limpiamos los datos locales
+void CerrarSesion()
+{
     FirebaseAuth.DefaultInstance.SignOut();
 
     PlayerPrefs.DeleteKey("nombreCompleto");
@@ -369,18 +381,14 @@ public class MenuHamburguesaControl : MonoBehaviour
     PlayerPrefs.DeleteKey("uid");
     PlayerPrefs.Save();
 
-    foreach (GameObject panel in allPanels)
-    {
-        if (panel != null)
-            panel.SetActive(false);
-    }
+    ForzarEstadoInicial();
 
-    if (panelMenuPrincipal != null)
-        panelMenuPrincipal.SetActive(false);
+    if (ScreensManage.Instance != null)
+        ScreensManage.Instance.OcultarTodos();
 
     if (panelInicioSesion != null)
         panelInicioSesion.SetActive(true);
 
     Debug.Log("Sesión cerrada");
-    }
+}
 }

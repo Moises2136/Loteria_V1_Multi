@@ -25385,6 +25385,8 @@ GameObject:
   - component: {fileID: 1291065289}
   - component: {fileID: 1291065291}
   - component: {fileID: 1291065292}
+  - component: {fileID: 1291065294}
+  - component: {fileID: 1291065293}
   m_Layer: 5
   m_Name: PanelResultados_Partida
   m_TagString: Untagged
@@ -25493,6 +25495,34 @@ MonoBehaviour:
   - {r: 0.2, g: 0.7, b: 1, a: 1}
   - {r: 0.3, g: 1, b: 0.4, a: 1}
   - {r: 1, g: 0.4, b: 0.8, a: 1}
+--- !u!114 &1291065293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291065286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &1291065294
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291065286}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1311156526
 GameObject:
   m_ObjectHideFlags: 0
@@ -39258,6 +39288,8 @@ GameObject:
   - component: {fileID: 1968239122}
   - component: {fileID: 1968239124}
   - component: {fileID: 1968239125}
+  - component: {fileID: 1968239127}
+  - component: {fileID: 1968239126}
   m_Layer: 5
   m_Name: PanelJuegaLoteriaMultiplayer
   m_TagString: Untagged
@@ -39465,6 +39497,34 @@ MonoBehaviour:
   mensaje: Boton para regresar al menu
   duracionVisible: 3
   velocidadEscala: 8
+--- !u!114 &1968239126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968239119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &1968239127
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968239119}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1974903243
 GameObject:
   m_ObjectHideFlags: 0
@@ -44816,6 +44876,8 @@ GameObject:
   - component: {fileID: 8346295511228594153}
   - component: {fileID: 8346295511228594167}
   - component: {fileID: 8346295511228594168}
+  - component: {fileID: 8346295511228594170}
+  - component: {fileID: 8346295511228594169}
   m_Layer: 5
   m_Name: PanelJuegaLoteriaSolo
   m_TagString: Untagged
@@ -44951,6 +45013,34 @@ MonoBehaviour:
   mensaje: Boton para regresar al menu
   duracionVisible: 3
   velocidadEscala: 8
+--- !u!114 &8346295511228594169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511228594155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295511228594170
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511228594155}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295511236492274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46585,6 +46675,8 @@ GameObject:
   - component: {fileID: 8346295511320363390}
   - component: {fileID: 8346295511320363388}
   - component: {fileID: 8346295511320363392}
+  - component: {fileID: 8346295511320363394}
+  - component: {fileID: 8346295511320363393}
   m_Layer: 5
   m_Name: PanelCrearLoteria
   m_TagString: Untagged
@@ -46701,6 +46793,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8346295511320363393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511320363376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295511320363394
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511320363376}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295511330385692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47023,6 +47143,8 @@ GameObject:
   - component: {fileID: 8346295511343327227}
   - component: {fileID: 8346295511343327226}
   - component: {fileID: 8346295511343327230}
+  - component: {fileID: 8346295511343327232}
+  - component: {fileID: 8346295511343327231}
   m_Layer: 5
   m_Name: PanelSalaEsperaAnfitrion
   m_TagString: Untagged
@@ -47078,6 +47200,34 @@ MonoBehaviour:
   botonSalir: {fileID: 981390780}
   panelActual: {fileID: 8346295511343327228}
   panelJuegaLoteria: {fileID: 1968239119}
+--- !u!114 &8346295511343327231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511343327228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 0
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295511343327232
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511343327228}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295511352660932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50291,7 +50441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51133,8 +51283,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8346295511842948441}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.39000005}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -56150,6 +56300,8 @@ GameObject:
   - component: {fileID: 8346295511895371552}
   - component: {fileID: 8346295511895371555}
   - component: {fileID: 8346295511895371558}
+  - component: {fileID: 8346295511895371560}
+  - component: {fileID: 8346295511895371559}
   m_Layer: 5
   m_Name: Panel_Logros
   m_TagString: Untagged
@@ -56201,6 +56353,34 @@ MonoBehaviour:
   btnRegresar: {fileID: 1819307682}
   panelLogros: {fileID: 8346295511895371557}
   panelAnterior: {fileID: 8346295512117702088}
+--- !u!114 &8346295511895371559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511895371557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295511895371560
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511895371557}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295511902059442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56255,9 +56435,9 @@ RectTransform:
   m_Father: {fileID: 8346295513148943080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: -17}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8346295511902059445
 MonoBehaviour:
@@ -56916,6 +57096,8 @@ GameObject:
   - component: {fileID: 8346295511956919338}
   - component: {fileID: 8346295511956919341}
   - component: {fileID: 8346295511956919344}
+  - component: {fileID: 8346295511956919346}
+  - component: {fileID: 8346295511956919345}
   m_Layer: 5
   m_Name: PanelPerfil
   m_TagString: Untagged
@@ -56962,6 +57144,34 @@ MonoBehaviour:
   duracionFade: 0.5
   escalaInicial: 0.8
   panelLogin: {fileID: 8346295512607765465}
+--- !u!114 &8346295511956919345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511956919343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295511956919346
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511956919343}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &8346295511963507410
 RectTransform:
   m_ObjectHideFlags: 0
@@ -57188,6 +57398,8 @@ GameObject:
   - component: {fileID: 8346295511964345898}
   - component: {fileID: 8346295511964345902}
   - component: {fileID: 8346295511964345903}
+  - component: {fileID: 8346295511964345905}
+  - component: {fileID: 8346295511964345904}
   m_Layer: 5
   m_Name: PanelConfig
   m_TagString: Untagged
@@ -57286,6 +57498,34 @@ MonoBehaviour:
   colorInactiva: {r: 1, g: 1, b: 1, a: 1}
   sombraElevada: {x: 1, y: 168.1}
   duracionPanel: 0.25
+--- !u!114 &8346295511964345904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511964345900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295511964345905
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295511964345900}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295511974758434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59898,13 +60138,15 @@ GameObject:
   - component: {fileID: 8346295512117702103}
   - component: {fileID: 8346295512117702102}
   - component: {fileID: 8346295512117702100}
+  - component: {fileID: 8346295512117702105}
+  - component: {fileID: 8346295512117702104}
   m_Layer: 5
   m_Name: PanelMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8346295512117702089
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59989,6 +60231,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8346295512117702088}
   m_CullTransparentMesh: 1
+--- !u!114 &8346295512117702104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512117702088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 0
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295512117702105
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512117702088}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295512131367846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60191,7 +60461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.002563}
+  m_AnchoredPosition: {x: 0, y: -61.002502}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -61952,6 +62222,8 @@ GameObject:
   - component: {fileID: 8346295512275847076}
   - component: {fileID: 8346295512275847079}
   - component: {fileID: 8346295512275847258}
+  - component: {fileID: 8346295512275847260}
+  - component: {fileID: 8346295512275847259}
   m_Layer: 5
   m_Name: Panel_Creditos
   m_TagString: Untagged
@@ -61974,6 +62246,34 @@ MonoBehaviour:
   panelActual: {fileID: 8346295512275847257}
   panelMenu: {fileID: 8346295512117702088}
   botonRegresar: {fileID: 757133194}
+--- !u!114 &8346295512275847259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512275847257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295512275847260
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512275847257}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8346295512284579586
 GameObject:
   m_ObjectHideFlags: 0
@@ -64891,6 +65191,8 @@ GameObject:
   - component: {fileID: 8346295512359749038}
   - component: {fileID: 8346295512359749025}
   - component: {fileID: 8346295512359749039}
+  - component: {fileID: 8346295512359749041}
+  - component: {fileID: 8346295512359749040}
   m_Layer: 5
   m_Name: Panel_ResultadosRatio
   m_TagString: Untagged
@@ -64933,6 +65235,34 @@ MonoBehaviour:
   botonRegresar: {fileID: 1269031373}
   panelActual: {fileID: 8346295512359749027}
   panelAnterior: {fileID: 8346295512117702088}
+--- !u!114 &8346295512359749040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512359749027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295512359749041
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512359749027}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295512372522402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68625,6 +68955,8 @@ GameObject:
   - component: {fileID: 8346295512592763183}
   - component: {fileID: 8346295512592763182}
   - component: {fileID: 8346295512592763184}
+  - component: {fileID: 8346295512592763186}
+  - component: {fileID: 8346295512592763185}
   m_Layer: 5
   m_Name: Panel_Amigos
   m_TagString: Untagged
@@ -68724,6 +69056,34 @@ MonoBehaviour:
   encabezadoAmigos: {fileID: 0}
   textoSinAmigos: {fileID: 0}
   intervaloEstado: 15
+--- !u!114 &8346295512592763185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512592763168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295512592763186
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512592763168}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &8346295512605011320
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -71141,6 +71501,8 @@ GameObject:
   - component: {fileID: 8346295512746583391}
   - component: {fileID: 8346295512746583390}
   - component: {fileID: 8346295512746583392}
+  - component: {fileID: 8346295512746583394}
+  - component: {fileID: 8346295512746583393}
   m_Layer: 5
   m_Name: PanelSalaEsperaPlayerF
   m_TagString: Untagged
@@ -71227,6 +71589,33 @@ MonoBehaviour:
   panelActual: {fileID: 8346295512746583376}
   panelJuegaLoteria: {fileID: 8346295513166340704}
   panelCuentaRegresiva: {fileID: 8346295512104287477}
+--- !u!114 &8346295512746583393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512746583376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3491f39986e0225479a711a88b07ad7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tarjeta: {fileID: 8346295512678360263}
+  duracion: 0.25
+  escalaInicial: 0.8
+--- !u!225 &8346295512746583394
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295512746583376}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &8346295512753499170
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -75594,9 +75983,9 @@ RectTransform:
   m_Father: {fileID: 8346295513148943080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: -17, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &8346295513041292710
 MonoBehaviour:
@@ -76171,6 +76560,8 @@ GameObject:
   - component: {fileID: 8346295513065191334}
   - component: {fileID: 8346295513065191513}
   - component: {fileID: 8346295513065191516}
+  - component: {fileID: 8346295513065191518}
+  - component: {fileID: 8346295513065191517}
   m_Layer: 5
   m_Name: Panel_Idioma
   m_TagString: Untagged
@@ -76193,6 +76584,34 @@ MonoBehaviour:
   panelActual: {fileID: 8346295513065191515}
   panelAnterior: {fileID: 8346295512117702088}
   botonRegresar: {fileID: 398113193}
+--- !u!114 &8346295513065191517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513065191515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295513065191518
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513065191515}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &8346295513072635846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77272,7 +77691,7 @@ RectTransform:
   m_Father: {fileID: 8346295513123157217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -77519,7 +77938,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8346295512665362561}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -77715,6 +78134,8 @@ GameObject:
   - component: {fileID: 8346295513166340719}
   - component: {fileID: 8346295513166340718}
   - component: {fileID: 8346295513166340720}
+  - component: {fileID: 8346295513166340722}
+  - component: {fileID: 8346295513166340721}
   m_Layer: 5
   m_Name: PanelJuegaLoteria
   m_TagString: Untagged
@@ -77832,6 +78253,34 @@ MonoBehaviour:
   panelMenu: {fileID: 8346295512117702088}
   textoEstado: {fileID: 373317661}
   modoMultijugador: 0
+--- !u!114 &8346295513166340721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513166340704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295513166340722
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513166340704}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &8346295513178885190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -78343,6 +78792,8 @@ GameObject:
   - component: {fileID: 8346295513198748200}
   - component: {fileID: 8346295513198748204}
   - component: {fileID: 8346295513198748205}
+  - component: {fileID: 8346295513198748207}
+  - component: {fileID: 8346295513198748206}
   m_Layer: 5
   m_Name: PanelAgregarCartaPaso1
   m_TagString: Untagged
@@ -78425,6 +78876,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89862a3424356f848af273202a00970f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8346295513198748206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513198748202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22effc238ab7b0448f6a54d53f2af39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entraDesdeIzquierda: 1
+  duracion: 1
+  desplazamiento: 40
+  animarPrimeraVez: 1
+--- !u!225 &8346295513198748207
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346295513198748202}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &8346295513203072288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -78683,9 +79162,9 @@ RectTransform:
   m_Father: {fileID: 8346295513148943080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &8346295513220195544
 MonoBehaviour:
@@ -78788,7 +79267,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295511543949384}
   m_HandleRect: {fileID: 8346295511543949387}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

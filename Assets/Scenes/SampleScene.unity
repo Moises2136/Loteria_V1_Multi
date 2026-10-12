@@ -12274,7 +12274,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Selecciona Loter\xEDa"
+  m_text: "Seleccionar loter\xEDa"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -53452,7 +53452,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8346295511729141067}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: e5fa1c5e66f5d1d4a8f51e7cb6dcfbc7, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 5bb4fb4b22a838948aa632b3a97ce539, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 462188908554434865}

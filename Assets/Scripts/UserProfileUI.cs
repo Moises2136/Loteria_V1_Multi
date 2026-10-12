@@ -8,7 +8,7 @@ using Firebase.Auth;
 using Firebase.Firestore;
 using Firebase.Extensions;
 
-/// <summary>
+/// <summary> 
 /// Controla el panel de perfil.
 /// Muestra datos del usuario desde PlayerPrefs y Firestore.
 /// Permite cambiar username, correo, contraseña, cerrar sesión y regresar al menú.
@@ -136,6 +136,10 @@ public class UserProfileUI : MonoBehaviour
     
     /// <summary>Animación en curso, para cortarla si se abre/cierra otra.</summary>
     private Coroutine rutinaFade;
+    /// <summary> Escala inicial de los subpaneles al abrirlos (0.5 = mitad de tamaño, 1 = tamaño normal). </summary>
+    [Range(0.5f, 1f)] public float escalaInicial = 0.85f;
+    /// </summary>  <summary>
+    Dictionary<GameObject, Vector3> escalasOriginales = new Dictionary<GameObject, Vector3>();
 
     // =========================
     // PANELES PRINCIPALES
@@ -170,6 +174,18 @@ public class UserProfileUI : MonoBehaviour
         OcultarPanelesInternos();
         SetEstado("");
     }
+
+    void Awake()
+    {
+        foreach (GameObject p in Subpaneles())
+            if (p != null) escalasOriginales[p] = p.transform.localScale;
+
+        if (fondoOscuro != null)
+            escalasOriginales[fondoOscuro] = fondoOscuro.transform.localScale;
+    }
+
+    Vector3 EscalaBase(GameObject obj) =>
+        escalasOriginales.TryGetValue(obj, out Vector3 s) ? s : Vector3.one;
 
     /// <summary>
     /// Revisa que todo lo necesario para usar Firebase esté disponible.
@@ -1057,11 +1073,11 @@ IEnumerator Fade(bool mostrar, GameObject panel)
 
         if (mostrar && !obj.activeSelf)
         {
-            cg.alpha = 0f;          // solo empieza en 0 si estaba apagado (evita parpadeo del fondo)
+            cg.alpha = 0f;
             obj.SetActive(true);
         }
 
-        cg.blocksRaycasts = false;  // sin toques durante la animación
+        cg.blocksRaycasts = false;
         grupos.Add(cg);
     }
 
@@ -1072,9 +1088,21 @@ IEnumerator Fade(bool mostrar, GameObject panel)
 
     for (float t = 0f; t < duracionFade; t += Time.unscaledDeltaTime)
     {
-        float p = Mathf.SmoothStep(0f, 1f, t / duracionFade);
+        float n = t / duracionFade;
+        float p = Mathf.SmoothStep(0f, 1f, n);
+
+        // Pop al abrir (con pequeño rebote), encogerse al cerrar
+        float escala = mostrar
+            ? Mathf.LerpUnclamped(escalaInicial, 1f, EaseOutBack(n))
+            : Mathf.Lerp(1f, escalaInicial, p);
+
         for (int i = 0; i < grupos.Count; i++)
+        {
             grupos[i].alpha = Mathf.Lerp(inicio[i], destino, p);
+
+            if (objetos[i] != fondoOscuro)
+                objetos[i].transform.localScale = EscalaBase(objetos[i]) * escala;
+        }
 
         yield return null;
     }
@@ -1083,12 +1111,21 @@ IEnumerator Fade(bool mostrar, GameObject panel)
     {
         grupos[i].alpha = 1f;
         grupos[i].blocksRaycasts = true;
+        objetos[i].transform.localScale = EscalaBase(objetos[i]);
 
         if (!mostrar)
             objetos[i].SetActive(false);
     }
 
     rutinaFade = null;
+}
+
+float EaseOutBack(float x)
+{
+    x = Mathf.Clamp01(x);
+    const float c1 = 1.70158f;
+    const float c3 = c1 + 1f;
+    return 1f + c3 * Mathf.Pow(x - 1f, 3) + c1 * Mathf.Pow(x - 1f, 2);
 }
 
 GameObject[] Subpaneles() =>
@@ -1103,6 +1140,7 @@ void RestaurarAlpha(GameObject obj)
     {
         cg.alpha = 1f;
         cg.blocksRaycasts = true;
+        obj.transform.localScale = EscalaBase(obj);
     }
 }
 

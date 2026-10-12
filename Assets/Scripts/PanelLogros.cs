@@ -24,6 +24,10 @@ public class PanelLogros : MonoBehaviour
 
     /// <summary>Animación en curso, para cortarla si se abre/cierra otra.</summary>
     private Coroutine rutinaFade;
+    /// <summary> Escala inicial del popup al abrirse. </summary>
+    [Range(0.5f, 1f)] public float escalaInicial = 0.8f;
+    /// <summary> Escala actual del popup. </summary>
+    Vector3 escalaPopup = Vector3.one;
 
     /// <summary>
     /// Un logro configurable desde el Inspector: su nombre, cómo se desbloquea,
@@ -270,9 +274,20 @@ public class PanelLogros : MonoBehaviour
 
         for (float t = 0f; t < duracionFade; t += Time.unscaledDeltaTime)
         {
-            float p = Mathf.SmoothStep(0f, 1f, t / duracionFade);
+            float n = t / duracionFade;
+            float p = Mathf.SmoothStep(0f, 1f, n);
+
+            float escala = mostrar
+                ? Mathf.LerpUnclamped(escalaInicial, 1f, EaseOutBack(n))
+                : Mathf.Lerp(1f, escalaInicial, p);
+
             for (int i = 0; i < grupos.Count; i++)
-                grupos[i].alpha = Mathf.Lerp(inicio[i], destino, p);
+            {
+            grupos[i].alpha = Mathf.Lerp(inicio[i], destino, p);
+
+            if (objetos[i] == panelDetalle)
+                panelDetalle.transform.localScale = escalaPopup * escala;
+            }
 
             yield return null;
         }
@@ -284,6 +299,9 @@ public class PanelLogros : MonoBehaviour
 
             if (!mostrar)
                 objetos[i].SetActive(false);
+
+            if (objetos[i] == panelDetalle)
+                panelDetalle.transform.localScale = escalaPopup;
         }
 
         rutinaFade = null;
@@ -305,6 +323,22 @@ public class PanelLogros : MonoBehaviour
             cg.alpha = 1f;
             cg.blocksRaycasts = true;
         }
+
+        if (obj == panelDetalle) obj.transform.localScale = escalaPopup;
+    }
+
+    void Awake()
+    {
+        if (panelDetalle != null)
+            escalaPopup = panelDetalle.transform.localScale;
+    }
+
+    float EaseOutBack(float x)
+    {
+    x = Mathf.Clamp01(x);
+    const float c1 = 1.70158f;
+    const float c3 = c1 + 1f;
+    return 1f + c3 * Mathf.Pow(x - 1f, 3) + c1 * Mathf.Pow(x - 1f, 2);
     }
 
     // =========================

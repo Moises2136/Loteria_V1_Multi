@@ -42,9 +42,14 @@ public class SubPanelesConfiguracion : MonoBehaviour
     Coroutine animacion;
     Coroutine[] animSombras;
 
+    [Header("Animaciones (Sobre los subpaneles)")]
+    public float duracionPanel = 0.25f;
+    Coroutine[] animPaneles;
+
     void Awake()
     {
         animSombras = new Coroutine[pestanas.Length];
+        animPaneles = new Coroutine[pestanas.Length];
 
         for (int i = 0; i < pestanas.Length; i++)
         {
@@ -75,7 +80,7 @@ public class SubPanelesConfiguracion : MonoBehaviour
             bool activa = i == indice;
 
             if (pestanas[i].panel != null)
-                pestanas[i].panel.SetActive(activa);
+                MostrarPanel(i, activa, instantaneo);
 
             if (pestanas[i].etiqueta != null)
             {
@@ -87,6 +92,56 @@ public class SubPanelesConfiguracion : MonoBehaviour
         }
 
         MoverIndicador(pestanas[indice].boton, instantaneo);
+    }
+
+    void MostrarPanel(int i, bool activa, bool instantaneo)
+    {
+    GameObject panel = pestanas[i].panel;
+
+    if (animPaneles[i] != null) { StopCoroutine(animPaneles[i]); animPaneles[i] = null; }
+
+    RectMask2D mascara = panel.GetComponent<RectMask2D>();
+    if (mascara == null) mascara = panel.AddComponent<RectMask2D>();
+
+    if (instantaneo || !isActiveAndEnabled)
+    {
+        mascara.padding = Vector4.zero;
+        panel.SetActive(activa);
+        return;
+    }
+
+    if (activa)
+    {
+        mascara.padding = new Vector4(0, 5000, 0, 0); // todo tapado antes de mostrarlo
+        panel.SetActive(true);
+        panel.transform.SetAsLastSibling();           // la cortina baja por encima del anterior
+        animPaneles[i] = StartCoroutine(Cortina(i, mascara, (RectTransform)panel.transform));
+    }
+    else
+    {
+        // El anterior se queda debajo hasta que termine la cortina
+        animPaneles[i] = StartCoroutine(OcultarDespues(i, panel));
+    }
+    }
+
+    IEnumerator Cortina(int i, RectMask2D m, RectTransform rt)
+    {
+    float alto = rt.rect.height;
+    for (float t = 0; t < duracionPanel; t += Time.unscaledDeltaTime)
+    {
+        float p = Mathf.SmoothStep(0f, 1f, t / duracionPanel);
+        m.padding = new Vector4(0, alto * (1f - p), 0, 0); // x=izq, y=abajo, z=der, w=arriba
+        yield return null;
+    }
+    m.padding = Vector4.zero;
+    animPaneles[i] = null;
+    }
+
+    IEnumerator OcultarDespues(int i, GameObject panel)
+    {
+    yield return new WaitForSecondsRealtime(duracionPanel);
+    panel.SetActive(false);
+    animPaneles[i] = null;
     }
 
     void MoverIndicador(Button boton, bool instantaneo)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5781749188764448844}
   - component: {fileID: 1633331824711042049}
   - component: {fileID: 4253620339525406045}
+  - component: {fileID: 5048176924495393463}
   m_Layer: 5
   m_Name: Confeti_Prefab
   m_TagString: Untagged
@@ -66,7 +67,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -75,3 +76,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5048176924495393463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067662211463223866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075a3f7f0dbd45f42bbe0d5f2e7b0af8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 220

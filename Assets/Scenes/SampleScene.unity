@@ -577,7 +577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &20865580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tip
+  m_text: Consejo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -2057,8 +2057,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281677109
-  m_fontColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+    rgba: 4285295724
+  m_fontColor: {r: 0.42318046, g: 0.42318046, b: 0.42318046, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3388,7 +3388,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Selene Marisol Mart\xEDnez Ram\xEDrez"
+  m_text: "Direcci\xF3n del proyecto"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -4658,7 +4658,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Introduce el codigo:'
+  m_text: "Introduce el c\xF3digo:"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -5411,7 +5411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -7819,8 +7819,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Utiliza im\xE1genes claras y de alta calidad para disfutar de la mejor
-    experencia de juego."
+  m_text: "Utiliza im\xE1genes claras y de alta calidad para disfrutar de la mejor
+    experiencia de juego."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -7829,8 +7829,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289901234
-  m_fontColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
+    rgba: 4289374890
+  m_fontColor: {r: 0.66576815, g: 0.66576815, b: 0.66576815, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8099,7 +8099,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -8777,7 +8777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loteria Completa
+  m_text: "Loter\xEDa completa"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -8842,7 +8842,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -393.48428, y: 0, z: -399.82047, w: 0}
+  m_margin: {x: -393.48428, y: -420.4728, z: -399.82047, w: -462.56882}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -10083,7 +10083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Codigo de amigo
+  m_text: "C\xF3digo de amigo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -12138,7 +12138,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: n jugadores
+  m_text: 'n '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -12203,7 +12203,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -208.59027, w: -13.96875}
+  m_margin: {x: -5.5395355, y: 0, z: 149.44356, w: -13.96875}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -16631,7 +16631,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -27152,8 +27152,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 687068659}
   m_HandleRect: {fileID: 687068658}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.6666667
+  m_Value: 1
+  m_Size: 0.6666666
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -28133,7 +28133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -31594,6 +31594,142 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632207498}
   m_CullTransparentMesh: 1
+--- !u!1 &1634435577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1634435578}
+  - component: {fileID: 1634435580}
+  - component: {fileID: 1634435579}
+  m_Layer: 5
+  m_Name: Players_Count (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1634435578
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634435577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1968239120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -326, y: 823}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1634435579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634435577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: jugadores
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
+  m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 36
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: -101.143616, w: -13.96875}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1634435580
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634435577}
+  m_CullTransparentMesh: 1
 --- !u!1 &1635099974
 GameObject:
   m_ObjectHideFlags: 0
@@ -33762,7 +33898,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ajustes de audio efectos de sonido
+  m_text: 'Ajustes de audio: efectos de sonido'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -37460,7 +37596,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Planta
+  m_text: Correcta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -38345,7 +38481,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cerrar Sesion
+  m_text: "Cerrar Sesi\xF3n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -39310,7 +39446,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tu codigo
+  m_text: "Tu c\xF3digo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -39621,7 +39757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1968239120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39645,6 +39781,7 @@ RectTransform:
   - {fileID: 1368028622}
   - {fileID: 718703533}
   - {fileID: 597687402}
+  - {fileID: 1634435578}
   - {fileID: 91828758}
   - {fileID: 2013156061}
   - {fileID: 843316705}
@@ -40057,7 +40194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -40283,7 +40420,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -41078,7 +41215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -42224,7 +42361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -48723,7 +48860,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Confirmar Contrase\xF1a"
+  m_text: "Confirmar contrase\xF1a"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -50535,7 +50672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Crea y juega a juegos de loter\xEDa personalizada"
+  m_text: "Crea y juega a juegos de loter\xEDa personalizada."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -50796,7 +50933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51018,7 +51155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Carta incorrecta
+  m_text: Incorrecta
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 46324403377ce884bb00f686abe20a23, type: 2}
   m_sharedMaterial: {fileID: -168564045535798675, guid: 46324403377ce884bb00f686abe20a23, type: 2}
@@ -60816,7 +60953,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.00244}
+  m_AnchoredPosition: {x: 0, y: -61.00226}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269
@@ -63488,7 +63625,7 @@ MonoBehaviour:
     spanish: O
     english: Or
     french: Ou
-    italian: oppure
+    italian: Oppure
   - tmpText: {fileID: 8346295511309943337}
     spanish: Continuar con Google
     english: 'Continue with Google '
@@ -63502,13 +63639,13 @@ MonoBehaviour:
   - tmpText: {fileID: 8346295512666316096}
     spanish: Registrarse
     english: Sign up
-    french: Inscrivez-vous
+    french: "S\u2019inscrire"
     italian: Registrati
   - tmpText: {fileID: 8346295511831826362}
     spanish: Crear Cuenta
     english: 'Create account '
     french: "Cr\xE9er un compte"
-    italian: Crea account
+    italian: Crea un account
   - tmpText: {fileID: 8346295511781647259}
     spanish: ' Nombre Completo'
     english: Full Name
@@ -63518,22 +63655,22 @@ MonoBehaviour:
     spanish: Nombre de Usuario
     english: Username
     french: "Nom d\u2019utilisateur"
-    italian: Nome Utente
+    italian: Nome utente
   - tmpText: {fileID: 8346295512341662547}
-    spanish: Correo
-    english: Email
-    french: E-mail
-    italian: Email
+    spanish: "Correo electr\xF3nico"
+    english: Email Address
+    french: Adresse e-mail
+    italian: Indirizzo e-mail
   - tmpText: {fileID: 8346295513271116970}
     spanish: "Contrase\xF1a"
     english: Password
     french: Mot de passe
     italian: 'Password '
   - tmpText: {fileID: 8346295511431228829}
-    spanish: "Confirmar Contrase\xF1a"
+    spanish: "Confirmar contrase\xF1a"
     english: Confirm Password
     french: Confirmer le mot de passe
-    italian: Conferma Password
+    italian: Conferma password
   - tmpText: {fileID: 8346295511705933939}
     spanish: Registrarse
     english: Sign up
@@ -63550,15 +63687,15 @@ MonoBehaviour:
     french: Loterie Mexicaine
     italian: Lotteria Messicana
   - tmpText: {fileID: 8346295511495603966}
-    spanish: "Crea y juega a juegos de loter\xEDa personalizada"
+    spanish: "Crea y juega a juegos de loter\xEDa personalizada."
     english: Create and play custom lottery games.
-    french: "Cr\xE9ez et jouez \xE0 des loteries personnalis\xE9es."
-    italian: Crea e gioca a lotterie personalizzate.
+    french: "Cr\xE9ez et jouez \xE0 des jeux de loterie personnalis\xE9s."
+    italian: Crea e gioca della lotteria personalizzati.
   - tmpText: {fileID: 1963956589}
     spanish: "Crear Loter\xEDa"
     english: Create Lottery
     french: "Cr\xE9er une loterie"
-    italian: Crea lotteria
+    italian: Crea una lotteria
   - tmpText: {fileID: 8346295511996885858}
     spanish: "Tus loter\xEDas"
     english: Your lotteries
@@ -63581,9 +63718,9 @@ MonoBehaviour:
     italian: Impostazioni
   - tmpText: {fileID: 0}
     spanish: Historial de Partidas
-    english: Match history
+    english: Game History
     french: Historique des parties
-    italian: Cronologia partite
+    italian: Cronologia delle partite
   - tmpText: {fileID: 8346295511454488298}
     spanish: Logros
     english: Achievements
@@ -63601,7 +63738,7 @@ MonoBehaviour:
     italian: Lingua
   - tmpText: {fileID: 8346295511777487508}
     spanish: "Cerrar Sesi\xF3n"
-    english: Sign Out
+    english: Log Out
     french: "Se d\xE9connecter"
     italian: Disconnetti
   - tmpText: {fileID: 8346295512373299745}
@@ -63623,11 +63760,11 @@ MonoBehaviour:
     spanish: Terminar
     english: Finish
     french: Terminer
-    italian: Fine
+    italian: Termina
   - tmpText: {fileID: 8346295512572794951}
     spanish: Cartas creadas
     english: Cards created
-    french: "Cartes cr\xE9\xE9s"
+    french: "Cartes cr\xE9\xE9es"
     italian: Carte create
   - tmpText: {fileID: 1281240221}
     spanish: Agregar Carta
@@ -63700,13 +63837,13 @@ MonoBehaviour:
     french: Description
     italian: Descrizione
   - tmpText: {fileID: 8346295512393802791}
-    spanish: "Agrega una descripci\xF3n divertida..."
-    english: Add a fun description...
-    french: Ajoutez une description amusante...
-    italian: Aggiungi una descrizione divertente...
+    spanish: "Agrega una descripci\xF3n"
+    english: Add a description
+    french: Ajoutez une description
+    italian: Aggiungi una descrizione
   - tmpText: {fileID: 8346295513232355160}
     spanish: "Juega a la loter\xEDa"
-    english: Play Lottery
+    english: Play the Lottery
     french: "Jouer \xE0 la loterie"
     italian: Gioca alla lotteria
   - tmpText: {fileID: 8346295511472952831}
@@ -63716,9 +63853,9 @@ MonoBehaviour:
     italian: Unisciti a una partita o crea una stanza privata
   - tmpText: {fileID: 2093452222}
     spanish: Modo Solo
-    english: Solo Mode
+    english: Single-Player Mode
     french: Mode solo
-    italian: "Modalit\xE0 giocatore singolo"
+    italian: "Modalit\xE0 in solitaria"
   - tmpText: {fileID: 2090637639}
     spanish: Multijugador
     english: Multiplayer
@@ -63726,9 +63863,9 @@ MonoBehaviour:
     italian: Multigiocatore
   - tmpText: {fileID: 598059688}
     spanish: "Seleccionar loter\xEDa"
-    english: Select Lottery
+    english: Select a Lottery
     french: "S\xE9lectionner une loterie"
-    italian: Seleziona lotteria
+    italian: Seleziona una lotteria
   - tmpText: {fileID: 8346295512674881555}
     spanish: "N\xFAmero de jugadores "
     english: Number of players
@@ -63747,7 +63884,7 @@ MonoBehaviour:
   - tmpText: {fileID: 1590841362}
     spanish: 'Unirse a Sala '
     english: Join Room
-    french: Rejoindre une salle
+    french: Rejoindre la salle
     italian: Unisciti alla stanza
   - tmpText: {fileID: 8346295513248991356}
     spanish: "\xA1Tu sala de juego est\xE1 lista!"
@@ -63760,9 +63897,9 @@ MonoBehaviour:
     english: Share this code with your friends so they can join and go to the waiting
       room to start the game.
     french: "Partagez ce code avec vos amis pour qu\u2019ils puissent rejoindre la
-      salle d\u2019attente et commencer la partie."
-    italian: "Condividi questo codice con i tuoi amici cos\xEC potranno unirsi e
-      andare nella sala d\u2019attesa per iniziare il gioco."
+      salle d\u2019attente avant le d\xE9but du jeu."
+    italian: "Condividi questo codice con i tuoi amici, cos\xEC potranno unirsi alla
+      partita ed entrare nella sala d\u2019attesa prima che inizi il gioco"
   - tmpText: {fileID: 8346295512070917553}
     spanish: "C\xF3digo de la sala"
     english: Room Code
@@ -63792,7 +63929,7 @@ MonoBehaviour:
     spanish: Iniciar juego
     english: Start Game
     french: Lancer la partie
-    italian: Avvia gioco
+    italian: Inizia la partita
   - tmpText: {fileID: 1790310823}
     spanish: Carta Actual
     english: Current card
@@ -63850,7 +63987,7 @@ MonoBehaviour:
     italian: Impostazioni
   - tmpText: {fileID: 8346295511330385692}
     spanish: Personaliza tu experencia de juego
-    english: Customize your gameplay experience
+    english: Customize your gaming experience
     french: "Personnalisez votre exp\xE9rience de jeu"
     italian: Personalizza la tua esperienza di gioco
   - tmpText: {fileID: 8346295511484987377}
@@ -63860,7 +63997,7 @@ MonoBehaviour:
     italian: Impostazioni audio
   - tmpText: {fileID: 8346295511892908474}
     spanish: Controla los sonidos del juego
-    english: "Control the game\u2019s sounds"
+    english: Control Game Sounds
     french: "Contr\xF4lez les sons du jeu"
     italian: Controlla i suoni del gioco
   - tmpText: {fileID: 8346295511672091942}
@@ -63872,12 +64009,12 @@ MonoBehaviour:
     spanish: "Selecci\xF3n de voz"
     english: Voice Selection
     french: "S\xE9lection de la voix"
-    italian: Selezione voce
+    italian: Selezione della voce
   - tmpText: {fileID: 8346295512066354727}
     spanish: Elige la voz para las llamadas de cartas
     english: Choose the voice for card calls
     french: "Choisissez la voix pour l\u2019annonce des cartes"
-    italian: Scegli la voce per le chiamate delle carte
+    italian: "Scegli la voce per l\u2019annuncio delle carte"
   - tmpText: {fileID: 8346295512202059642}
     spanish: "Clasificaci\xF3n"
     english: Rankings
@@ -63885,7 +64022,7 @@ MonoBehaviour:
     italian: Classifica
   - tmpText: {fileID: 8346295511974758434}
     spanish: Tu lugar
-    english: Your position
+    english: Your Rank
     french: Votre position
     italian: La tua posizione
   - tmpText: {fileID: 8346295513007941163}
@@ -63908,6 +64045,364 @@ MonoBehaviour:
     english: Supervisors
     french: Responsables
     italian: Responsabili
+  - tmpText: {fileID: 1105497199}
+    spanish: Jugar
+    english: Play
+    french: Jouer
+    italian: Gioca
+  - tmpText: {fileID: 8346295511609117099}
+    spanish: "Clasificaci\xF3n"
+    english: Leaderboard
+    french: Classement
+    italian: Classifica
+  - tmpText: {fileID: 1547099312}
+    spanish: Amigos
+    english: Friends
+    french: Amis
+    italian: Amici
+  - tmpText: {fileID: 1948826963}
+    spanish: Editar
+    english: Edit
+    french: Modifier
+    italian: Modifica
+  - tmpText: {fileID: 2012235228}
+    spanish: Nombre de Usuario
+    english: Username
+    french: "Nom d\u2019utilisateur"
+    italian: Nome utente
+  - tmpText: {fileID: 1223664482}
+    spanish: Correo
+    english: Email
+    french: E-mail
+    italian: E-mail
+  - tmpText: {fileID: 2006319371}
+    spanish: "Contrase\xF1a"
+    english: Password
+    french: Mot de passe
+    italian: Password
+  - tmpText: {fileID: 1936655056}
+    spanish: "Cerrar Sesi\xF3n"
+    english: Log Out
+    french: "Se d\xE9connecter"
+    italian: Esci
+  - tmpText: {fileID: 1751537310}
+    spanish: 'Ajustes de audio: efectos de sonido'
+    english: 'Audio Settings: Sound Effects'
+    french: "Param\xE8tres audio : effets sonores"
+    italian: 'Impostazioni audio: effetti sonori'
+  - tmpText: {fileID: 2077536906}
+    spanish: Controla los sonidos del juego
+    english: Control Game Sounds
+    french: "Contr\xF4lez les sons du jeu"
+    italian: Controlla i suoni del gioco
+  - tmpText: {fileID: 731996946}
+    spanish: Volumen
+    english: Volume
+    french: Volume
+    italian: Volume
+  - tmpText: {fileID: 686838730}
+    spanish: Modo Oscuro
+    english: Dark Mode
+    french: Mode sombre
+    italian: "Modalit\xE0 scura"
+  - tmpText: {fileID: 957217126}
+    spanish: Modo Claro
+    english: Light Mode
+    french: Mode clair
+    italian: "Modalit\xE0 chiara"
+  - tmpText: {fileID: 1253484725}
+    spanish: Hombre
+    english: Male
+    french: Homme
+    italian: Uomo
+  - tmpText: {fileID: 1667911318}
+    spanish: Mujer
+    english: Female
+    french: Femme
+    italian: Donna
+  - tmpText: {fileID: 766112358}
+    spanish: Probar Voz
+    english: Test Voice
+    french: Tester la voix
+    italian: Prova la voce
+  - tmpText: {fileID: 576185600}
+    spanish: Voz
+    english: Voice
+    french: Voix
+    italian: Voce
+  - tmpText: {fileID: 995378286}
+    spanish: Colores
+    english: Colors
+    french: Couleurs
+    italian: Colori
+  - tmpText: {fileID: 1525398762}
+    spanish: Sonido
+    english: Sound
+    french: Son
+    italian: Suono
+  - tmpText: {fileID: 8346295511711226926}
+    spanish: Amigos
+    english: Friends
+    french: Amis
+    italian: Amici
+  - tmpText: {fileID: 160470383}
+    spanish: "Introduce el c\xF3digo:"
+    english: 'Enter the Code:'
+    french: 'Saisissez le code:'
+    italian: 'Inserisci il codice:'
+  - tmpText: {fileID: 1961866885}
+    spanish: "Tu c\xF3digo"
+    english: Your Code
+    french: Votre code
+    italian: Il tuo codice
+  - tmpText: {fileID: 494819168}
+    spanish: "C\xF3digo de amigo"
+    english: Friend Code
+    french: Code ami
+    italian: Codice amico
+  - tmpText: {fileID: 1770855726}
+    spanish: Agregar
+    english: Add
+    french: Ajouter
+    italian: Aggiungi
+  - tmpText: {fileID: 8346295513222434912}
+    spanish: "Loter\xEDa"
+    english: Lottery
+    french: Loterie
+    italian: Lotteria
+  - tmpText: {fileID: 0}
+    spanish: "Bot\xE1nico"
+    english: Botanical
+    french: Botanique
+    italian: Botanico
+  - tmpText: {fileID: 117291436}
+    spanish: "Direcci\xF3n del proyecto"
+    english: Project Lead
+    french: Direction du projet
+    italian: Direzione del progetto
+  - tmpText: {fileID: 357058076}
+    spanish: "Utiliza im\xE1genes claras y de alta calidad para disfrutar de la mejor
+      experiencia de juego."
+    english: Use clear, high-quality images for the best gaming experience.
+    french: "Utilisez des images claires et de haute qualit\xE9 pour profiter de
+      la meilleure exp\xE9rience de jeu."
+    italian: "Utilizza immagini nitide e di alta qualit\xE0 per goderti la migliore
+      esperienza di gioco."
+  - tmpText: {fileID: 75314670}
+    spanish: Consejo
+    english: Tip
+    french: Astuce
+    italian: Suggerimento
+  - tmpText: {fileID: 8346295512015627529}
+    spanish: Modo Solo
+    english: Single-Player Mode
+    french: Mode solo
+    italian: "Modalit\xE0 in solitaria"
+  - tmpText: {fileID: 598059688}
+    spanish: "Seleccionar loter\xEDa"
+    english: Select a Lottery
+    french: "S\xE9lectionner une loterie"
+    italian: Seleziona una lotteria
+  - tmpText: {fileID: 124532538}
+    spanish: Iniciar Partida
+    english: Start Game
+    french: Lancer la partie
+    italian: Inizia la partita
+  - tmpText: {fileID: 414114384}
+    spanish: "Loter\xEDa completa"
+    english: Complete Lottery
+    french: "Loterie compl\xE8te"
+    italian: Lotteria completa
+  - tmpText: {fileID: 8346295512246158133}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 439357985}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1832789857}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 754728285}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1645500301}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 528152247}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1896246332}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1441364018}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1485979494}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 692471768}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1056422699}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1823701511}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 151372986}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1056776632}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1853976456}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1632207500}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1563631117}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 2102220730}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 1196818509}
+    spanish: Correcta
+    english: Correct
+    french: Correcte
+    italian: Corretta
+  - tmpText: {fileID: 8346295511540660633}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1986720597}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 2083854274}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1463276802}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1992528788}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 224454317}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 367516105}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 2029725145}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 821650491}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 8346295511540660633}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1986720597}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 2083854274}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1463276802}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1992528788}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 224454317}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 367516105}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 2029725145}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 821650491}
+    spanish: Incorrecta
+    english: Incorrect
+    french: Incorrecte
+    italian: Errata
+  - tmpText: {fileID: 1634435579}
+    spanish: jugadores
+    english: players
+    french: joueurs
+    italian: giocatori
   spanishButton:
     button: {fileID: 8346295512529948543}
     tmpText: {fileID: 8346295512468668619}
@@ -64921,7 +65416,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Correo
+  m_text: "Correo electr\xF3nico"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -66272,7 +66767,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Agrega una descripci\xF3n divertida..."
+  m_text: "Agrega una descripci\xF3n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
@@ -76297,7 +76792,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295513123040141}
   m_HandleRect: {fileID: 8346295513123040140}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -78322,8 +78817,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8346295512665362574}
   m_HandleRect: {fileID: 8346295512665362561}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.99999994
+  m_Value: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -79477,7 +79972,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8346295511597421376}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.60999995
+  m_Size: 0.6099999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -79697,7 +80192,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loteria
+  m_text: "Loter\xEDa"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}
   m_sharedMaterial: {fileID: 503074561269395086, guid: 8a35e888fb44f274096655e5312a3ee2, type: 2}

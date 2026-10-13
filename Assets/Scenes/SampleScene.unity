@@ -6262,16 +6262,22 @@ MonoBehaviour:
   lightModeButton: {fileID: 1071742442}
   backgrounds:
   - {fileID: 8346295511964345898}
+  - {fileID: 1928550019}
+  - {fileID: 224717068}
+  - {fileID: 615212846}
+  - {fileID: 921293645}
   texts:
   - {fileID: 8346295511434564541}
-  - {fileID: 686838730}
   - {fileID: 8346295511330385692}
-  - {fileID: 8346295511484987377}
-  - {fileID: 8346295511892908474}
-  - {fileID: 8346295511672091942}
-  - {fileID: 8346295512924442691}
-  - {fileID: 8346295512320201209}
-  - {fileID: 8346295512066354727}
+  - {fileID: 686838730}
+  - {fileID: 957217126}
+  - {fileID: 995378286}
+  - {fileID: 576185600}
+  - {fileID: 1525398762}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   images: []
   lightBackground: {r: 1, g: 1, b: 1, a: 1}
   darkBackground: {r: 0.08, g: 0.08, b: 0.08, a: 1}
@@ -39757,7 +39763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1968239120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50933,7 +50939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &8346295511499613726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60953,7 +60959,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -61.00226}
+  m_AnchoredPosition: {x: 0, y: -61.002136}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8346295512131603269

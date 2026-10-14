@@ -454,7 +454,7 @@ public class PanelJuegaLoteriaMultiUI : MonoBehaviour
         if (botonLoteria != null) botonLoteria.interactable = false;
 
         if (textoJugadores != null && Photon.Pun.PhotonNetwork.InRoom)
-            textoJugadores.text = Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount + " jugadores";
+            textoJugadores.text = Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount.ToString();
         
         if (textoTituloLoteria != null)
         {

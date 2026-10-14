@@ -5,9 +5,9 @@ using TMPro;
 /// <summary>
 /// Este script controla cómo se ve una tarjeta de lotería en la pantalla
 /// (por ejemplo en una lista de loterías disponibles). Muestra su nombre,
-/// si es pública o privada, cuántas cartas tiene, una portada elegida de
-/// la carpeta local Resources/Portadas, y maneja los botones para editarla
-/// o jugarla.
+/// si es pública o privada (traducido al idioma actual), cuántas cartas
+/// tiene, una portada elegida de la carpeta local Resources/Portadas, y
+/// maneja los botones para editarla o jugarla.
 /// </summary>
 public class CardLoteriaUI : MonoBehaviour
 {
@@ -54,6 +54,33 @@ public class CardLoteriaUI : MonoBehaviour
     /// </summary>
     private static Sprite[] portadas;
 
+    // =========================
+    // IDIOMA
+    // =========================
+
+    /// <summary>Se suscribe al cambio de idioma para volver a traducir el estado.</summary>
+    void OnEnable() => LanguageManager.OnIdiomaAplicado += AlCambiarIdioma;
+
+    /// <summary>Se da de baja del cambio de idioma para evitar fugas de memoria.</summary>
+    void OnDisable() => LanguageManager.OnIdiomaAplicado -= AlCambiarIdioma;
+
+    /// <summary>Cuando cambia el idioma, vuelve a escribir "Pública/Privada".</summary>
+    void AlCambiarIdioma(LanguageManager.Language idioma) => PintarPrivacidad();
+
+    /// <summary>Escribe "Pública" o "Privada" en el idioma actual.</summary>
+    void PintarPrivacidad()
+    {
+        if (txtPrivadaPublica == null || datosLoteria == null) return;
+
+        txtPrivadaPublica.text = datosLoteria.esPublica
+            ? LanguageManager.Traducir("Pública", "Public", "Publique", "Pubblica")
+            : LanguageManager.Traducir("Privada", "Private", "Privée", "Privata");
+    }
+
+    // =========================
+    // CONFIGURAR
+    // =========================
+
     /// <summary>
     /// Llena la tarjeta con la información de una lotería específica:
     /// su nombre, si es pública o privada, cuántas cartas tiene, su portada,
@@ -67,8 +94,7 @@ public class CardLoteriaUI : MonoBehaviour
         if (txtNombre != null)
             txtNombre.text = datos.nombreLoteria;
 
-        if (txtPrivadaPublica != null)
-            txtPrivadaPublica.text = datos.esPublica ? "Pública" : "Privada";
+        PintarPrivacidad();
 
         if (txtNumeroCartas != null)
             txtNumeroCartas.text = datos.cartas.Count.ToString();
@@ -94,6 +120,10 @@ public class CardLoteriaUI : MonoBehaviour
             btnJugar.onClick.AddListener(JugarLoteria);
         }
     }
+
+    // =========================
+    // PORTADA
+    // =========================
 
     /// <summary>
     /// Elige una portada de la carpeta Resources/Portadas. Usa el nombre de
@@ -122,6 +152,10 @@ public class CardLoteriaUI : MonoBehaviour
         // Si prefieres una portada al azar cada vez, usa esta línea en lugar de la anterior:
         // return portadas[Random.Range(0, portadas.Length)];
     }
+
+    // =========================
+    // BOTONES
+    // =========================
 
     /// <summary>
     /// Se ejecuta cuando el jugador le da clic al botón de editar.

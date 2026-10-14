@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 190082852730620393}
   - component: {fileID: 9107295142084260873}
   - component: {fileID: -3146444568779157852}
+  - component: {fileID: 9098410222585014266}
   m_Layer: 5
   m_Name: Friends_Online
   m_TagString: Untagged
@@ -387,6 +388,29 @@ MonoBehaviour:
   colorConectado: {r: 0.07699323, g: 0.5309972, b: 0.016459435, a: 1}
   colorEnPartida: {r: 1, g: 0.5588235, b: 0, a: 1}
   colorDesconectado: {r: 0.7789757, g: 0.7789757, b: 0.7789757, a: 1}
+--- !u!114 &9098410222585014266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371578540096248240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f2ba85eed1c434c8688840f6e41f21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textos:
+  - tmpText: {fileID: 7979768066261873491}
+    spanish: Aceptar
+    english: Accept
+    french: Accepter
+    italian: Accetta
+  - tmpText: {fileID: 1120169876792448034}
+    spanish: Rechazar
+    english: Decline
+    french: Refuser
+    italian: Rifiuta
 --- !u!1 &6032846216175209601
 GameObject:
   m_ObjectHideFlags: 0

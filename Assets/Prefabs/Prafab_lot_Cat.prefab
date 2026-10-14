@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6352944038464711311}
   - component: {fileID: 4667819193474704968}
   - component: {fileID: 5722803919731370792}
+  - component: {fileID: 4510240770374571657}
   m_Layer: 5
   m_Name: Prafab_lot_Cat
   m_TagString: Untagged
@@ -134,6 +135,24 @@ MonoBehaviour:
   imgPortada: {fileID: 3302876689472869235}
   btnEditar: {fileID: 8918472041940911833}
   btnJugar: {fileID: 9210524829288884388}
+--- !u!114 &4510240770374571657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722344821977494424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4f2ba85eed1c434c8688840f6e41f21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textos:
+  - tmpText: {fileID: 1386845711784166663}
+    spanish: cartas
+    english: cards
+    french: cartes
+    italian: carte
 --- !u!1 &1988928937152180278
 GameObject:
   m_ObjectHideFlags: 0

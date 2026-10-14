@@ -35,6 +35,12 @@ public class LanguageManager : MonoBehaviour
     public Language currentLanguage = Language.Spanish;
 
     /// <summary>
+    /// Se dispara cada vez que se aplica un idioma (al iniciar y al cambiarlo).
+    /// Lo escuchan los textos de prefabs que no están en localizedTexts.
+    /// </summary>
+    public static event System.Action<Language> OnIdiomaAplicado;
+
+    /// <summary>
     /// Lista de todos los textos de la interfaz que cambian según el idioma
     /// (títulos, etiquetas, descripciones, etc). NO se deben poner aquí los
     /// botones de idioma — esos van en su propia sección más abajo.
@@ -458,6 +464,25 @@ public class LanguageManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Devuelve el texto en el idioma actual. Si falta la traducción, usa español.
+    /// Para textos que se escriben desde código (estados, mensajes, etc.).
+    /// </summary>
+    public static string Traducir(string es, string en, string fr, string it)
+    {
+        Language idioma = Instance != null ? Instance.currentLanguage : Language.Spanish;
+
+        string valor = idioma switch
+        {
+            Language.English => en,
+            Language.French  => fr,
+            Language.Italian => it,
+            _ => es
+        };
+
+        return string.IsNullOrEmpty(valor) ? es : valor;
+    }
+
+    /// <summary>
     /// Aplica el idioma actual a toda la interfaz: actualiza los textos
     /// generales y los botones de selección de idioma.
     /// </summary>
@@ -469,6 +494,7 @@ public class LanguageManager : MonoBehaviour
         UpdateLanguageButtons();
         UpdateDropdownI();
         UpdateDropdownR();
+        OnIdiomaAplicado?.Invoke(currentLanguage);
     }
 
     /// <summary>

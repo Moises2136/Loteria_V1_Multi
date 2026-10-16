@@ -42795,9 +42795,9 @@ MonoBehaviour:
   botonSalir: {fileID: 353495838}
   panelMenu: {fileID: 8346295512117702088}
   tiempoFeedbackIncorrecto: 1
-  audioCorrecto: {fileID: 5584685065526456153}
+  audioCorrecto: {fileID: 2092883222}
   sonidoCorrecto: {fileID: 8300000, guid: 757a33a7e7707204fabd7ad15567aaee, type: 3}
-  audioIncorrecto: {fileID: 5584685065526456153}
+  audioIncorrecto: {fileID: 2092883222}
   sonidoIncorrecto: {fileID: 8300000, guid: 9baaa94b8bcef024e9594107ea02d2c5, type: 3}
 --- !u!114 &1968239125
 MonoBehaviour:
@@ -48733,9 +48733,9 @@ MonoBehaviour:
   botonLoteria: {fileID: 8346295511360199939}
   botonSalir: {fileID: 1040810882}
   panelMenu: {fileID: 8346295512117702088}
-  audioCorrecto: {fileID: 5584685065526456153}
+  audioCorrecto: {fileID: 2092883222}
   sonidoCorrecto: {fileID: 8300000, guid: 757a33a7e7707204fabd7ad15567aaee, type: 3}
-  audioIncorrecto: {fileID: 5584685065526456153}
+  audioIncorrecto: {fileID: 2092883222}
   sonidoIncorrecto: {fileID: 8300000, guid: 9baaa94b8bcef024e9594107ea02d2c5, type: 3}
   totalCartasTablero: 9
   tiempoEntreCartas: 6
@@ -61222,9 +61222,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31a4ad69c210d1b4eb3f593cac58d5e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: "Assembly-CSharp::PanelConfiguraci\xF3n"
-  sliderVolumen: {fileID: 8346295511528303107}
-  textoPorcentajeVolumen: {fileID: 8346295512924442691}
+  sliderVolumenVoz: {fileID: 8346295511528303107}
+  textoPorcentajeVolumenVoz: {fileID: 8346295512924442691}
   audioSourcePrueba: {fileID: 5584685065526456153}
+  sliderVolumenFX: {fileID: 970959721}
+  textoPorcentajeVolumenFX: {fileID: 1334275588}
+  audioSourcesFX:
+  - {fileID: 2092883222}
   botonVozHombre: {fileID: 8346295513327386171}
   botonVozMujer: {fileID: 8346295512255065098}
   botonProbarVoz: {fileID: 8346295511236614428}
@@ -61234,7 +61238,7 @@ MonoBehaviour:
   mujerActivado: {fileID: 8346295511279974501}
   clipVozHombre: {fileID: 0}
   clipVozMujer: {fileID: 0}
-  ttsManager: {fileID: 0}
+  ttsManager: {fileID: 8346295511882024444}
   textoPrueba: "Bienvenido a la loter\xEDa mexicana de plantas medicinales."
   botonRegresar: {fileID: 540559599}
   panelAnterior: {fileID: 8346295512117702088}

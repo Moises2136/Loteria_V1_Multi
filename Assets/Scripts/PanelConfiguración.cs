@@ -1,27 +1,54 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
 /// Este script controla el panel de configuración del juego: permite ajustar
-/// el volumen general, elegir entre voz masculina o femenina, y probar cómo
-/// suena esa voz (ya sea generándola con OpenAI TTS, o usando un clip de
-/// respaldo guardado localmente si el TTS no está disponible).
+/// por SEPARADO el volumen de la voz y el volumen de los efectos de sonido (FX),
+/// elegir entre voz masculina o femenina, y probar cómo suena esa voz (ya sea
+/// generándola con ElevenLabs TTS, o usando un clip de respaldo guardado
+/// localmente si el TTS no está disponible).
+/// <para>
+/// Los volúmenes quedan disponibles para cualquier script mediante
+/// <see cref="VolumenVoz"/> y <see cref="VolumenFX"/>, que leen lo guardado en
+/// PlayerPrefs (así funcionan aunque este panel nunca se haya abierto).
+/// </para>
 /// </summary>
 public class PanelConfiguración : MonoBehaviour
 {
     // =========================
-    // AUDIO
+    // AUDIO: VOZ
     // =========================
 
-    /// <summary>Control deslizante para ajustar el volumen general.</summary>
-    public Slider sliderVolumen;
+    /// <summary>Control deslizante para ajustar el volumen de la VOZ.</summary>
+    [FormerlySerializedAs("sliderVolumen")]
+    public Slider sliderVolumenVoz;
 
-    /// <summary>Texto que muestra el porcentaje de volumen actual (ej. "80%").</summary>
-    public TMP_Text textoPorcentajeVolumen;
+    /// <summary>Texto que muestra el porcentaje de volumen de la VOZ (ej. "80%").</summary>
+    [FormerlySerializedAs("textoPorcentajeVolumen")]
+    public TMP_Text textoPorcentajeVolumenVoz;
 
-    /// <summary>AudioSource usado para reproducir la prueba de voz.</summary>
+    /// <summary>AudioSource usado para reproducir la prueba de voz (y la voz del juego, si comparte este).</summary>
     public AudioSource audioSourcePrueba;
+
+    // =========================
+    // AUDIO: FX (EFECTOS DE SONIDO)
+    // =========================
+
+    /// <summary>Control deslizante para ajustar el volumen de los EFECTOS DE SONIDO (FX).</summary>
+    [Header("FX (efectos de sonido)")]
+    public Slider sliderVolumenFX;
+
+    /// <summary>Texto que muestra el porcentaje de volumen de los FX (ej. "80%").</summary>
+    public TMP_Text textoPorcentajeVolumenFX;
+
+    /// <summary>
+    /// AudioSources de efectos que ya existen en la escena (clics, aciertos, popups...).
+    /// A todos se les aplica el volumen FX. Los que se reproducen con PlayOneShot
+    /// desde otros scripts deben multiplicar por <see cref="VolumenFX"/>.
+    /// </summary>
+    public AudioSource[] audioSourcesFX;
 
     // =========================
     // BOTONES DE VOZ
@@ -63,10 +90,10 @@ public class PanelConfiguración : MonoBehaviour
     public AudioClip clipVozMujer;
 
     // =========================
-    // OPENAI TTS
+    // TTS
     // =========================
 
-    /// <summary>Referencia al script que genera audio con ElevenLabsTTs (texto a voz).</summary>
+    /// <summary>Referencia al script que genera audio con ElevenLabsTTS (texto a voz).</summary>
     public ElevenLabsTTS ttsManager;
 
     /// <summary>Texto de ejemplo que se lee en voz alta al probar la voz.</summary>
@@ -89,17 +116,39 @@ public class PanelConfiguración : MonoBehaviour
     // CONFIGURACIÓN (PLAYERPREFS)
     // =========================
 
-    /// <summary>Llave usada para guardar el volumen en PlayerPrefs.</summary>
+    /// <summary>Llave usada para guardar el volumen de la VOZ (se conserva la anterior para no perder lo ya guardado).</summary>
     private const string KEY_VOLUMEN = "config_volumen";
+
+    /// <summary>Llave usada para guardar el volumen de los FX.</summary>
+    private const string KEY_VOLUMEN_FX = "config_volumen_fx";
 
     /// <summary>Llave usada para guardar la voz elegida en PlayerPrefs.</summary>
     private const string KEY_VOZ = "config_voz"; // 0 = hombre, 1 = mujer
 
-    /// <summary>Volumen actual, en un rango de 0 (silencio) a 1 (máximo).</summary>
-    private float volumenActual = 0f;
+    /// <summary>Volumen actual de la VOZ, de 0 (silencio) a 1 (máximo).</summary>
+    private float volumenVozActual = 0f;
+
+    /// <summary>Volumen actual de los FX, de 0 (silencio) a 1 (máximo).</summary>
+    private float volumenFXActual = 0f;
 
     /// <summary>Voz seleccionada actualmente: 0 para hombre, 1 para mujer.</summary>
     private int vozSeleccionada = 0;
+
+    // =========================
+    // VOLÚMENES PÚBLICOS (PARA OTROS SCRIPTS)
+    // =========================
+
+    /// <summary>
+    /// Volumen de la VOZ guardado (0 a 1). Úsalo en cualquier script que reproduzca voz:
+    /// <c>audioSource.volume = PanelConfiguración.VolumenVoz;</c>
+    /// </summary>
+    public static float VolumenVoz => PlayerPrefs.GetFloat(KEY_VOLUMEN, 1f);
+
+    /// <summary>
+    /// Volumen de los FX guardado (0 a 1). Úsalo en cualquier script que reproduzca efectos:
+    /// <c>audioSource.PlayOneShot(clip, PanelConfiguración.VolumenFX);</c>
+    /// </summary>
+    public static float VolumenFX => PlayerPrefs.GetFloat(KEY_VOLUMEN_FX, 1f);
 
     // =========================
     // INICIALIZACIÓN
@@ -107,43 +156,60 @@ public class PanelConfiguración : MonoBehaviour
 
     /// <summary>
     /// Al iniciar, carga la configuración guardada, prepara la interfaz,
-    /// conecta los botones, y aplica el volumen y la voz guardados.
+    /// conecta los botones, y aplica los volúmenes (voz y FX) y la voz guardados.
     /// </summary>
     void Start()
     {
         CargarConfiguracion();
         ConfigurarUIInicial();
         ConfigurarEventos();
-        AplicarVolumen();
+        AplicarVolumenVoz();
+        AplicarVolumenFX();
         AplicarEstadoVisualVoz();
     }
 
     /// <summary>
-    /// Deja el slider de volumen con el rango correcto (0 a 1) y su valor
-    /// inicial cargado, y actualiza el texto de porcentaje.
+    /// Deja los sliders (voz y FX) con el rango correcto (0 a 1) y su valor
+    /// inicial cargado, y actualiza los textos de porcentaje.
     /// </summary>
     void ConfigurarUIInicial()
     {
-        if (sliderVolumen != null)
+        if (sliderVolumenVoz != null)
         {
-            sliderVolumen.minValue = 0f;
-            sliderVolumen.maxValue = 1f;
-            sliderVolumen.value = volumenActual;
+            sliderVolumenVoz.minValue = 0f;
+            sliderVolumenVoz.maxValue = 1f;
+            sliderVolumenVoz.SetValueWithoutNotify(volumenVozActual);
         }
 
-        ActualizarTextoVolumen();
+        // FX
+        if (sliderVolumenFX != null)
+        {
+            sliderVolumenFX.minValue = 0f;
+            sliderVolumenFX.maxValue = 1f;
+            sliderVolumenFX.SetValueWithoutNotify(volumenFXActual);
+        }
+
+        ActualizarTextoVolumenVoz();
+        ActualizarTextoVolumenFX();
     }
 
     /// <summary>
-    /// Conecta el slider de volumen y todos los botones de esta pantalla
+    /// Conecta los sliders (voz y FX) y todos los botones de esta pantalla
     /// con sus funciones correspondientes.
     /// </summary>
     void ConfigurarEventos()
     {
-        if (sliderVolumen != null)
+        if (sliderVolumenVoz != null)
         {
-            sliderVolumen.onValueChanged.RemoveAllListeners();
-            sliderVolumen.onValueChanged.AddListener(CambiarVolumen);
+            sliderVolumenVoz.onValueChanged.RemoveAllListeners();
+            sliderVolumenVoz.onValueChanged.AddListener(CambiarVolumenVoz);
+        }
+
+        // FX
+        if (sliderVolumenFX != null)
+        {
+            sliderVolumenFX.onValueChanged.RemoveAllListeners();
+            sliderVolumenFX.onValueChanged.AddListener(CambiarVolumenFX);
         }
 
         if (botonVozHombre != null)
@@ -176,62 +242,109 @@ public class PanelConfiguración : MonoBehaviour
     // =========================
 
     /// <summary>
-    /// Lee de PlayerPrefs el volumen y la voz guardados de una sesión anterior.
+    /// Lee de PlayerPrefs los volúmenes (voz y FX) y la voz guardados de una sesión anterior.
     /// </summary>
     void CargarConfiguracion()
     {
-        volumenActual = PlayerPrefs.GetFloat(KEY_VOLUMEN, 1f);
+        volumenVozActual = PlayerPrefs.GetFloat(KEY_VOLUMEN, 1f);
+        volumenFXActual = PlayerPrefs.GetFloat(KEY_VOLUMEN_FX, 1f);   // FX
         vozSeleccionada = PlayerPrefs.GetString("VOICE_TYPE", "female") == "male" ? 0 : 1;
     }
 
     /// <summary>
-    /// Guarda el volumen y la voz actuales en PlayerPrefs, para recordarlos
+    /// Guarda los volúmenes (voz y FX) en PlayerPrefs, para recordarlos
     /// la próxima vez que se abra el juego.
     /// </summary>
     void GuardarConfiguracion()
     {
-        PlayerPrefs.SetFloat(KEY_VOLUMEN, volumenActual);
+        PlayerPrefs.SetFloat(KEY_VOLUMEN, volumenVozActual);
+        PlayerPrefs.SetFloat(KEY_VOLUMEN_FX, volumenFXActual);   // FX
         PlayerPrefs.Save();
     }
 
     // =========================
-    // CONTROL DE VOLUMEN
+    // CONTROL DE VOLUMEN: VOZ
     // =========================
 
     /// <summary>
-    /// Se llama cada vez que el usuario mueve el slider de volumen.
+    /// Se llama cada vez que el usuario mueve el slider de volumen de la VOZ.
     /// Aplica el nuevo volumen, actualiza el texto, y lo guarda.
     /// </summary>
     /// <param name="valor">El nuevo valor de volumen, entre 0 y 1.</param>
-    public void CambiarVolumen(float valor)
+    public void CambiarVolumenVoz(float valor)
     {
-        volumenActual = valor;
-        AplicarVolumen();
-        ActualizarTextoVolumen();
+        volumenVozActual = valor;
+        AplicarVolumenVoz();
+        ActualizarTextoVolumenVoz();
         GuardarConfiguracion();
     }
 
     /// <summary>
-    /// Aplica el volumen actual tanto al audio general del juego
-    /// (<c>AudioListener.volume</c>) como al AudioSource de prueba.
+    /// Aplica el volumen de la VOZ al AudioSource de prueba. Ya no se usa
+    /// <c>AudioListener.volume</c> porque afectaría también a los FX; se deja en 1
+    /// y cada grupo de sonido (voz / FX) se ajusta por separado.
     /// </summary>
-    void AplicarVolumen()
+    void AplicarVolumenVoz()
     {
-        AudioListener.volume = volumenActual;
+        AudioListener.volume = 1f;
 
         if (audioSourcePrueba != null)
-            audioSourcePrueba.volume = volumenActual;
+            audioSourcePrueba.volume = volumenVozActual;
     }
 
     /// <summary>
-    /// Actualiza el texto que muestra el volumen como porcentaje (ej. "80%").
+    /// Actualiza el texto que muestra el volumen de la VOZ como porcentaje (ej. "80%").
     /// </summary>
-    void ActualizarTextoVolumen()
+    void ActualizarTextoVolumenVoz()
     {
-        if (textoPorcentajeVolumen != null)
+        if (textoPorcentajeVolumenVoz != null)
         {
-            int porcentaje = Mathf.RoundToInt(volumenActual * 100f);
-            textoPorcentajeVolumen.text = porcentaje + "%";
+            int porcentaje = Mathf.RoundToInt(volumenVozActual * 100f);
+            textoPorcentajeVolumenVoz.text = porcentaje + "%";
+        }
+    }
+
+    // =========================
+    // CONTROL DE VOLUMEN: FX
+    // =========================
+
+    /// <summary>
+    /// Se llama cada vez que el usuario mueve el slider de volumen de los FX.
+    /// Aplica el nuevo volumen, actualiza el texto, y lo guarda.
+    /// </summary>
+    /// <param name="valor">El nuevo valor de volumen FX, entre 0 y 1.</param>
+    public void CambiarVolumenFX(float valor)
+    {
+        volumenFXActual = valor;
+        AplicarVolumenFX();
+        ActualizarTextoVolumenFX();
+        GuardarConfiguracion();
+    }
+
+    /// <summary>
+    /// Aplica el volumen de los FX a todos los AudioSources de efectos asignados
+    /// en <see cref="audioSourcesFX"/>.
+    /// </summary>
+    void AplicarVolumenFX()
+    {
+        if (audioSourcesFX == null) return;
+
+        foreach (AudioSource fx in audioSourcesFX)
+        {
+            if (fx != null)
+                fx.volume = volumenFXActual;
+        }
+    }
+
+    /// <summary>
+    /// Actualiza el texto que muestra el volumen de los FX como porcentaje (ej. "80%").
+    /// </summary>
+    void ActualizarTextoVolumenFX()
+    {
+        if (textoPorcentajeVolumenFX != null)
+        {
+            int porcentaje = Mathf.RoundToInt(volumenFXActual * 100f);
+            textoPorcentajeVolumenFX.text = porcentaje + "%";
         }
     }
 
@@ -285,37 +398,37 @@ public class PanelConfiguración : MonoBehaviour
 
     /// <summary>
     /// Reproduce un texto de ejemplo usando la voz seleccionada. Primero
-    /// intenta generar el audio con ElevenLabs si no hay un <see cref="ttsManager"/>
+    /// intenta generar el audio con ElevenLabs; si no hay un <see cref="ttsManager"/>
     /// asignado, usa un clip de audio local guardado como respaldo.
     /// </summary>
     public void ProbarVozSeleccionada()
-{
-    if (ttsManager != null)
     {
-        ttsManager.SpeakText(textoPrueba);
-        return;
+        if (ttsManager != null)
+        {
+            ttsManager.SpeakText(textoPrueba);
+            return;
+        }
+
+        // Respaldo local
+        if (audioSourcePrueba == null)
+        {
+            Debug.LogWarning("No asignaste audioSourcePrueba.");
+            return;
+        }
+
+        AudioClip clipAReproducir = vozSeleccionada == 0 ? clipVozHombre : clipVozMujer;
+
+        if (clipAReproducir == null)
+        {
+            Debug.LogWarning("No asignaste clip local y tampoco TTS.");
+            return;
+        }
+
+        audioSourcePrueba.Stop();
+        audioSourcePrueba.clip = clipAReproducir;
+        audioSourcePrueba.volume = volumenVozActual;
+        audioSourcePrueba.Play();
     }
-
-    // Respaldo local
-    if (audioSourcePrueba == null)
-    {
-        Debug.LogWarning("No asignaste audioSourcePrueba.");
-        return;
-    }
-
-    AudioClip clipAReproducir = vozSeleccionada == 0 ? clipVozHombre : clipVozMujer;
-
-    if (clipAReproducir == null)
-    {
-        Debug.LogWarning("No asignaste clip local y tampoco TTS.");
-        return;
-    }
-
-    audioSourcePrueba.Stop();
-    audioSourcePrueba.clip = clipAReproducir;
-    audioSourcePrueba.volume = volumenActual;
-    audioSourcePrueba.Play();
-}
 
     // =========================
     // NAVEGACIÓN
@@ -347,11 +460,20 @@ public class PanelConfiguración : MonoBehaviour
     }
 
     /// <summary>
-    /// Devuelve el volumen actual configurado.
+    /// Devuelve el volumen actual de la VOZ.
     /// </summary>
     /// <returns>Un valor entre 0 (silencio) y 1 (volumen máximo).</returns>
-    public float ObtenerVolumenActual()
+    public float ObtenerVolumenVozActual()
     {
-        return volumenActual;
+        return volumenVozActual;
+    }
+
+    /// <summary>
+    /// Devuelve el volumen actual de los FX.
+    /// </summary>
+    /// <returns>Un valor entre 0 (silencio) y 1 (volumen máximo).</returns>
+    public float ObtenerVolumenFXActual()
+    {
+        return volumenFXActual;
     }
 }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 898541174981931172}
   - component: {fileID: 3023074680113276464}
   - component: {fileID: 2590187936478824550}
+  - component: {fileID: 6981166361260797484}
   m_Layer: 5
   m_Name: Card_Historial
   m_TagString: Untagged
@@ -156,6 +157,27 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: -0.4, y: 0.29}
   m_UseGraphicAlpha: 1
+--- !u!114 &6981166361260797484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590020564332267950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8cfe95783b9654881bdaf3637f3927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgrounds:
+  - {fileID: 8024351148857871909}
+  texts:
+  - {fileID: 869085464805909119}
+  images: []
+  textosInput: []
+  placeholders: []
+  sombras:
+  - {fileID: 226357511843592063}
 --- !u!1 &2346118018722994741
 GameObject:
   m_ObjectHideFlags: 0

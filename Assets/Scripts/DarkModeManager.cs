@@ -8,8 +8,13 @@ using TMPro;
 /// Controla el modo oscuro/claro del juego: al presionar el botón de Modo Oscuro
 /// (Dark_Button) o el de Modo Claro (Light_Button), cambia el color de los fondos,
 /// textos, imágenes, texto escrito en inputs, placeholders, sombras y tintes de
-/// selectables registrados en las listas del Inspector, y anima con un crossfade
-/// el cambio entre la textura negra y blanca de cada botón.
+/// selectables registrados en las listas del Inspector, cambia el sprite blanco/negro
+/// de las imágenes registradas, y anima con un crossfade el cambio entre la textura
+/// negra y blanca de cada botón.
+/// <para>
+/// La primera vez que se abre la app, el modo inicial sigue el tema del sistema
+/// (solo Android). Después se respeta la última elección del usuario, guardada en PlayerPrefs.
+/// </para>
 /// <para>
 /// Además publica el modo y los colores actuales de forma estática, para que los
 /// prefabs que lleven <see cref="DarkModeItem"/> se pinten solos al activarse,
@@ -44,11 +49,17 @@ public class DarkModeManager : MonoBehaviour
     /// <summary>Prefabs y paneles registrados que siguen el modo oscuro.</summary>
     private static readonly HashSet<DarkModeItem> items = new HashSet<DarkModeItem>();
 
+    /// <summary>Clave de PlayerPrefs donde se guarda la elección del usuario (1 = oscuro, 0 = claro).</summary>
+    private const string PrefKeyDarkMode = "dark_mode";
+
     // =========================
     // MODO ACTUAL
     // =========================
 
-    /// <summary>Indica si el modo oscuro está activo actualmente.</summary>
+    /// <summary>
+    /// Indica si el modo oscuro está activo actualmente.
+    /// Se sobrescribe en Awake con la elección guardada o con el tema del sistema.
+    /// </summary>
     [Header("Modo actual")]
     [SerializeField] private bool darkMode = false;
 
@@ -133,6 +144,36 @@ public class DarkModeManager : MonoBehaviour
     [SerializeField] private Color darkShadow = new Color32(0x7E, 0x7E, 0x7E, 255);
 
     // =========================
+    // SPRITES BLANCO / NEGRO
+    // =========================
+
+    /// <summary>
+    /// Imagen cuyo sprite cambia entre una versión blanca y una negra según el modo.
+    /// </summary>
+    [System.Serializable]
+    public class SpriteCambiante
+    {
+        [Tooltip("Solo para identificar este elemento en el Inspector, no afecta la lógica.")]
+        public string nombre;
+
+        [Tooltip("Image a la que se le cambia el sprite. Su Color debe estar en blanco puro.")]
+        public Image imagen;
+
+        [Tooltip("Sprite que se usa en MODO CLARO")]
+        public Sprite spriteBlanco;
+
+        [Tooltip("Sprite que se usa en MODO OSCURO")]
+        public Sprite spriteNegro;
+    }
+
+    /// <summary>
+    /// Imágenes que cambian de sprite (blanco en modo claro, negro en modo oscuro).
+    /// No las agregues también a la lista de "Imágenes que deben cambiar".
+    /// </summary>
+    [Header("Imágenes con sprite blanco/negro")]
+    [SerializeField] private List<SpriteCambiante> spritesCambiantes = new List<SpriteCambiante>();
+
+    // =========================
     // ICONOS DE BOTONES
     // =========================
 
@@ -147,10 +188,10 @@ public class DarkModeManager : MonoBehaviour
         [Tooltip("Solo para identificar este elemento en el Inspector, no afecta la lógica.")]
         public string nombre;
 
-        [Tooltip("Image del hijo con la textura NEGRA (ej. Light_Button_Black).")]
+        [Tooltip("Image del hijo con la textura NEGRA")]
         public Image iconoNegro;
 
-        [Tooltip("Image del hijo con la textura BLANCA (ej. Light_Button_White).")]
+        [Tooltip("Image del hijo con la textura BLANCA")]
         public Image iconoBlanco;
     }
 
@@ -228,13 +269,49 @@ public class DarkModeManager : MonoBehaviour
         s.colors = cb;
     }
 
+    /// <summary>
+    /// Devuelve true si el dispositivo tiene activado el tema oscuro del sistema.
+    /// Solo funciona en Android (en el Editor y otras plataformas devuelve false).
+    /// </summary>
+    private static bool SistemaEnModoOscuro()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        try
+        {
+            using (var player = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            using (var activity = player.GetStatic<AndroidJavaObject>("currentActivity"))
+            using (var resources = activity.Call<AndroidJavaObject>("getResources"))
+            using (var config = resources.Call<AndroidJavaObject>("getConfiguration"))
+            {
+                int uiMode = config.Get<int>("uiMode");
+                return (uiMode & 0x30) == 0x20;   // UI_MODE_NIGHT_MASK / UI_MODE_NIGHT_YES
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning("No se pudo leer el tema del sistema: " + e.Message);
+            return false;
+        }
+#else
+        return false;
+#endif
+    }
+
     // =========================
     // CICLO DE VIDA
     // =========================
 
-    /// <summary>Publica el modo y los colores desde el primer momento, antes de que cualquier prefab los pida.</summary>
+    /// <summary>
+    /// Decide el modo inicial: si el usuario ya eligió uno, se respeta; si no, se usa
+    /// el tema del sistema. Luego publica el modo y los colores antes de que cualquier prefab los pida.
+    /// </summary>
     private void Awake()
     {
+        if (PlayerPrefs.HasKey(PrefKeyDarkMode))
+            darkMode = PlayerPrefs.GetInt(PrefKeyDarkMode) == 1;
+        else
+            darkMode = SistemaEnModoOscuro();
+
         Publicar();
     }
 
@@ -307,19 +384,21 @@ public class DarkModeManager : MonoBehaviour
 
     /// <summary>
     /// Establece directamente el modo oscuro como activado o desactivado,
-    /// y aplica el cambio (con animación) a todos los elementos registrados.
+    /// guarda la elección del usuario y aplica el cambio (con animación)
+    /// a todos los elementos registrados.
     /// </summary>
     /// <param name="enabled">Verdadero para activar el modo oscuro, falso para el modo claro.</param>
     public void SetDarkMode(bool enabled)
     {
         darkMode = enabled;
+        PlayerPrefs.SetInt(PrefKeyDarkMode, enabled ? 1 : 0);
         ApplyDarkMode();
     }
 
     /// <summary>
     /// Publica los colores, recorre las listas (fondos, textos, imágenes, texto de inputs,
-    /// placeholders, sombras y selectables) y los prefabs registrados aplicándoles el color
-    /// del modo actual, y dispara el crossfade de las texturas de los botones.
+    /// placeholders, sombras, selectables y sprites blanco/negro) y los prefabs registrados
+    /// aplicándoles el valor del modo actual, y dispara el crossfade de las texturas de los botones.
     /// </summary>
     /// <param name="instant">Si es verdadero, aplica el cambio sin animar (usado al iniciar la escena).</param>
     private void ApplyDarkMode(bool instant = false)
@@ -381,6 +460,15 @@ public class DarkModeManager : MonoBehaviour
         foreach (Selectable s in selectables)
         {
             AplicarSelectable(s, Fondo, Texto);
+        }
+
+        // Imágenes que cambian de sprite: blanco en modo claro, negro en modo oscuro
+        foreach (SpriteCambiante sc in spritesCambiantes)
+        {
+            if (sc != null && sc.imagen != null)
+            {
+                sc.imagen.sprite = darkMode ? sc.spriteNegro : sc.spriteBlanco;
+            }
         }
 
         // Prefabs y paneles que se registraron solos

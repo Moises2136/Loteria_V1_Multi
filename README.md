@@ -58,6 +58,7 @@ Aplicar buenas prácticas de control de versiones usando Git.
 Moisés Corpus García
 
 GitHub: https://github.com/Moises2136
+Version web jugable https://moises2136.github.io/loteria-web/
 
 📜 Licencia
 Proyecto desarrollado con fines educativos y de portafolio.
